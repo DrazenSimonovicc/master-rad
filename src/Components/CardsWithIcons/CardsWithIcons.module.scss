@@ -1,0 +1,24 @@
+@import "src/Styling/index";
+
+.iconWrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+
+  .iconLightBlue {
+    background-color: #00cbb8;
+  }
+
+  .iconPurple {
+    background-color: $dark-purple-color;
+  }
+
+  .iconBlue {
+    background-color: #29b9e7;
+  }
+
+  @include breakpoint("tablet") {
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

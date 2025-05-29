@@ -1,0 +1,49 @@
+@import "src/Styling/index";
+
+.label {
+  font-size: 14px;
+  font-weight: 500;
+  color: $gray-color;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-top: 8px;
+}
+
+.input {
+  width: 100%;
+  padding: 16px 32px;
+  border: 1px solid #49bbbd;
+  font-size: 16px;
+  outline: none;
+  border-radius: 60px;
+
+  &:focus {
+    border: 1px solid #1976d2;
+    outline: 1px solid #1976d2;
+  }
+
+  &.error {
+    border-color: red;
+  }
+}
+
+.visibilityIcon {
+  cursor: pointer;
+  position: absolute;
+  right: 26px;
+  color: $gray-color;
+}
+
+.iconVisible {
+  color: #1976d2;
+}
+
+.errorText {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
+}

@@ -1,0 +1,76 @@
+@import "src/Styling/index";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 45px 15px;
+  gap: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .referencesWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    flex: 1;
+  }
+
+  .activityWrap {
+    .typeOfActivity {
+      color: $blue-500;
+      font-weight: 600;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      font-size: 14px;
+    }
+
+    .title {
+      margin-bottom: 12px;
+      font-size: 20px;
+      font-weight: 700;
+      color: $title-dark;
+    }
+
+    .afterTitle {
+      color: #6b7280;
+      font-size: 14px;
+      margin-bottom: 24px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .description {
+      color: #374151;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+  }
+}
+
+@include breakpoint("tablet") {
+  .container {
+    padding: 105px 15px 70px;
+  }
+}
+
+@include breakpoint("desktopSmall") {
+  .container {
+    flex-direction: row;
+    gap: 60px;
+
+    .sidebarWrap {
+      width: 280px;
+      margin-bottom: 45px;
+    }
+  }
+}
+
+@include breakpoint("desktop") {
+  .container {
+    .sidebarWrap {
+      width: 340px;
+    }
+  }
+}

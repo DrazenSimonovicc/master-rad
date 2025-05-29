@@ -1,0 +1,116 @@
+.cardWrapper {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 16px;
+  margin: 16px 0;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  // Add a border for priority cards
+  &.priority {
+    border: 3px solid #ff0000; // Change the color as needed (e.g., red for priority)
+    background-color: #fef1f1; // Optional: change background to indicate priority
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.imageContainer {
+  width: 100%;
+  height: 200px; /* Adjust the height as needed */
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 16px; /* Add margin to separate the image from the content */
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image fills the container without distortion */
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.cardSubtitleWrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.cardSubtitle {
+  font-size: 1rem;
+  font-weight: 600;
+
+  &.active {
+    color: #28a745; // Green for Active status
+  }
+
+  &.upcoming {
+    color: #007bff; // Blue for Upcoming status
+  }
+
+  &.finished {
+    color: #6c757d; // Gray for Finished status
+  }
+}
+
+.cardDescription {
+  font-size: 1rem;
+  color: #555;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.cardDates {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.cardDate {
+  font-size: 0.9rem;
+  color: #777;
+
+  strong {
+    color: #333;
+  }
+
+  p {
+    margin: 0;
+    color: #555;
+  }
+}
+
+.attachmentIcon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 1rem;
+  color: #007bff; // Blue for attachment icon, can be customized
+
+  span {
+    font-size: 0.9rem;
+    color: #555;
+  }
+}

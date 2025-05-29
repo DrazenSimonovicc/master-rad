@@ -1,0 +1,101 @@
+@import "src/Styling/index";
+
+.loginPage {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  gap: 32px;
+
+  .leftSide {
+    width: 100%;
+    position: relative;
+
+    picture {
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .rightSide {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+
+    .toggleText {
+      color: $gray-color;
+      span {
+        color: #007bff;
+        cursor: pointer;
+        margin-left: 4px;
+      }
+    }
+
+    .description {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 40px;
+
+      div {
+        margin-bottom: 0;
+      }
+
+      .title {
+        margin: 32px 0;
+        color: $dark-blue;
+      }
+    }
+
+    .inputs {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .error {
+      color: red;
+      margin-bottom: 10px;
+    }
+
+    .buttonWrap {
+      display: flex;
+      justify-content: center;
+      padding: 20px 0;
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+
+  @include breakpoint("tablet") {
+    flex-direction: row;
+
+    gap: 40px;
+
+    .leftSide {
+      width: 50%;
+    }
+    .rightSide {
+      width: 50%;
+
+      .buttonWrap {
+        display: flex;
+        justify-content: center;
+
+        button {
+          width: 180px;
+        }
+      }
+    }
+  }
+
+  @include breakpoint("desktop") {
+    gap: 80px;
+  }
+}

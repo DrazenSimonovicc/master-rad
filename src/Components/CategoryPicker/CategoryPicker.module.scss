@@ -1,0 +1,55 @@
+@import "src/Styling/index";
+
+.categoryPickerWrap {
+  max-width: 1200px;
+
+  .categoryHeaderWrap {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    .categoryTitle {
+      font-size: 30px;
+      font-weight: bold;
+      color: $black;
+    }
+
+    .categoryButton {
+      font-size: 20px;
+      font-weight: bold;
+      color: $main-color-light-blue;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: $orange-color;
+      }
+    }
+  }
+
+  .categoryCardWrap {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+
+    @include breakpoint("550px") {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @include breakpoint("tablet") {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @include breakpoint("desktopSmall") {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .div {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

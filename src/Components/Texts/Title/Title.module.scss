@@ -1,0 +1,85 @@
+@import "src/Styling/index";
+
+.title {
+  color: $black;
+  font-size: $h1-mobile-size;
+  line-height: 40px;
+  font-weight: 700;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  @include breakpoint("desktop") {
+    font-size: $h1-desktop-size;
+    line-height: $h1-desktop-size;
+  }
+
+  &.level1 {
+    font-size: $h1-mobile-size;
+    line-height: $h1-mobile-size + $h-mobile-line-height-add;
+
+    @include breakpoint("desktop") {
+      font-size: $h1-desktop-size;
+      line-height: $h1-desktop-size + $h-desktop-line-height-add;
+    }
+  }
+
+  &.level2 {
+    font-size: $h2-mobile-size;
+    line-height: $h2-mobile-size + $h-mobile-line-height-add;
+    @include breakpoint("desktop") {
+      font-size: $h2-desktop-size;
+      line-height: $h2-desktop-size + $h-desktop-line-height-add;
+    }
+  }
+
+  &.level3 {
+    font-size: $h3-mobile-size;
+    line-height: $h3-mobile-size + $h-mobile-line-height-add;
+    @include breakpoint("desktop") {
+      font-size: $h3-desktop-size;
+      line-height: $h3-desktop-size + $h-desktop-line-height-add;
+    }
+  }
+
+  &.level4 {
+    font-size: $h4-mobile-size;
+    line-height: $h4-mobile-size + $h-mobile-line-height-add;
+    @include breakpoint("desktop") {
+      font-size: $h4-desktop-size;
+      line-height: $h4-desktop-size + $h-desktop-line-height-add;
+    }
+  }
+
+  &.level5 {
+    font-size: $h1-mobile-size;
+    line-height: $h1-mobile-size + $h-mobile-line-height-add;
+    @include breakpoint("desktop") {
+      font-size: $h5-desktop-size;
+      line-height: $h4-desktop-size + $h-desktop-line-height-add;
+    }
+  }
+
+  &.regular {
+    font-weight: 400;
+  }
+
+  &.light {
+    font-weight: 300;
+  }
+
+  &.white {
+    color: $shade-level-1;
+  }
+
+  &.underline {
+    text-decoration: underline;
+  }
+
+  .dot {
+    background-color: #aeb3b2;
+    border-radius: 100%;
+    width: 6px;
+    height: 6px;
+  }
+}

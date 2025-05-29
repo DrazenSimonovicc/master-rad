@@ -1,0 +1,9 @@
+@import "src/Styling/index";
+
+.errorText {
+  color: $main-error-1;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: left;
+  margin-bottom: 7px;
+}

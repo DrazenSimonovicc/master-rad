@@ -1,0 +1,88 @@
+@import "src/Styling/index";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+  align-items: center;
+  padding: 40px 0;
+
+  .textContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    .title {
+      margin-bottom: 20px;
+      font-size: $h2-mobile-size;
+      line-height: $h2-mobile-size + $h-mobile-line-height-add;
+      @include breakpoint("desktop") {
+        font-size: $h2-desktop-size;
+        line-height: $h2-desktop-size + $h-desktop-line-height-add;
+      }
+
+      .spanOne {
+        color: #2f327d;
+      }
+      .spanTwo {
+        color: #00cbb8;
+      }
+    }
+
+    .link {
+      color: #696984;
+      font-size: 16px;
+    }
+  }
+
+  .imageContainer {
+    width: 100%;
+    height: auto;
+    object-position: center;
+    object-fit: cover;
+    position: relative;
+
+    img {
+      width: 100%;
+      z-index: 2;
+      position: relative;
+    }
+  }
+
+  @include breakpoint("desktop") {
+    flex-direction: row;
+    padding: 80px 70px;
+
+    .textContainer {
+      width: 50%;
+    }
+    .imageContainer {
+      width: 50%;
+
+      img {
+        border-radius: 20px;
+      }
+
+      .blueSquere {
+        position: absolute;
+        width: 120px;
+        height: 140px;
+        background-color: #23bdee;
+        top: -20px;
+        left: -20px;
+        z-index: 1;
+        border-radius: 20px;
+      }
+
+      .greenSquere {
+        position: absolute;
+        width: 200px;
+        height: 230px;
+        background-color: $green-color;
+        bottom: -20px;
+        right: -20px;
+        z-index: 1;
+        border-radius: 20px;
+      }
+    }
+  }
+}

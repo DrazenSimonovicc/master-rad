@@ -1,0 +1,40 @@
+@import "../../../Styling/index";
+
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e2e2e2;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #333;
+  }
+
+  p {
+    flex-grow: 1;
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 16px;
+  }
+
+  a {
+    color: #0070f3;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

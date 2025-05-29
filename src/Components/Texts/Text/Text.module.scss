@@ -1,0 +1,31 @@
+@import "src/Styling/index";
+
+.text {
+  font-size: 14px;
+  line-height: 25.2px;
+  font-weight: 400;
+
+  &.white {
+    color: $white;
+  }
+
+  &.black {
+    color: $black;
+  }
+
+  &.gray {
+    color: $text-color-gray;
+  }
+
+  &.AlignLeft {
+    text-align: left;
+  }
+
+  &.AlignJustify {
+    text-align: justify;
+  }
+
+  &.AlignCenter {
+    text-align: center;
+  }
+}

@@ -1,0 +1,108 @@
+@import "src/Styling/index"; // Assuming this is for global styles
+
+.profilePage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  background-color: #f7f7f7;
+  min-height: 100vh;
+
+  .buttonWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .dateWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+    flex-direction: row;
+
+    .date {
+      width: 100%;
+
+      .label {
+        font-size: 14px;
+        font-weight: 500;
+        padding-bottom: 8px;
+      }
+
+      :global {
+        .MuiStack-root {
+          padding-top: 0;
+
+          .MuiTextField-root {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    @include breakpoint("tablet") {
+      flex-direction: row;
+
+      .date {
+        width: 48%;
+      }
+    }
+  }
+
+  .MuiInputBase-root {
+    font-size: 16px;
+  }
+
+  .MuiInputLabel-root {
+    font-size: 16px;
+    color: #333;
+  }
+
+  .MuiSelect-root {
+    font-size: 16px;
+    color: #333;
+  }
+
+  .MuiSelect-icon {
+    color: #333;
+  }
+
+  .MuiMenuItem-root {
+    font-size: 16px;
+  }
+
+  .errorText {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 768px) {
+    .dateWrapper {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
+
+    form {
+      padding: 15px;
+      width: 100%;
+    }
+  }
+}

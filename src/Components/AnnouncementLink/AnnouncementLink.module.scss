@@ -1,0 +1,34 @@
+@import "src/Styling/index";
+
+.announcementItem {
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #f7f7f7;
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+
+  &:hover {
+    background-color: #eef3ff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  .announcementLink {
+    font-size: 18px;
+    font-weight: 500;
+    color: $blue-500;
+    text-decoration: none;
+    display: inline-block;
+
+    &:hover {
+      color: #0069d9;
+      text-decoration: underline;
+    }
+  }
+
+  .announcementDate {
+    margin-top: 6px;
+    font-size: 14px;
+    color: #666;
+  }
+}

@@ -1,0 +1,24 @@
+@import "src/Styling/index";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .title {
+    margin-right: 0;
+    color: $dark-blue;
+  }
+
+  @include breakpoint("tablet") {
+    align-items: center;
+
+    .smallDescription {
+      width: 800px;
+    }
+    .description {
+      text-align: center;
+      max-width: 1200px;
+    }
+  }
+}

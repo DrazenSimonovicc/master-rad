@@ -1,0 +1,179 @@
+@import "src/Styling/index";
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.servicesBox {
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px;
+
+  .imageContainer {
+    width: 100%;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    position: relative;
+    aspect-ratio: 1/1;
+
+    .image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+    }
+  }
+
+  .textContainer {
+    max-width: 100%;
+
+    .mainTitle {
+      color: $dark-blue;
+    }
+
+    .personInfo {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 14px;
+
+      .personName {
+        font-size: 18px;
+        color: $black;
+
+        &.mainPersonName {
+          font-size: 24px;
+        }
+      }
+
+      .schoolName {
+        font-size: 16px;
+        color: $main-color-light-blue;
+        font-weight: bold;
+
+        &.mainSchoolName {
+          font-size: 18px;
+        }
+      }
+
+      .dateAndLikes {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        font-size: 14px;
+        color: $black;
+
+        &.mainDateAndLikes {
+          font-size: 16px;
+          color: $black;
+        }
+      }
+
+      .likesSection {
+        .likesSpan {
+          color: $main-color-light-blue;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .text {
+      margin-top: 20px;
+      font-size: 14px;
+
+      &.mainText {
+        font-size: 16px;
+        color: #696984;
+      }
+    }
+
+    .list {
+      list-style-type: none;
+      padding: 0;
+      margin-top: 20px;
+
+      li {
+        margin-left: 16px;
+        font-size: 14px;
+        line-height: 25.2px;
+        color: #666;
+        font-family: inherit;
+        position: relative;
+        padding-left: 20px;
+
+        &:before {
+          content: "\2014 ";
+          color: #222;
+          position: absolute;
+          left: -15px;
+        }
+      }
+    }
+
+    .button {
+      background-color: $main-color-light-blue;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      text-decoration: none;
+      margin-top: 20px;
+      width: 200px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background-color: $orange-color;
+      }
+    }
+  }
+
+  @include breakpoint("tablet") {
+    padding: 50px 0;
+  }
+
+  @include breakpoint("tabletLarge") {
+    flex-direction: row;
+    gap: 30px;
+    max-width: 100%;
+
+    .imageContainer {
+      height: calc(50% - 45px);
+      margin-bottom: 0;
+    }
+
+    .textContainer {
+      width: 50%;
+    }
+  }
+  @include breakpoint("desktopSmall") {
+    gap: 90px;
+  }
+
+  @include breakpoint("desktop") {
+    gap: 90px;
+
+    .textContainer {
+      max-width: 570px;
+    }
+
+    .imageContainer {
+      flex-shrink: 0;
+      width: 510px;
+      height: 510px;
+    }
+
+    .smallImage {
+      height: 255px;
+      width: 255px;
+      position: relative;
+    }
+  }
+
+  @include breakpoint("1170px") {
+    max-width: 1170px;
+  }
+}

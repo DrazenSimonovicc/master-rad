@@ -1,0 +1,47 @@
+@import "src/Styling/index";
+
+.taskListWrapper {
+  margin-top: -1px;
+}
+
+.taskItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+  font-size: 16px;
+  line-height: 24px;
+  color: #333;
+
+  .taskNumber {
+    font-weight: 600;
+    color: #007acc;
+    flex-shrink: 0;
+  }
+
+  .taskContent {
+    flex: 1;
+
+    p {
+      margin: 0 0 8px;
+    }
+
+    ul,
+    ol {
+      padding-left: 24px;
+      margin: 8px 0;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    strong {
+      font-weight: 600;
+    }
+
+    em {
+      font-style: italic;
+    }
+  }
+}

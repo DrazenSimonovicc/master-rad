@@ -1,0 +1,113 @@
+@import "src/Styling/index";
+
+@import "src/Styling/index";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 60px;
+  padding: 30px 15px;
+
+  .leftSide {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+
+    .avatar {
+      width: 180px;
+      height: 225px;
+      object-fit: cover;
+    }
+
+    .imageWrapper {
+      .image {
+        width: 180px;
+        height: 225px;
+        object-fit: cover;
+      }
+    }
+
+    .profileDetails {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      .avatarUpload {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+
+    .buttonWrapper {
+      display: flex;
+      justify-content: center;
+      padding: 20px 0;
+    }
+
+    .select {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dateAndGenderWrap {
+      display: flex;
+      gap: 16px;
+    }
+
+    .dateAndGenderWrap > div {
+      flex: 1;
+
+      :global {
+        .MuiStack-root {
+          padding-top: 0;
+
+          .MuiTextField-root {
+            width: 100%;
+          }
+        }
+      }
+    }
+
+    .label {
+      font-size: 14px;
+      font-weight: 500;
+      padding-bottom: 8px;
+      color: #5b5b5b;
+    }
+  }
+
+  @include breakpoint("tablet") {
+    padding: 105px 15px 70px;
+  }
+
+  @include breakpoint("desktopSmall") {
+    flex-direction: row;
+
+    .leftSide {
+      max-width: 652px;
+    }
+
+    .sidebarWrap {
+      width: 280px;
+    }
+  }
+
+  @include breakpoint("desktop") {
+    .leftSide {
+      max-width: 720px;
+    }
+
+    .sidebarWrap {
+      width: 340px;
+    }
+  }
+
+  @include breakpoint("1200px") {
+    .leftSide {
+      max-width: 770px;
+    }
+  }
+}

@@ -1,0 +1,61 @@
+@import "src/Styling/index";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 45px 15px;
+  gap: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .referencesWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    flex: 1;
+
+    .title {
+      color: $title-dark;
+    }
+
+    .announcementList {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px 0;
+    }
+
+    .paginationWrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 32px;
+    }
+  }
+}
+
+@include breakpoint("tablet") {
+  .container {
+    padding: 105px 15px 70px;
+  }
+}
+
+@include breakpoint("desktopSmall") {
+  .container {
+    flex-direction: row;
+    gap: 60px;
+
+    .sidebarWrap {
+      width: 280px;
+      margin-bottom: 45px;
+    }
+  }
+}
+
+@include breakpoint("desktop") {
+  .container {
+    .sidebarWrap {
+      width: 340px;
+    }
+  }
+}

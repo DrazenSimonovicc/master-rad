@@ -1,0 +1,73 @@
+@import "src/Styling/index";
+.container {
+  .titleWrap {
+    margin-bottom: 30px;
+    .title {
+      margin-bottom: 14px;
+
+      font-size: 24px;
+      line-height: 28.8px;
+    }
+  }
+
+  .gallery {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 61px;
+    column-gap: 30px;
+    row-gap: 15px;
+    align-items: center;
+
+    .imageWrap {
+      width: calc((100% - 30px) / 2);
+
+      cursor: pointer;
+
+      .image {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  .text {
+    margin-bottom: 45px;
+    line-height: 25.2px;
+    color: $black;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .slider {
+    margin-bottom: 45px;
+  }
+
+  .contactWrap {
+    margin-bottom: 45px;
+
+    .contactInfo {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 16px;
+      line-height: 28px;
+      font-size: 14px;
+      color: $black;
+
+      .link {
+        text-decoration: none;
+        color: $main-color-red;
+      }
+    }
+  }
+
+  .sidebarInputWrap {
+    margin-bottom: 30px;
+  }
+
+  .contactInfoWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

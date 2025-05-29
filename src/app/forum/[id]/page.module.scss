@@ -1,0 +1,164 @@
+@import "src/Styling/index";
+
+.teamMemberWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px 15px;
+  gap: 50px;
+
+  .memberWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .type {
+      margin-top: 32px;
+      font-size: 28px;
+      line-height: 33.6px;
+    }
+
+    .marginTop {
+      margin-top: 10px;
+    }
+
+    .text {
+      margin-bottom: 16px;
+      color: $black;
+      font-size: 14px;
+      line-height: 25.2px;
+      font-weight: 400;
+      text-align: justify;
+
+      p {
+        margin-bottom: 16px;
+      }
+    }
+
+    .title {
+      margin-bottom: 16px;
+      font-size: 28px;
+      line-height: 33.6px;
+    }
+
+    .image {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  }
+
+  @include breakpoint("tablet") {
+    padding: 105px 15px 70px;
+  }
+
+  @include breakpoint("desktopSmall") {
+    flex-direction: row;
+    gap: 60px;
+
+    .memberWrap {
+      max-width: calc(100% - 60px - 290px);
+    }
+
+    .sidebarWrap {
+      max-width: 290px;
+    }
+  }
+
+  @include breakpoint("desktop") {
+    .memberWrap {
+      width: calc(100% - 60px - 340px);
+      max-width: 770px;
+    }
+
+    .sidebarWrap {
+      max-width: 340px;
+    }
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 45px 15px;
+  gap: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .referencesWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    flex: 1;
+
+    .title {
+      color: $dark-blue;
+    }
+
+    .infoWrap {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      .name {
+        font-size: 16px;
+        font-weight: bold;
+        color: $black;
+
+        span {
+          font-size: 14px;
+          color: $main-color-gray;
+          font-weight: unset;
+        }
+      }
+
+      .likesSection {
+        .likesSpan {
+          color: $main-color-light-blue;
+          font-weight: bold;
+        }
+      }
+
+      .bottomInfo {
+        span {
+          font-size: 14px;
+          color: $main-color-gray;
+          font-weight: unset;
+        }
+      }
+    }
+
+    img {
+      max-width: 100%;
+      object-position: center;
+      object-fit: cover;
+    }
+  }
+}
+
+@include breakpoint("tablet") {
+  .container {
+    padding: 105px 15px 70px;
+  }
+}
+
+@include breakpoint("desktopSmall") {
+  .container {
+    flex-direction: row;
+    gap: 60px;
+
+    .sidebarWrap {
+      width: 280px;
+      margin-bottom: 45px;
+    }
+  }
+}
+
+@include breakpoint("desktop") {
+  .container {
+    .sidebarWrap {
+      width: 340px;
+    }
+  }
+}

@@ -1,0 +1,149 @@
+@import "src/Styling/index";
+
+$navBorder: 1px solid rgba(255, 255, 255, 0.8);
+$navGray: #404040;
+
+.navLinks {
+  border-top: $navBorder;
+
+  .navItem {
+    position: relative;
+    border-bottom: $navBorder;
+    font-size: 15px;
+    line-height: 24px;
+    font-weight: 500;
+    padding: 10px 20px;
+  }
+}
+
+.link {
+  text-decoration: none;
+  color: $white;
+
+  &:hover {
+    color: $main-color-red;
+  }
+
+  &.singleItem {
+    width: 236px;
+    display: block;
+    border-right: $navBorder;
+  }
+}
+
+.flagWrapper {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dropdownBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: $main-color-dark-blue;
+  border: none;
+  width: 44px;
+  height: 44px;
+
+  svg {
+    font-size: 24px;
+    font-weight: 900;
+    color: $white;
+  }
+}
+
+.submenu {
+  opacity: 0;
+  visibility: hidden;
+  max-height: 0;
+  transition:
+    height 1s ease,
+    opacity 0.4s ease;
+  list-style: none;
+  margin-left: -20px;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+    max-height: 999px;
+    transition:
+      height 1s ease,
+      opacity 1s ease;
+    padding-top: 10px;
+  }
+
+  .submenuItem {
+    background-color: $main-color-dark-blue;
+    border-top: $navBorder;
+    padding: 10px 20px 15px 30px;
+    font-size: 13px;
+    color: $navGray;
+    width: 300px;
+    height: max-content;
+
+    &:hover {
+      color: $main-color-red;
+    }
+  }
+
+  :last-child {
+    border-bottom: none;
+    margin-bottom: -10px;
+  }
+}
+
+.languageSwitcherWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+
+  .language {
+    border-bottom: $navBorder;
+    font-size: 15px;
+    line-height: 24px;
+    font-weight: 500;
+    padding: 10px 20px;
+    width: 100%;
+  }
+
+  .switcher {
+    width: 236px;
+    border-right: $navBorder;
+    display: block;
+    font-size: 15px;
+  }
+}
+
+.languageDropdown {
+  max-height: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  transition:
+    height 1s ease,
+    opacity 0.4s ease;
+
+  &.active {
+    max-height: 999px;
+    opacity: 1;
+    visibility: visible;
+    border-bottom: $navBorder;
+    transition:
+      height 1s ease,
+      opacity 1s ease;
+  }
+
+  .languageOption {
+    background-color: $main-color-dark-blue;
+    padding: 10px 20px;
+    font-size: 15px;
+    color: $navGray;
+    list-style-type: none;
+
+    &:hover {
+      color: $main-color-red;
+    }
+  }
+}

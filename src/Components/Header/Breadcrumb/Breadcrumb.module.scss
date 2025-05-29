@@ -1,0 +1,25 @@
+@import "src/Styling/index";
+
+.breadcrumbContainer {
+  margin-top: 45px;
+  font-weight: 600;
+  font-size: 14px;
+  color: $white;
+  display: flex;
+  flex-flow: wrap;
+  column-gap: 10px;
+  row-gap: 0;
+  align-items: center;
+
+  .link {
+    text-decoration: none;
+    color: $white;
+    line-height: 23.8px;
+    cursor: pointer;
+  }
+
+  .searchText {
+    text-decoration: none;
+    color: $white;
+  }
+}

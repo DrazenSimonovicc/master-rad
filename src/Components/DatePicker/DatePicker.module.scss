@@ -1,0 +1,13 @@
+@import "src/Styling/index";
+
+.datePickerWrap {
+  display: flex;
+  flex-direction: column;
+
+  .label {
+    font-size: 14px;
+    font-weight: 500;
+    padding-bottom: 8px;
+    color: #5b5b5b;
+  }
+}

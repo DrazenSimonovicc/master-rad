@@ -1,0 +1,17 @@
+@import "src/Styling/index";
+
+.description {
+  font-size: 16px;
+  line-height: 23px;
+  color: $gray-color;
+  text-align: left;
+
+  @include breakpoint("desktop") {
+    font-size: 18px;
+    line-height: 26px;
+  }
+
+  .upperCase {
+    text-transform: uppercase;
+  }
+}

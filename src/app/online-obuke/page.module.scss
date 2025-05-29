@@ -1,0 +1,100 @@
+@import "src/Styling/index";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 45px 15px;
+  gap: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .referencesWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    flex: 1;
+
+    .title {
+      color: $title-dark;
+    }
+
+    .announcementList {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px 0;
+
+      .card {
+        background-color: #f9f9f9;
+        border-radius: 1rem;
+        padding: 2rem;
+        max-width: 600px;
+        margin: 2rem auto;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+        h2 {
+          margin-bottom: 1rem;
+          color: #2a2a2a;
+        }
+
+        p {
+          margin-bottom: 1.5rem;
+          font-size: 1rem;
+          color: #555;
+        }
+
+        ul {
+          list-style-type: disc;
+          padding-left: 1.5rem;
+
+          li {
+            margin-bottom: 0.5rem;
+
+            a {
+              color: #0070f3;
+              text-decoration: none;
+              font-weight: 500;
+
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .paginationWrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 32px;
+    }
+  }
+}
+
+@include breakpoint("tablet") {
+  .container {
+    padding: 105px 15px 70px;
+  }
+}
+
+@include breakpoint("desktopSmall") {
+  .container {
+    flex-direction: row;
+    gap: 60px;
+
+    .sidebarWrap {
+      width: 280px;
+      margin-bottom: 45px;
+    }
+  }
+}
+
+@include breakpoint("desktop") {
+  .container {
+    .sidebarWrap {
+      width: 340px;
+    }
+  }
+}

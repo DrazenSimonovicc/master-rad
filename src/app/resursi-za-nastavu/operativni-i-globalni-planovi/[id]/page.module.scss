@@ -1,0 +1,114 @@
+@import "src/Styling/index";
+
+.addButtonWrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px;
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.blurWrapper {
+  filter: blur(5px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 45px 15px;
+  gap: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .referencesWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    flex: 1;
+
+    .title {
+      color: $title-dark;
+    }
+
+    .tableWrapper {
+      overflow-x: auto;
+      max-width: 770px;
+
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+        background-color: #fff;
+
+        thead {
+          background: linear-gradient(135deg, #dfefff, #f0f7ff);
+
+          th {
+            padding: 16px 20px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 15px;
+            color: #2c3e50;
+            border-bottom: 1px solid #e0e6ed;
+          }
+        }
+
+        tbody {
+          tr {
+            transition: background-color 0.2s ease;
+
+            &:hover {
+              background-color: #f0f7ff;
+            }
+
+            &:nth-child(odd) {
+              background-color: #ffffff; // white
+            }
+
+            &:nth-child(even) {
+              background-color: #f9f9f9; // light gray
+            }
+          }
+
+          td {
+            padding: 12px;
+            border-bottom: 1px solid #f0f2f5;
+            font-size: 14px;
+            color: #34495e;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include breakpoint("tablet") {
+  .container {
+    padding: 105px 15px 70px;
+  }
+}
+
+@include breakpoint("desktopSmall") {
+  .container {
+    flex-direction: row;
+    gap: 60px;
+
+    .sidebarWrap {
+      width: 280px;
+      margin-bottom: 45px;
+    }
+  }
+}
+
+@include breakpoint("desktop") {
+  .container {
+    .sidebarWrap {
+      width: 340px;
+    }
+  }
+}

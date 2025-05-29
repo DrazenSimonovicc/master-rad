@@ -1,0 +1,499 @@
+@import "src/Styling/index";
+
+$navBorder: 1px solid rgba(0, 0, 0, 0.1);
+$submenu-box-shadow:
+  2px 2px 5px 1px rgb(0 0 0 / 5%),
+  -2px 0px 5px 1px rgb(0 0 0 / 5%);
+
+@keyframes fadeInDown {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fadeInRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes fadeOutRightBackground {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fadeOutRightNavContent {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes fadeInRightBackground {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes fadeInRightNavContent {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.nav {
+  width: 100%;
+  background-color: $main-color-light-blue;
+  padding: 10px 25px;
+  display: flex;
+  align-items: flex-start;
+  z-index: 100 !important;
+
+  .wrap {
+    display: flex;
+    max-width: 1170px;
+    margin: 0 auto;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+
+    @include breakpoint("1200px") {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  /*  @include breakpoint("tablet") {
+    height: 130px;
+    background-color: $main-color-dark-gray;
+  }*/
+
+  &.sticky {
+    display: none;
+  }
+
+  @include breakpoint("tablet") {
+    padding: 5px 15px;
+    height: 130px;
+  }
+
+  @include breakpoint("desktopSmall") {
+    height: 160px;
+    background-color: transparent;
+    padding: 30px 10px;
+    align-items: center;
+
+    .wrap {
+      align-items: center;
+    }
+
+    &.sticky {
+      display: flex;
+      position: fixed;
+      height: 140px;
+      background-color: rgba(0, 0, 0, 0.7);
+      transition: all 500ms ease;
+      animation-name: fadeInDown;
+      animation-duration: 500ms;
+      animation-timing-function: linear;
+      animation-iteration-count: 1;
+      /*padding: 0 15px;*/
+      z-index: 100 !important;
+    }
+  }
+}
+
+.searchWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  .my {
+    z-index: 10000 !important;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  .icon {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    svg {
+      font-size: 30px;
+      color: $white;
+    }
+  }
+
+  /*@include breakpoint("tablet") {
+    background-color: $main-color-dark-gray;
+  }*/
+  @include breakpoint("desktopSmall") {
+    /* padding-bottom: 15px;
+    margin-left: 12px;*/
+    background-color: transparent;
+    order: 3;
+    padding-bottom: 14px;
+  }
+}
+
+.search {
+  background-color: $light-blue;
+  border: none;
+  cursor: pointer;
+  padding-top: 15px;
+
+  svg {
+    color: $white;
+    font-size: 24px;
+  }
+
+  /*@include breakpoint("tablet") {
+    background-color: $main-color-dark-gray;
+  }*/
+
+  @include breakpoint("desktopSmall") {
+    background-color: transparent;
+    order: 3;
+    padding-top: 0;
+
+    &.sticky {
+      display: none;
+    }
+  }
+}
+
+.logo {
+  text-decoration: none;
+
+  p {
+    font-size: 52px;
+    line-height: 52px;
+    text-decoration: none;
+    color: $white;
+  }
+
+  @include breakpoint("desktopSmall") {
+    order: 1;
+  }
+
+  @include breakpoint("1401px") {
+    margin-right: 64px;
+    padding-bottom: 15px;
+  }
+}
+
+.stickyLogo {
+  width: 151px;
+  height: 92px;
+  padding: 4px 0;
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.navButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  svg {
+    font-size: 30px;
+    color: $white;
+  }
+
+  /*  @include breakpoint("tablet") {
+    background-color: $main-color-dark-gray;
+  }*/
+
+  @include breakpoint("desktopSmall") {
+    display: none;
+    padding-top: 0;
+  }
+}
+
+.navContainer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  transform: translateX(100%);
+  transition: transform 0.7s ease-in-out;
+
+  &.active {
+    transform: translateX(0%);
+  }
+}
+
+.background {
+  background-color: #b9b9b9;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: transform 0.7s ease-in-out 500ms;
+  z-index: 4;
+
+  &.active {
+    animation: fadeInRightBackground 0.7s forwards;
+  }
+
+  &.fadeOut {
+    animation: fadeOutRightBackground 0.7s forwards;
+  }
+}
+
+.navContent {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background-color: $main-color-dark-blue;
+  overflow-y: auto;
+  z-index: 2;
+  transform: translateX(100%);
+  transition: transform 0.7s ease-in-out 500ms;
+
+  &.active {
+    animation: fadeInRightNavContent 0.7s 0.5s forwards;
+  }
+
+  &.fadeOut {
+    animation: fadeOutRightNavContent 0.7s forwards;
+  }
+}
+
+.closeButton {
+  position: absolute;
+  right: 3px;
+  top: 3px;
+  border: none;
+  background-color: $main-color-dark-blue;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  transform: translateY(-50px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  svg {
+    color: $white;
+  }
+
+  &.active {
+    transform: translateY(0);
+  }
+}
+
+.mobileLogo {
+  padding: 20px;
+
+  img {
+    max-width: 180px;
+    height: auto;
+  }
+}
+
+.navItems {
+  order: 2;
+  list-style: none;
+  display: flex;
+  align-items: center;
+
+  .languageListItemWrap {
+    margin-left: 8px;
+    transition: all 500ms ease;
+    position: relative;
+
+    @include breakpoint("1100px") {
+      margin-left: 11px;
+    }
+
+    @include breakpoint("1200px") {
+      margin-left: 15px;
+    }
+  }
+
+  .navItem {
+    margin: 0 8px;
+    transition: all 500ms ease;
+    position: relative;
+
+    @include breakpoint("desktopSmall") {
+      padding-bottom: 15px;
+    }
+
+    @include breakpoint("1100px") {
+      margin: 0 11px;
+    }
+
+    @include breakpoint("1200px") {
+      margin: 0 15px;
+    }
+
+    .link {
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      color: $white;
+      position: relative;
+      cursor: pointer;
+      font-stretch: 75%;
+
+      &.activeLink {
+        color: $main-color-light-blue;
+
+        &:before {
+          position: absolute;
+          content: "";
+          left: 0;
+          top: 22px;
+          height: 2px;
+          width: 100%;
+          background-color: $white;
+          transition: all 500ms ease;
+        }
+      }
+
+      @include breakpoint("desktopSmall") {
+        font-size: 14px;
+      }
+
+      @include breakpoint("1400px") {
+        font-size: 16px;
+      }
+
+      &:before {
+        position: absolute;
+        content: "";
+        left: 0;
+        top: 22px;
+        height: 2px;
+        width: 0;
+        background-color: $white;
+        transition: all 500ms ease;
+      }
+
+      &:hover {
+        color: $main-color-light-blue;
+        &::before {
+          width: 100%;
+        }
+      }
+
+      &.active {
+        color: $main-color-light-blue;
+        &:before {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .submenuItems {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 210px;
+    background-color: $main-color-beige;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    visibility: hidden;
+    opacity: 0;
+    box-shadow: $submenu-box-shadow;
+    list-style: none;
+    transform: rotateX(100deg);
+
+    @include breakpoint("desktopSmall") {
+      background-color: $white;
+    }
+
+    .submenuItem {
+      padding: 10px 25px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      transition: all 300ms ease;
+      color: white;
+
+      &:hover {
+        margin-left: 5px;
+      }
+
+      .link {
+        text-decoration: none;
+        font-weight: 600;
+        line-height: 20px;
+        font-size: 14px;
+
+        color: $main-color-dark-gray;
+
+        &:hover {
+          color: $main-color-light-blue;
+        }
+      }
+    }
+  }
+
+  :hover {
+    .submenuItems {
+      opacity: 1;
+      visibility: visible;
+      transform: rotateX(0deg);
+    }
+  }
+}
+
+@media screen and (min-width: 1401px) and (max-width: 1446px) {
+  .navItems .navItem {
+    margin-left: 10px;
+  }
+}
+
+@media screen and (max-width: 1022px) {
+  .sticky {
+    position: static !important;
+    /*background-color: $main-color-dark-gray !important;*/
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+.profileMenuItem {
+  text-decoration: none;
+  color: $black;
+}

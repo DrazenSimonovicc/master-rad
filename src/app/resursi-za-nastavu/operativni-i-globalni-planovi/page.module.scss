@@ -1,0 +1,94 @@
+@import "src/Styling/index";
+
+.addButtonWrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 15px;
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.blurWrapper {
+  filter: blur(5px);
+  pointer-events: none;
+  user-select: none;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 45px 15px;
+  gap: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .referencesWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    flex: 1;
+
+    .link {
+      display: block;
+      padding: 18px 24px;
+      margin-bottom: 16px;
+      border-radius: 12px;
+      background-color: #ffffff;
+      border: 1px solid #e2e8f0;
+      color: #1a202c;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.5;
+      text-decoration: none;
+      box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+      transition:
+        box-shadow 0.3s ease,
+        transform 0.3s ease,
+        background-color 0.3s ease;
+
+      &:hover {
+        background-color: #f9fafb;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+        transform: translateY(-3px);
+        text-decoration: none;
+      }
+
+      &:active {
+        transform: scale(0.98);
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.06);
+      }
+    }
+
+    .title {
+      color: $title-dark;
+    }
+  }
+}
+
+@include breakpoint("tablet") {
+  .container {
+    padding: 105px 15px 70px;
+  }
+}
+
+@include breakpoint("desktopSmall") {
+  .container {
+    flex-direction: row;
+    gap: 60px;
+
+    .sidebarWrap {
+      width: 280px;
+      margin-bottom: 45px;
+    }
+  }
+}
+
+@include breakpoint("desktop") {
+  .container {
+    .sidebarWrap {
+      width: 340px;
+    }
+  }
+}

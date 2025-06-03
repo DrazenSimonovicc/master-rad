@@ -111,7 +111,7 @@ const Homework = () => {
             <Button
               title={"Dodaj domaci zadatak"}
               themes={[
-                "blue",
+                "orange",
                 "standardWide",
                 "standardHeight",
                 "noBorderRadius",

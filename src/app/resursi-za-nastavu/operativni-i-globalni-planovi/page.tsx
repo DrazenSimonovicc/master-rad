@@ -122,7 +122,7 @@ const OperativeAndGlobalPlans = () => {
             <Button
               title={"Dodaj novi operativni plan"}
               themes={[
-                "blue",
+                "orange",
                 "standardWide",
                 "standardHeight",
                 "noBorderRadius",
@@ -134,7 +134,7 @@ const OperativeAndGlobalPlans = () => {
             <Button
               title={"Dodaj novi globalni plan"}
               themes={[
-                "blue",
+                "orange",
                 "standardWide",
                 "standardHeight",
                 "noBorderRadius",

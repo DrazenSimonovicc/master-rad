@@ -138,7 +138,7 @@ export default function Page() {
           <Button
             title={"Dodaj novu vest"}
             themes={[
-              "blue",
+              "orange",
               "standardWide",
               "standardHeight",
               "noBorderRadius",

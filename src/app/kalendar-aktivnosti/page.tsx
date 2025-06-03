@@ -126,7 +126,7 @@ const Calendar = () => {
             <Button
               title="Dodaj raspored časova"
               themes={[
-                "blue",
+                "orange",
                 "standardWide",
                 "standardHeight",
                 "noBorderRadius",
@@ -137,7 +137,7 @@ const Calendar = () => {
             <Button
               title="Dodaj novu aktivnost"
               themes={[
-                "blue",
+                "orange",
                 "standardWide",
                 "standardHeight",
                 "noBorderRadius",

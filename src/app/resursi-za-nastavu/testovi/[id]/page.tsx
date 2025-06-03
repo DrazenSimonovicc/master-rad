@@ -109,7 +109,7 @@ const Test = () => {
             <Button
               title={"Dodaj test"}
               themes={[
-                "blue",
+                "orange",
                 "standardWide",
                 "standardHeight",
                 "noBorderRadius",

@@ -32,6 +32,6 @@ export const useFetchHomeworks = () => {
     homework,
     error,
     loading,
-    refetch: fetchHomework, // 👈 expose for manual refresh
+    refetch: fetchHomework,
   };
 };

@@ -36,7 +36,7 @@ const SingleActivity = () => {
       <div>
         <Header
           title={`${title}`}
-          imageUrl={"/forum-1.jpg"}
+          imageUrl={"/cal1.jpg"}
           breadcrumbItems={breadCrumb}
         />
 

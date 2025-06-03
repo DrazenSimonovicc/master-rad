@@ -48,7 +48,7 @@ export interface ForumNewsItemType {
   likes: number;
   dislikes: number;
   expand: {
-    category: { category_name: string };
+    category: { category_name: string; id: string };
     user: {
       current_work: string;
       name: string;

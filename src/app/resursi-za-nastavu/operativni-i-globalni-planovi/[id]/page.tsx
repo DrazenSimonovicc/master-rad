@@ -19,6 +19,7 @@ import { useFetchOperativePlansWithClass } from "@/Hooks/OperativeAndGlobalPlans
 import { useSearchParams } from "next/navigation";
 import { useFetchGlobalPlansWithSubject } from "@/Hooks/OperativeAndGlobalPlans/getGlobalPlanForSubject";
 import Preloader from "@/Components/Preloader/Preloader";
+import { Footer } from "@/Components/Footer";
 
 const SingleOperativnePlan = () => {
   const searchParams = useSearchParams();
@@ -130,7 +131,6 @@ const SingleOperativnePlan = () => {
         imageUrl={"/forum-1.jpg"}
         breadcrumbItems={breadCrumb}
       />
-
       {isLoggedIn && (
         <div className={styles.addButtonWrapper}>
           {(type === "operative" || type === "global") && (
@@ -148,7 +148,6 @@ const SingleOperativnePlan = () => {
           )}
         </div>
       )}
-
       <section className={styles.container}>
         <div className={styles.referencesWrap}>
           {type === "operative" ? (
@@ -237,7 +236,6 @@ const SingleOperativnePlan = () => {
           <SidebarWrapper />
         </aside>
       </section>
-
       <Modal
         title="Dodaj novi čas"
         isOpen={open}
@@ -309,6 +307,7 @@ const SingleOperativnePlan = () => {
           </form>
         )}
       </Modal>
+      <Footer />
     </div>
   );
 };

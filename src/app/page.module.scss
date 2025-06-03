@@ -36,7 +36,6 @@
   max-width: 1240px;
   margin: 0 auto;
   padding-top: 60px;
-  padding-bottom: 80px;
 }
 
 .backgroundWorkDescription {
@@ -57,7 +56,11 @@
     }
 
     @include breakpoint("tablet") {
-      padding: 146px 0;
+      padding: 146px 15px;
     }
   }
+}
+
+.thirdPart {
+  padding: 60px 15px;
 }

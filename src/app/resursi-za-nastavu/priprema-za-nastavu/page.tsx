@@ -17,6 +17,7 @@ import RequireAuth from "@/Components/RequireAuth/RequireAuth";
 import { useFetchLessonPlansForSubject } from "@/Hooks/LessonPlan/getLessonPlanForSubject";
 import { lessonPlanSubjectConfig } from "@/app/resursi-za-nastavu/priprema-za-nastavu/config";
 import Preloader from "@/Components/Preloader/Preloader";
+import { Footer } from "@/Components/Footer";
 
 const LessonPlanSubjects = () => {
   const breadCrumb = {
@@ -160,6 +161,8 @@ const LessonPlanSubjects = () => {
           </form>
         </Modal>
       </div>
+      <Footer />
+
       {!isLoggedIn && <RequireAuth />}
     </div>
   );

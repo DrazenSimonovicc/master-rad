@@ -10,7 +10,7 @@ import { MobileNavigation } from "./MobileNavigation";
 import { NavigationItemType } from "@/Interfaces/BaseType";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { pb } from "@/libs/pocketbase"; // Import useRouter for redirection
+import { pb } from "@/libs/pocketbase";
 import { usePathname } from "next/navigation";
 
 //TODO:ako ima profil picture stavi to ako nema onda account circle
@@ -77,31 +77,25 @@ export const Navigation: FC<NavigationProps> = ({ items }) => {
     }
   }, [mobileOpen]);
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null); // Menu anchor state
-  const router = useRouter(); // Router for redirection
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const router = useRouter();
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  // Close the menu
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
 
-  // Handle logout
   const handleLogout = () => {
-    // Clear the auth data from PocketBase
     pb.authStore.clear();
 
-    // Optionally, clear any token from localStorage or sessionStorage if used
-    localStorage.removeItem("authToken"); // Remove auth token from localStorage
-    sessionStorage.removeItem("authToken"); // Remove auth token from sessionStorage
+    localStorage.removeItem("authToken");
+    sessionStorage.removeItem("authToken");
 
-    // Redirect to the prijava page
     router.push("/logout");
 
-    // Close the menu
     handleMenuClose();
   };
 

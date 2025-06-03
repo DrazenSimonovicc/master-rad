@@ -15,22 +15,12 @@ const RequireAuth = () => {
         <div className={styles.buttonsWrap}>
           <Button
             title="Povratak na početnu stranicu"
-            themes={[
-              "blue",
-              "standardWide",
-              "standardHeight",
-              "noBorderRadius",
-            ]}
+            themes={["blue", "maxWidth", "standardHeight", "noBorderRadius"]}
             onClick={() => router.push("/")}
           />
           <Button
             title="Prijavi se"
-            themes={[
-              "blue",
-              "standardWide",
-              "standardHeight",
-              "noBorderRadius",
-            ]}
+            themes={["blue", "maxWidth", "standardHeight", "noBorderRadius"]}
             onClick={() => router.push("/prijava")}
           />
         </div>

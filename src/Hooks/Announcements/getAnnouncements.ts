@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
-import { AnnouncementsType, HomeworkItemType } from "@/Interfaces/BaseType";
+import { AnnouncementsType } from "@/Interfaces/BaseType";
 import { PocketBaseCollection } from "@/libs/pocketbase";
 
 export const useFetchAnnouncements = () => {

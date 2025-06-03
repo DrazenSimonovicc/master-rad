@@ -20,7 +20,6 @@ const LoginPage: FC = () => {
   const router = useRouter();
 
   const handleLogin = async () => {
-    // Basic validation
     if (!email || !password) {
       setError("Email i lozinka su obavezni.");
       return;
@@ -30,7 +29,6 @@ const LoginPage: FC = () => {
     setError(null);
 
     try {
-      // Use correct collection name and auth method
       await pb.collection("users").authWithPassword(email, password);
 
       if (pb.authStore.isValid) {
@@ -47,7 +45,6 @@ const LoginPage: FC = () => {
   };
 
   const handleSignUp = async () => {
-    // Basic validation
     if (!email || !password || !passwordConfirm) {
       setError("Sva polja su obavezna.");
       return;
@@ -62,14 +59,12 @@ const LoginPage: FC = () => {
     setError(null);
 
     try {
-      // Create user in PocketBase
       await pb.collection("users").create({
         email,
         password,
         passwordConfirm,
       });
 
-      // Log in immediately after sign up
       await pb.collection("users").authWithPassword(email, password);
 
       router.push("/podaci-o-korisniku");
@@ -98,7 +93,7 @@ const LoginPage: FC = () => {
           <Description text="Master rad" />
           <Title
             level={2}
-            text="Razvoj obrazovnog veb portala za ucitelje i nastavnike"
+            text="Razvoj obrazovnog veb portala za učitelje i nastavnike"
             className={styles.title}
           />
           <Title text={isSignUp ? "Registracija" : "Prijava"} level={3} />

@@ -63,7 +63,8 @@ const HeroSlider: FC<SliderProps> = ({ data }) => {
                 <p className={styles.text}>{slide.description}</p>
                 <Button
                   title={"Saznaj više"}
-                  themes={["height38", "standardWide"]}
+                  themes={["standardHeight", "standardWide", "white"]}
+                  linkTo={slide.linkTo}
                 />
               </div>
             </div>

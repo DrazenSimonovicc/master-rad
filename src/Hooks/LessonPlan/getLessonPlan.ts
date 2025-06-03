@@ -32,6 +32,6 @@ export const useFetchLessonPlan = () => {
     lessonPlan,
     error,
     loading,
-    refetch: fetchLessonPlan, // 👈 expose for manual refresh
+    refetch: fetchLessonPlan,
   };
 };

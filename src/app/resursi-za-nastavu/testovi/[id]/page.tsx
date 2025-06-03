@@ -19,6 +19,7 @@ import TaskList from "@/Components/TaskList/TaskList";
 import RequireAuth from "@/Components/RequireAuth/RequireAuth";
 import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
 import Preloader from "@/Components/Preloader/Preloader";
+import { Footer } from "@/Components/Footer";
 
 const Test = () => {
   const searchParams = useSearchParams();
@@ -235,6 +236,7 @@ const Test = () => {
           </form>
         </Modal>
       </div>
+      <Footer />
       {!isLoggedIn && <RequireAuth />}
     </div>
   );

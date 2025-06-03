@@ -154,7 +154,7 @@ const Page: FC = () => {
               <FormControl fullWidth>
                 <Select
                   value={formik.values.gender}
-                  onChange={(event: SelectChangeEvent<string>) => {
+                  onChange={(event: SelectChangeEvent) => {
                     formik.setFieldValue("gender", event.target.value);
                   }}
                   error={Boolean(formik.errors.gender)}

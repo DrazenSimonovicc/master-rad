@@ -3,9 +3,6 @@ import React, { FC } from "react";
 
 import styles from "./IconCard.module.scss";
 import Link from "next/link";
-import { Title } from "@/Components/Texts/Title";
-
-//TODO NIJE URADJEN STAJLING ICONICE NEKA BUDU MUI
 
 interface IconCardProps {
   className?: string;

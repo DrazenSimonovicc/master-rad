@@ -65,10 +65,6 @@
     }
   }
 
-  &.withBorder {
-    border: 1px solid $main-color-dark-gray;
-  }
-
   &.standardWide {
     width: 180px;
   }
@@ -79,33 +75,11 @@
     max-width: 300px;
   }
 
-  &.narrower {
-    width: 135px;
-  }
-
   &.standardHeight {
     height: 52px;
   }
 
-  &.taller {
-    height: 35px;
-  }
-
-  &.height38 {
-    height: 38px;
-  }
-
-  &.animation {
-    animation-name: jumpBtn;
-    animation-duration: 1500ms;
-    animation-delay: 0ms;
-  }
-
   &.noBorderRadius {
     border-radius: 2px;
-  }
-
-  &.leftAndRightPadding {
-    padding: 0 24px;
   }
 }

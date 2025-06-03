@@ -3,8 +3,8 @@ import { pb } from "@/libs/pocketbase";
 
 export const useAuth = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userData, setUserData] = useState<any>(null); // Adjust type as needed
-  const [authLoading, setAuthLoading] = useState(true); // New state to track loading
+  const [userData, setUserData] = useState<any>(null);
+  const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
     if (pb.authStore.isValid) {
@@ -15,7 +15,7 @@ export const useAuth = () => {
       setIsLoggedIn(false);
       setUserData(null);
     }
-    setAuthLoading(false); // Authentication check is complete
+    setAuthLoading(false);
   }, []);
 
   return { isLoggedIn, userData, authLoading };

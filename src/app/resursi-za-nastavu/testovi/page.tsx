@@ -17,6 +17,7 @@ import { testsSubjectConfig } from "@/app/resursi-za-nastavu/testovi/config";
 import SubjectCard from "@/Components/SubjectCard/SubjectCard";
 import RequireAuth from "@/Components/RequireAuth/RequireAuth";
 import Preloader from "@/Components/Preloader/Preloader";
+import { Footer } from "@/Components/Footer";
 
 const TestsSubjects = () => {
   const breadCrumb = {
@@ -158,6 +159,9 @@ const TestsSubjects = () => {
           </form>
         </Modal>
       </div>
+
+      <Footer />
+
       {!isLoggedIn && <RequireAuth />}
     </div>
   );

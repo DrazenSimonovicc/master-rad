@@ -45,7 +45,7 @@ export const LessonConfig = {
   type_of_lesson: {
     label: "Tip nastavnog časa",
     placeholder:
-      "Unesite tip nastavnog časa (obrada, utvrđivanje, ponavljanje...)",
+      "Unesite tip nastavnog časa (uvodni čas, obrada, utvrđivanje, ponavljanje...)",
   },
   educational_objectives: {
     label: "Obrazovni zadaci",
@@ -61,11 +61,13 @@ export const LessonConfig = {
   },
   teaching_methods: {
     label: "Nastavne metode",
-    placeholder: "Unesite nastavne metode (npr. razgovor, demonstracija...)",
+    placeholder:
+      "Unesite nastavne metode (npr. monološka, dijaloška, demonstracije, metoda rada sa tekstom, metoda pismenih i grafičkih radova, metoda praktičnih i labaratorijskih radova )",
   },
   forms_of_work: {
     label: "Oblici rada",
-    placeholder: "Unesite oblike rada (npr. frontalni, grupni...)",
+    placeholder:
+      "Unesite oblike rada (npr. frontalni, grupni, individualni, rad u paru)",
   },
   instructional_materials: {
     label: "Nastavna sredstva",

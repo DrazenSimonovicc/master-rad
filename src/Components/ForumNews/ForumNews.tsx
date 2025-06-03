@@ -194,7 +194,9 @@ export const ForumNews: FC<ServicesBoxProps> = ({ data, className }) => {
                   [styles.mainSchoolName]: d.main_news,
                 })}
               >
-                {d.current_work || d.expand?.user?.current_work || "Nepoznato"}
+                {d.current_work || d.expand?.user?.current_work
+                  ? d.current_work || d.expand?.user?.current_work
+                  : ""}
               </div>
               <div
                 className={clsx(styles.dateAndLikes, {

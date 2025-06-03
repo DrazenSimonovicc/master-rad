@@ -1,7 +1,6 @@
 "use client";
 import React, { FC, useEffect, useState } from "react";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import styles from "./page.module.scss";
 import { pb } from "@/libs/pocketbase";
 import { useFetchUserData } from "@/Hooks/getUserData";
@@ -16,6 +15,7 @@ import { Button } from "@/Components/Button";
 import { EditButton } from "@/Components/Button/EditButton/EditButton";
 import DatePickerField from "@/Components/DatePicker/DatePicker";
 import SelectField from "@/Components/Inputs/SelectField/SelectField";
+import { Footer } from "@/Components/Footer";
 
 const ProfilePage: FC = () => {
   const { userData, error, loading } = useFetchUserData();
@@ -362,6 +362,7 @@ const ProfilePage: FC = () => {
           <div></div>
         </aside>
       </div>
+      <Footer />
     </div>
   );
 };

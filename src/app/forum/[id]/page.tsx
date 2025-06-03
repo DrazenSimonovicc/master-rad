@@ -106,7 +106,7 @@ const NewsArticle = () => {
     <div>
       <Header
         title={"Forum"}
-        imageUrl={"/forum-1.jpg"}
+        imageUrl={"/try.jpg"}
         breadcrumbItems={breadCrumb}
       />
 

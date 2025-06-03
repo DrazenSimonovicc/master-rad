@@ -1,4 +1,3 @@
-// app/components/TeacherSiteCard.tsx
 import styles from "./TeacherSiteCard.module.scss";
 
 type Site = {

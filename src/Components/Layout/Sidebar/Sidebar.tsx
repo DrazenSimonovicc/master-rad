@@ -8,7 +8,6 @@ import { ImageType } from "@/Interfaces/BaseType";
 import { Title } from "@/Components/Texts/Title";
 import { useFetchFooter } from "@/Hooks/getFooterData";
 import Link from "next/link";
-import Preloader from "@/Components/Preloader/Preloader";
 
 interface PhotoSwipeItemType {
   linkTo: string;
@@ -87,13 +86,13 @@ export const Sidebar: FC<SidebarProps> = ({
                 className={styles.imageWrap}
                 href={item.linkTo}
               >
-                <Image
-                  src={item.thumbnailUrl}
-                  alt={item.alt}
-                  width={155}
-                  height={145}
-                  className={styles.image}
-                />
+                <picture>
+                  <img
+                    src={item.thumbnailUrl}
+                    alt={item.alt}
+                    className={styles.image}
+                  />
+                </picture>
               </Link>
             ))}
           </div>

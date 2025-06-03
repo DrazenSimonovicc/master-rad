@@ -17,6 +17,7 @@ import { useFetchHomeworkSubjects } from "@/Hooks/Homework/getHomeworkSubjects";
 import SubjectCard from "@/Components/SubjectCard/SubjectCard";
 import RequireAuth from "@/Components/RequireAuth/RequireAuth";
 import Preloader from "@/Components/Preloader/Preloader";
+import { Footer } from "@/Components/Footer";
 
 const HomeworkSubjects = () => {
   const breadCrumb = {
@@ -157,6 +158,7 @@ const HomeworkSubjects = () => {
           </form>
         </Modal>
       </div>
+      <Footer />
       {!isLoggedIn && <RequireAuth />}
     </div>
   );

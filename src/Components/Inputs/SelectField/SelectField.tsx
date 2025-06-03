@@ -7,7 +7,7 @@ import styles from "./SelectField.module.scss";
 interface SelectFieldProps {
   label: string;
   value: string;
-  onChange: (event: SelectChangeEvent<string>) => void;
+  onChange: (event: SelectChangeEvent) => void;
   options: string[];
   error?: boolean;
   className?: string;

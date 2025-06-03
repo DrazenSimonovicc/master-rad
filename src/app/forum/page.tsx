@@ -79,7 +79,6 @@ export default function Page() {
           },
         );
 
-        alert("Uspešno ste dodali vest!");
         setOpen(false);
 
         const updated = await axios.get(
@@ -130,7 +129,7 @@ export default function Page() {
     <main>
       <Header
         title={"Forum"}
-        imageUrl={"/forum-1.jpg"}
+        imageUrl={"/try.jpg"}
         breadcrumbItems={breadCrumb}
       />
 
@@ -158,14 +157,20 @@ export default function Page() {
       </div>
 
       <div className={styles.categoryWrapper}>
-        {/* Pass the setter to CategoryPicker so it can update selectedCategoryId */}
         <CategoryPicker onCategorySelect={setSelectedCategoryId} />
       </div>
 
       <div className={styles.otherNewsWrapper}>
         <div className={styles.otherNews}>
           <Title text={"Ostale vesti"} level={2} />
-          <ForumNews data={filteredNews.filter((a) => !a.main_news)} />
+          <ForumNews
+            data={newsList
+              .filter((a) => !a.main_news)
+              .sort(
+                (a, b) =>
+                  new Date(b.created).getTime() - new Date(a.created).getTime(),
+              )}
+          />
         </div>
       </div>
 

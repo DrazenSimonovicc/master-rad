@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
-import { Montserrat } from "next/font/google"; // Import Montserrat font
+import { Montserrat } from "next/font/google";
 import "./globals.css";
 import React from "react";
 
-// Define the Montserrat font with different weights
 const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -11,7 +10,8 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: "Master rad - Drazen Simonovic",
-  description: "Razvoj obrazovnog veb portala za ucitelje i nastavnike",
+  description: "Razvoj obrazovnog veb portala za učitelje i nastavnike",
+  icons: { icon: "/stack-of-books.png" },
 };
 
 export default function RootLayout({

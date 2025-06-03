@@ -137,7 +137,7 @@ const SingleOperativnePlan = () => {
             <Button
               title={type === "operative" ? "Dodaj čas" : "Dodaj nastavnu temu"}
               themes={[
-                "blue",
+                "orange",
                 "standardWide",
                 "standardHeight",
                 "noBorderRadius",

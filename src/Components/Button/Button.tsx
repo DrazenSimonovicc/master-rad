@@ -6,6 +6,7 @@ import Link from "next/link";
 type themeType =
   | "blue"
   | "white"
+  | "orange"
   | "standardWide"
   | "narrower"
   | "standardHeight"

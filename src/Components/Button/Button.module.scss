@@ -65,6 +65,18 @@
     }
   }
 
+  &.orange {
+    background-color: #ff9800;
+    color: $white;
+
+    &:hover {
+      background-color: $white;
+      color: #ff9800;
+      border: none;
+      transition: all 0.3s ease;
+    }
+  }
+
   &.standardWide {
     width: 180px;
   }

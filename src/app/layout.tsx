@@ -9,9 +9,11 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Master rad - Drazen Simonovic",
+  title: "Master rad - Dražen Simonović",
   description: "Razvoj obrazovnog veb portala za učitelje i nastavnike",
-  icons: { icon: "/stack-of-books.png" },
+  icons: {
+    icon: [{ url: "/stack-of-books.png", type: "image/png", sizes: "32x32" }],
+  },
 };
 
 export default function RootLayout({

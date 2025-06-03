@@ -82,7 +82,7 @@ const TestsSubjects = () => {
             <Button
               title={"Dodaj novi predmet i razred"}
               themes={[
-                "blue",
+                "orange",
                 "standardWide",
                 "standardHeight",
                 "noBorderRadius",

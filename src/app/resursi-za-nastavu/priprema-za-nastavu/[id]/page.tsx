@@ -123,7 +123,7 @@ const LessonPlan = () => {
             <Button
               title={"Dodaj pripremu za nastavu"}
               themes={[
-                "blue",
+                "orange",
                 "standardWide",
                 "standardHeight",
                 "noBorderRadius",

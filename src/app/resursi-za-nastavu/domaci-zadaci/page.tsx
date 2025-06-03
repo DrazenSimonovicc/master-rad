@@ -81,7 +81,7 @@ const HomeworkSubjects = () => {
             <Button
               title={"Dodaj novi predmet i razred"}
               themes={[
-                "blue",
+                "orange",
                 "standardWide",
                 "standardHeight",
                 "noBorderRadius",

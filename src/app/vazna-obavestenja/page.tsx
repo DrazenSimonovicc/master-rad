@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import Pagination from "@mui/material/Pagination";
 
 import { Header } from "@/Components/Header/Header";
@@ -12,6 +11,7 @@ import styles from "./page.module.scss";
 import { useFetchAnnouncements } from "@/Hooks/Announcements/getAnnouncements";
 import Preloader from "@/Components/Preloader/Preloader";
 import { AnnouncementLink } from "@/Components/AnnouncementLink/AnnouncementLink";
+import { Footer } from "@/Components/Footer";
 
 const Announcements = () => {
   const breadcrumbItems = {
@@ -52,7 +52,7 @@ const Announcements = () => {
     <div>
       <Header
         title="Važna obaveštenja"
-        imageUrl="/forum-1.jpg"
+        imageUrl="/news.jpg"
         breadcrumbItems={breadcrumbItems}
       />
 
@@ -88,6 +88,7 @@ const Announcements = () => {
           <SidebarWrapper />
         </aside>
       </section>
+      <Footer />
     </div>
   );
 };

@@ -8,6 +8,7 @@ import React from "react";
 import styles from "./page.module.scss";
 
 import { Title } from "@/Components/Texts/Title";
+import { Footer } from "@/Components/Footer";
 
 const HomeworkSubjects = () => {
   const breadCrumb = {
@@ -72,6 +73,8 @@ const HomeworkSubjects = () => {
           <SidebarWrapper />
         </aside>
       </section>
+
+      <Footer />
     </div>
   );
 };

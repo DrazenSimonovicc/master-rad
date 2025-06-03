@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import styles from "./TextWithImage.module.scss";
-import Link from "next/link";
 import clsx from "clsx";
 import { Description } from "@/Components/Texts/Description";
 
@@ -13,7 +12,6 @@ interface TextWithImageProps {
   otherTitle?: boolean;
   titlePartOne: string;
   titlePartTwo: string;
-  linkText: string;
 }
 
 export const TextWithImage: FC<TextWithImageProps> = ({
@@ -25,7 +23,6 @@ export const TextWithImage: FC<TextWithImageProps> = ({
   otherTitle,
   titlePartOne,
   titlePartTwo,
-  linkText,
 }) => {
   return (
     <div className={clsx(styles.container, className)}>
@@ -40,9 +37,6 @@ export const TextWithImage: FC<TextWithImageProps> = ({
         )}
 
         <Description text={text} className={styles.text} />
-        <Link href={linkUrl} className={styles.link}>
-          {linkText}
-        </Link>
       </div>
       <div className={styles.imageContainer}>
         <div className={styles.blueSquere}></div>

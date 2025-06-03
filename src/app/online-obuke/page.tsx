@@ -1,8 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
-
-import Pagination from "@mui/material/Pagination";
+import React from "react";
 
 import { Header } from "@/Components/Header/Header";
 import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
@@ -11,6 +9,7 @@ import { Title } from "@/Components/Texts/Title";
 import styles from "./page.module.scss";
 
 import TeacherSitesGrid from "@/Components/TeacherSiteGrid/TeacherSiteGrid";
+import { Footer } from "@/Components/Footer";
 
 const Announcements = () => {
   const breadcrumbItems = {
@@ -24,7 +23,7 @@ const Announcements = () => {
     <div>
       <Header
         title="Online obuke"
-        imageUrl="/forum-1.jpg"
+        imageUrl="/try.jpg"
         breadcrumbItems={breadcrumbItems}
       />
 
@@ -43,6 +42,7 @@ const Announcements = () => {
           <SidebarWrapper />
         </aside>
       </section>
+      <Footer />
     </div>
   );
 };

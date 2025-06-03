@@ -42,6 +42,6 @@ export const useFetchOperativePlans = (userId: string) => {
     operativePlans,
     error,
     loading,
-    refetch: fetchOperativePlans, // 👈 expose for manual refresh
+    refetch: fetchOperativePlans,
   };
 };

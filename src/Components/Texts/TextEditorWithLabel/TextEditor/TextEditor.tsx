@@ -36,7 +36,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
     onUpdate({ editor }) {
       onChange(editor.getHTML());
     },
-    injectCSS: false, // Important to prevent SSR issues
+    injectCSS: false,
     immediatelyRender: false,
   });
 

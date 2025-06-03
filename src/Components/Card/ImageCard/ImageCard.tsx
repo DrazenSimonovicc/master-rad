@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import { FC } from "react";
 
-import Image from "next/image";
 import Link from "next/link";
 
 import styles from "./ImageCard.module.scss";

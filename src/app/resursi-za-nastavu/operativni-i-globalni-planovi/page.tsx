@@ -2,7 +2,6 @@
 
 import { Header } from "@/Components/Header/Header";
 import { useFetchOperativePlans } from "@/Hooks/OperativeAndGlobalPlans/getOperativePlans";
-import Link from "next/link";
 import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
 import { Button } from "@/Components/Button";
 import React, { useState } from "react";
@@ -22,6 +21,7 @@ import { useFetchGlobalPlans } from "@/Hooks/OperativeAndGlobalPlans/getGlobalPl
 import RequireAuth from "@/Components/RequireAuth/RequireAuth";
 import Preloader from "@/Components/Preloader/Preloader";
 import SubjectCard from "@/Components/SubjectCard/SubjectCard";
+import { Footer } from "@/Components/Footer";
 
 const OperativeAndGlobalPlans = () => {
   const breadCrumb = {
@@ -265,6 +265,7 @@ const OperativeAndGlobalPlans = () => {
           </form>
         </Modal>
       </div>
+      <Footer />
       {!isLoggedIn && <RequireAuth />}
     </div>
   );

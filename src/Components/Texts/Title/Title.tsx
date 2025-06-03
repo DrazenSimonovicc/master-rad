@@ -16,7 +16,7 @@ export const Title: FC<TitleProps> = ({
   text,
   className,
   level = 1,
-  themes = [], // Default to empty array if no themes are passed
+  themes = [],
   isRequired = false,
 }) => {
   const Tag: keyof JSX.IntrinsicElements = `h${level}`;
@@ -27,12 +27,10 @@ export const Title: FC<TitleProps> = ({
         styles.title,
         className,
         styles[`level${level}`],
-        ...themes.map((theme) => styles[theme]), // Ensure proper class appending
+        ...themes.map((theme) => styles[theme]),
       )}
     >
-      {isRequired && <span className={styles.dot}></span>}{" "}
-      {/* Using span instead of div */}
-      <span>{text}</span>
+      {isRequired && <span className={styles.dot}></span>} <span>{text}</span>
     </Tag>
   );
 };

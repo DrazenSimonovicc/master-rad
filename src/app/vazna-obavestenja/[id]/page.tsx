@@ -11,6 +11,7 @@ import { AnnouncementsType } from "@/Interfaces/BaseType";
 import Link from "next/link";
 import { Title } from "@/Components/Texts/Title";
 import Preloader from "@/Components/Preloader/Preloader";
+import { Footer } from "@/Components/Footer";
 
 const Announcement = () => {
   const { id } = useParams();
@@ -49,7 +50,7 @@ const Announcement = () => {
     <div>
       <Header
         title={announcement.title}
-        imageUrl="/forum-1.jpg"
+        imageUrl="/news.jpg"
         breadcrumbItems={breadCrumb}
       />
 
@@ -93,6 +94,7 @@ const Announcement = () => {
           <SidebarWrapper />
         </aside>
       </section>
+      <Footer />
     </div>
   );
 };

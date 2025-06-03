@@ -18,7 +18,7 @@ export const CardsWithIcons: FC = ({}) => (
     <IconCard
       title={"Važna obaveštenja"}
       description="Pratite najnovije vesti i saopštenja Ministarstva prosvete na jednom mestu."
-      linkUrl={"/resursi-za-nastavu"}
+      linkUrl={"/vazna-obavestenja"}
       icon={<ForumIcon />}
       className={styles.iconPurple}
     />

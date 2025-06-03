@@ -20,6 +20,7 @@ import { testConfig } from "@/app/resursi-za-nastavu/testovi/config";
 import { LessonConfig } from "@/app/resursi-za-nastavu/priprema-za-nastavu/config";
 import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
 import Preloader from "@/Components/Preloader/Preloader";
+import { Footer } from "@/Components/Footer";
 
 const LessonPlan = () => {
   const searchParams = useSearchParams();
@@ -141,7 +142,7 @@ const LessonPlan = () => {
                 currentPage * itemsPerPage,
               )
               .map((lesson, index) => {
-                const isExpanded = expandedUnitId === lesson.id; // assuming lesson.id is unique
+                const isExpanded = expandedUnitId === lesson.id;
                 return (
                   <div key={lesson.id || index} className={styles.lessonCard}>
                     <div
@@ -557,6 +558,8 @@ const LessonPlan = () => {
           </form>
         </Modal>
       </div>
+      <Footer />
+
       {!isLoggedIn && <RequireAuth />}
     </div>
   );

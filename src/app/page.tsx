@@ -1,13 +1,11 @@
 "use client";
 
 import { Footer } from "@/Components/Footer/Footer";
-import { Header } from "@/Components/Header/Header";
 import { TitleWithDescription } from "@/Components/Texts/TitleWithDescription/TitleWithDescription";
 import React from "react";
 
 import styles from "./page.module.scss";
 import { CardsWithIcons } from "@/Components/CardsWithIcons/CardsWithIcons";
-import Link from "next/link";
 import { TextWithImage } from "@/Components/TextWithImageHomepage/TextWithImage";
 import { ImageCard } from "@/Components/Card/ImageCard/ImageCard";
 import HeroSlider from "@/Components/Hero/Hero";
@@ -35,21 +33,7 @@ export default function Home() {
           titlePartTwo={"sve na jednom mestu"}
           imageUrl={"/homepageImage.jpg"}
           linkUrl={"/"}
-          linkText={"Saznaj više"}
         />
-      </div>
-
-      <div>
-        <TitleWithDescription
-          title={"Sve-u-jednom softver za školu"}
-          text={
-            "Moj master rad je softver koji omogućava korišćenje različitih alata potrebnih za uspešan rad u nastavi — bilo u učionici ili online.\n" +
-            "Pruža jednostavan pristup planiranju časova, upravljanju nastavnim materijalima, komunikaciji sa kolegama, kao i praćenju napretka učenika. Sve na jednom mestu, sa ciljem da olakša i unapredi obrazovni proces."
-          }
-        />
-        <div className={styles.cardsWrapper}>
-          <CardsWithIcons />
-        </div>
       </div>
 
       <div className={styles.backgroundWorkDescription}>
@@ -72,13 +56,26 @@ export default function Home() {
               buttonText={"Pripremite svoj cas"}
             />
             <ImageCard
-              imageUrl={"/kalendar-aktivnosti.jpg"}
+              imageUrl={"/kalendar.jpg"}
               linkUrl={"/kalendar-aktivnosti"}
               title={"Kalendar aktivnosti"}
               imageDescription={"opis"}
               buttonText={"Prikaži sve aktivnosti"}
             />
           </div>
+        </div>
+      </div>
+
+      <div className={styles.thirdPart}>
+        <TitleWithDescription
+          title={"Sve-u-jednom softver za školu"}
+          text={
+            "Moj master rad je softver koji omogućava korišćenje različitih alata potrebnih za uspešan rad u nastavi — bilo u učionici ili online.\n" +
+            "Pruža jednostavan pristup planiranju časova, upravljanju nastavnim materijalima, komunikaciji sa kolegama, kao i praćenju napretka učenika. Sve na jednom mestu, sa ciljem da olakša i unapredi obrazovni proces."
+          }
+        />
+        <div className={styles.cardsWrapper}>
+          <CardsWithIcons />
         </div>
       </div>
 

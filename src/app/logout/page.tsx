@@ -2,11 +2,8 @@ import { FC } from "react";
 
 import styles from "./page.module.scss";
 
-import Link from "next/link";
 import { Description } from "@/Components/Texts/Description";
 import { Button } from "@/Components/Button";
-
-//TODO: Urediti stranicu
 
 const LogoutPage: FC = () => {
   return (

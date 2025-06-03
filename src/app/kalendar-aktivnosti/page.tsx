@@ -117,7 +117,7 @@ const Calendar = () => {
       <div className={!isLoggedIn ? styles.blurWrapper : ""}>
         <Header
           title="Kalendar aktivnosti"
-          imageUrl="/forum-1.jpg"
+          imageUrl="/cal1.jpg"
           breadcrumbItems={breadCrumb}
         />
 

@@ -67,7 +67,9 @@ export const Footer: FC = () => {
           </div>
         </div>
 
-        <p className={styles.rights}>© Sva prava sačuvana.</p>
+        <p className={styles.rights}>
+          © 2025 Dražen Simonović. Sva prava sačuvana.
+        </p>
       </div>
       <div className={styles.footerImage}>
         <Image src={footerImage} width={1200} height={300} alt="Footer image" />

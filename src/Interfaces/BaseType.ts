@@ -222,4 +222,5 @@ export interface AnnouncementsType {
   link1description?: string;
   link2?: string;
   link2description?: string;
+  created: string;
 }

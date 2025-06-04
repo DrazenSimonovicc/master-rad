@@ -46,7 +46,7 @@ export const Footer: FC = () => {
           </div>
         </div>
 
-        <div className={styles.subscribeContent}>
+        {/*<div className={styles.subscribeContent}>
           <span className={styles.subscribeDescription}>
             Prijavite se na novosti
           </span>
@@ -65,7 +65,7 @@ export const Footer: FC = () => {
               themes={["blue", "standardHeight", "standardWide"]}
             />
           </div>
-        </div>
+        </div>*/}
 
         <p className={styles.rights}>
           © 2025 Dražen Simonović. Sva prava sačuvana.

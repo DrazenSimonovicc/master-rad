@@ -43,6 +43,7 @@ const NewsArticle = () => {
         <Preloader page />
       </div>
     );
+
   if (error) return <div>Greška u učitavanju vesti: {error}</div>;
 
   if (!newsItem) {

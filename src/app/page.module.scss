@@ -1,37 +1,5 @@
 @import "src/Styling/index";
 
-.frontPageTitleAndDescription {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin-bottom: 60px;
-  align-items: center;
-
-  .description {
-    font-size: 16px;
-    line-height: 23px;
-    color: $gray-color;
-    text-align: left;
-
-    @include breakpoint("desktop") {
-      font-size: 18px;
-      line-height: 26px;
-      max-width: 1000px;
-      text-align: center;
-    }
-  }
-
-  .title {
-    color: $dark-blue;
-    font-size: $h2-mobile-size;
-    line-height: $h2-mobile-size + $h-mobile-line-height-add;
-    @include breakpoint("desktop") {
-      font-size: $h2-desktop-size;
-      line-height: $h2-desktop-size + $h-desktop-line-height-add;
-    }
-  }
-}
-
 .cardsWrapper {
   max-width: 1240px;
   margin: 0 auto;
@@ -40,25 +8,6 @@
 
 .backgroundWorkDescription {
   background-color: rgba(#9dccff, 0.2);
-
-  .workDescription {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 60px 15px;
-    .imageCardsWrap {
-      display: flex;
-      gap: 40px;
-      flex-direction: column;
-
-      @include breakpoint("tablet") {
-        flex-direction: row;
-      }
-    }
-
-    @include breakpoint("tablet") {
-      padding: 146px 15px;
-    }
-  }
 }
 
 .thirdPart {

@@ -28,7 +28,7 @@ const LessonPlan = () => {
   const breadCrumb = {
     level1: "Početak",
     level2: "Resursi za nastavu",
-    level3: "Priprema za nastavu",
+    level3: "Pripreme za nastavu",
     level1url: "/",
     level2url: "/resursi-za-nastavu",
     level3url: "/resursi-za-nastavu/priprema-za-nastavu",
@@ -113,7 +113,7 @@ const LessonPlan = () => {
     <div>
       <div className={!isLoggedIn ? styles.blurWrapper : ""}>
         <Header
-          title={`Priprema za nastavu - ${subject}`}
+          title={`Pripreme za nastavu - ${subject}`}
           imageUrl={"/forum-1.jpg"}
           breadcrumbItems={breadCrumb}
         />

@@ -1,4 +1,4 @@
-@import "src/Styling/index";
+@use "src/Styling/index" as *;
 
 .footer {
   background-color: $footer-color;
@@ -18,6 +18,11 @@
         display: flex;
         flex-direction: column;
         text-align: center;
+
+        a {
+          text-decoration: none;
+          color: $white;
+        }
 
         .footerHeader {
           font-weight: bold;

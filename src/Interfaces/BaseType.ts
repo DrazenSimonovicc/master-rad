@@ -153,6 +153,7 @@ export interface TestItemType {
   teaching_unit: string;
   date: string;
   id: string;
+  user: string;
 }
 
 export interface HomeworkItemType {
@@ -169,6 +170,7 @@ export interface HomeworkItemType {
   subject: string;
   teaching_unit: string;
   id: string;
+  user: string;
 }
 
 export interface LessonPlanType {
@@ -196,6 +198,7 @@ export interface LessonPlanType {
   introduction: string;
   main: string;
   conclusion: string;
+  user: string;
 }
 
 export interface ActivityType {
@@ -222,4 +225,5 @@ export interface AnnouncementsType {
   link1description?: string;
   link2?: string;
   link2description?: string;
+  created: string;
 }

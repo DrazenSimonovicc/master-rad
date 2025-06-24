@@ -28,7 +28,9 @@ export const useFetchClassSchedule = (userId: string) => {
       if (err instanceof Error) {
         setError(err.message);
       } else {
-        setError("Error fetching plans. Please try again later.");
+        setError(
+          "Problem prilikom učitvanja rasporeda časova. Molimo Vas da pokušate kasnije.",
+        );
       }
     } finally {
       setLoading(false);

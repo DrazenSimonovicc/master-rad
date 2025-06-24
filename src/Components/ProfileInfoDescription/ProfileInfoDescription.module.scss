@@ -1,4 +1,4 @@
-@import "src/Styling/index";
+@use "src/Styling/index" as *;
 
 .profileInfo {
   font-size: 16px;

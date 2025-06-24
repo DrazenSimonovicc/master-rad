@@ -16,8 +16,8 @@ export const operativeFieldConfig = {
     placeholder: "Unesite školsku godinu (npr. 2024/2025)",
   },
   teacher: {
-    label: "Ime nastavnika",
-    placeholder: "Unesite ime nastavnika",
+    label: "Ime i prezime nastavnika",
+    placeholder: "Unesite ime i prezime nastavnika",
   },
 };
 
@@ -93,8 +93,8 @@ export const globalFieldConfig = {
     placeholder: "Unesite školsku godinu (npr. 2024/2025)",
   },
   teacher: {
-    label: "Ime nastavnika",
-    placeholder: "Unesite ime nastavnika",
+    label: "Ime i prezime nastavnika",
+    placeholder: "Unesite ime i prezime nastavnika",
   },
 };
 

@@ -17,7 +17,9 @@ export const useFetchNewsCategories = () => {
       setCategories(response.data.items || []);
       setError(null);
     } catch (error: any) {
-      setError("Error fetching to-do items. Please try again later.");
+      setError(
+        "Problem prilikom učitvanja kategorija. Molimo Vas da pokušate kasnije.",
+      );
     } finally {
       setLoading(false);
     }

@@ -15,12 +15,14 @@ export const useFetchOperativePlansWithClass = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `${PocketBaseCollection}/operativni_plan_cas/records`,
+        `${PocketBaseCollection}/operative_plan_for_class/records`,
       );
       setOperativePlansForClass(response.data.items || []);
       setError(null);
     } catch (error: any) {
-      setError("Error fetching lessons. Please try again later.");
+      setError(
+        "Problem prilikom učitvanja operativnih planova. Molimo Vas da pokušate kasnije.",
+      );
     } finally {
       setLoading(false);
     }

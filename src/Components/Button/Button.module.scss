@@ -1,4 +1,4 @@
-@import "src/Styling/index";
+@use "src/Styling/index" as *;
 
 @keyframes jumpBtn {
   0% {
@@ -65,14 +65,31 @@
     }
   }
 
+  &.orange {
+    background-color: #ff9800;
+    color: $white;
+
+    &:hover {
+      background-color: $white;
+      color: #ff9800;
+      border: none;
+      transition: all 0.3s ease;
+    }
+  }
+
   &.standardWide {
     width: 180px;
   }
 
   &.maxWidth {
-    width: 300px;
+    width: 280px;
     padding: 12px;
-    max-width: 300px;
+    max-width: 280px;
+
+    @include breakpoint("375px") {
+      width: 300px;
+      max-width: 300px;
+    }
   }
 
   &.standardHeight {

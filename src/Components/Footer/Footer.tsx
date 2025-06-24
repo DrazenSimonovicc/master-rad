@@ -3,10 +3,8 @@ import styles from "./Footer.module.scss";
 import Image from "next/image";
 import footerImage from "@/Assets/footerImages/img7.jpg";
 import { useFetchFooter } from "@/Hooks/getFooterData";
-import { Button } from "@/Components/Button";
-import TextInput from "@/Components/Inputs/TextInput/TextInput";
+import Link from "next/link";
 
-//ToDo: treba srediti dizajn da izgleda pristojno
 export const Footer: FC = () => {
   const { footerData, error, loading } = useFetchFooter();
 
@@ -22,8 +20,10 @@ export const Footer: FC = () => {
           <div className={styles.footerPart}>
             <div className={styles.footerHeader}>Podaci o studentu:</div>
             <div>
-              {data?.expand?.personal?.first_name}{" "}
-              {data?.expand?.personal?.last_name}
+              <Link href={"/drazen-simonovic"}>
+                {data?.expand?.personal?.first_name}{" "}
+                {data?.expand?.personal?.last_name}
+              </Link>
             </div>
             <p>{data?.expand.personal.title}</p>
             <p>{data?.expand?.personal?.index_number}</p>
@@ -46,7 +46,7 @@ export const Footer: FC = () => {
           </div>
         </div>
 
-        <div className={styles.subscribeContent}>
+        {/*<div className={styles.subscribeContent}>
           <span className={styles.subscribeDescription}>
             Prijavite se na novosti
           </span>
@@ -65,7 +65,7 @@ export const Footer: FC = () => {
               themes={["blue", "standardHeight", "standardWide"]}
             />
           </div>
-        </div>
+        </div>*/}
 
         <p className={styles.rights}>
           © 2025 Dražen Simonović. Sva prava sačuvana.

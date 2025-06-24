@@ -159,8 +159,8 @@ const Page: FC = () => {
                   }}
                   error={Boolean(formik.errors.gender)}
                 >
-                  <MenuItem value="muški">Muški</MenuItem>
-                  <MenuItem value="ženski">Ženski</MenuItem>
+                  <MenuItem value="Muški">Muški</MenuItem>
+                  <MenuItem value="Ženski">Ženski</MenuItem>
                 </Select>
               </FormControl>
               <span className={styles.errorText}>{formik.errors.gender}</span>

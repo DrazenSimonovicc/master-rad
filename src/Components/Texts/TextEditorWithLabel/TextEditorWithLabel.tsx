@@ -8,6 +8,7 @@ interface TextEditorWithLabelProps {
   task: string;
   onChange: (value: string) => void;
   label: string;
+  error?: string;
 }
 
 const TextEditorWithLabel: FC<TextEditorWithLabelProps> = ({
@@ -15,11 +16,15 @@ const TextEditorWithLabel: FC<TextEditorWithLabelProps> = ({
   task,
   onChange,
   label,
+  error,
 }) => {
   return (
     <div key={index} className={styles.textEditorWrapper}>
       <span className={styles.label}>{label}</span>
-      <RichTextEditor content={task} onChange={onChange} />
+      <div>
+        <RichTextEditor content={task} onChange={onChange} error={!!error} />
+        {error && <div className={styles.error}>{error}</div>}
+      </div>
     </div>
   );
 };

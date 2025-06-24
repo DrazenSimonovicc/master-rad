@@ -3,7 +3,7 @@
 import { Header } from "@/Components/Header/Header";
 
 import { useAuth } from "@/Hooks/useAuth";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
 import { PocketBaseCollection } from "@/libs/pocketbase";
@@ -21,6 +21,7 @@ import { LessonConfig } from "@/app/resursi-za-nastavu/priprema-za-nastavu/confi
 import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
 import Preloader from "@/Components/Preloader/Preloader";
 import { Footer } from "@/Components/Footer";
+import { Title } from "@/Components/Texts/Title";
 
 const LessonPlan = () => {
   const searchParams = useSearchParams();
@@ -28,18 +29,15 @@ const LessonPlan = () => {
   const breadCrumb = {
     level1: "Početak",
     level2: "Resursi za nastavu",
-    level3: "Priprema za nastavu",
+    level3: "Pripreme za nastavu",
     level1url: "/",
     level2url: "/resursi-za-nastavu",
     level3url: "/resursi-za-nastavu/priprema-za-nastavu",
   };
 
-  const [currentPage, setCurrentPage] = useState(1);
+  const [myCurrentPage, setMyCurrentPage] = useState(1);
+  const [otherCurrentPage, setOtherCurrentPage] = useState(1);
   const itemsPerPage = 12;
-
-  const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
-    setCurrentPage(value);
-  };
 
   const {
     lessonPlan,
@@ -58,6 +56,15 @@ const LessonPlan = () => {
   const toggleExpandedUnit = (id: string) => {
     setExpandedUnitId((prev) => (prev === id ? null : id));
   };
+
+  const otherLessonPlan = useMemo(() => {
+    if (!lessonPlan.length || !userData?.id) return [];
+    return lessonPlan.filter(
+      (t) =>
+        t.subject.toLowerCase() === subject.toLowerCase() &&
+        t.user !== userData.id,
+    );
+  }, [lessonPlan, subject, userData?.id]);
 
   const formikLessonPlan = useFormik({
     initialValues: {
@@ -84,11 +91,12 @@ const LessonPlan = () => {
       main: "",
       conclusion: "",
       subject: subject,
+      user: userData?.id,
     },
     onSubmit: async (values) => {
       try {
         await axios.post(`${PocketBaseCollection}/lesson_plan/records`, values);
-        refetchOperative();
+        await refetchOperative();
         handleCloseModal();
         formikLessonPlan.resetForm();
       } catch (error) {
@@ -96,10 +104,6 @@ const LessonPlan = () => {
       }
     },
   });
-
-  const filteredLessonPlan = lessonPlan.filter(
-    (plan) => plan.subject === subject,
-  );
 
   type LessonField = keyof typeof LessonConfig;
 
@@ -109,11 +113,27 @@ const LessonPlan = () => {
 
   if (onError) return <div>Greška u učitavanju {onError}</div>;
 
+  const myLessonPlan = lessonPlan.filter(
+    (t) =>
+      t.subject.toLowerCase() === subject.toLowerCase() &&
+      t.user === userData?.id,
+  );
+
+  const paginatedLessonPlan = myLessonPlan.slice(
+    (myCurrentPage - 1) * itemsPerPage,
+    myCurrentPage * itemsPerPage,
+  );
+
+  const paginatedOtherLessonPlan = otherLessonPlan.slice(
+    (otherCurrentPage - 1) * itemsPerPage,
+    otherCurrentPage * itemsPerPage,
+  );
+
   return (
     <div>
       <div className={!isLoggedIn ? styles.blurWrapper : ""}>
         <Header
-          title={`Priprema za nastavu - ${subject}`}
+          title={`Pripreme za nastavu - ${subject}`}
           imageUrl={"/forum-1.jpg"}
           breadcrumbItems={breadCrumb}
         />
@@ -123,7 +143,7 @@ const LessonPlan = () => {
             <Button
               title={"Dodaj pripremu za nastavu"}
               themes={[
-                "blue",
+                "orange",
                 "standardWide",
                 "standardHeight",
                 "noBorderRadius",
@@ -136,12 +156,10 @@ const LessonPlan = () => {
 
         <section className={styles.container}>
           <div className={styles.referencesWrap}>
-            {filteredLessonPlan
-              .slice(
-                (currentPage - 1) * itemsPerPage,
-                currentPage * itemsPerPage,
-              )
-              .map((lesson, index) => {
+            <div className={styles.testsWrap}>
+              <Title level={3} text={"Moji testovi"} className={styles.title} />
+
+              {paginatedLessonPlan.map((lesson, index) => {
                 const isExpanded = expandedUnitId === lesson.id;
                 return (
                   <div key={lesson.id || index} className={styles.lessonCard}>
@@ -239,17 +257,160 @@ const LessonPlan = () => {
                   </div>
                 );
               })}
-            {filteredLessonPlan.length > itemsPerPage && (
-              <div className={styles.paginationContainer}>
-                <Pagination
-                  count={Math.ceil(filteredLessonPlan.length / itemsPerPage)}
-                  page={currentPage}
-                  onChange={handlePageChange}
-                  color="primary"
-                  shape="rounded"
-                />
-              </div>
-            )}
+              {myLessonPlan.length > itemsPerPage && (
+                <div className={styles.paginationContainer}>
+                  <Pagination
+                    count={Math.ceil(myLessonPlan.length / itemsPerPage)}
+                    page={myCurrentPage}
+                    onChange={(_, value) => setMyCurrentPage(value)} // ✅ correct setter
+                    color="primary"
+                    shape="rounded"
+                  />
+                </div>
+              )}
+            </div>
+
+            <div className={styles.testsWrap}>
+              {paginatedOtherLessonPlan &&
+                paginatedOtherLessonPlan.length > 0 && (
+                  <>
+                    <Title
+                      level={3}
+                      text={"Pripreme drugih autora"}
+                      className={styles.title}
+                    />
+
+                    {paginatedOtherLessonPlan.map((lesson, index) => {
+                      const isExpanded = expandedUnitId === lesson.id;
+                      return (
+                        <div
+                          key={lesson.id || index}
+                          className={styles.lessonCard}
+                        >
+                          <div
+                            className={`${styles.teachingUnitTitle} ${isExpanded ? styles.expanded : ""}`}
+                            onClick={() => toggleExpandedUnit(lesson.id)}
+                          >
+                            {lesson.class_number} - {lesson.teaching_topic} -{" "}
+                            {lesson.lesson_name} - {lesson.date}
+                          </div>
+
+                          {isExpanded && (
+                            <div className={styles.lessonDetails}>
+                              {[
+                                {
+                                  title: "Opšti podaci",
+                                  fields: [
+                                    "date",
+                                    "class_number",
+                                    "grade_and_class",
+                                  ],
+                                },
+                                {
+                                  title: "Opšti metodički podaci",
+                                  fields: [
+                                    "subject",
+                                    "teaching_topic",
+                                    "lesson_name",
+                                    "previous_lesson",
+                                    "next_lesson",
+                                    "type_of_lesson",
+                                  ],
+                                },
+                                {
+                                  title: "Operativni zadaci",
+                                  fields: [
+                                    "educational_objectives",
+                                    "social_objectives",
+                                    "functional_objectives",
+                                    "teaching_methods",
+                                    "forms_of_work",
+                                    "instructional_materials",
+                                    "correlation",
+                                    "literature",
+                                  ],
+                                },
+                                {
+                                  title: "Struktura časa",
+                                  fields: [
+                                    "introduction_small",
+                                    "main_activity_small",
+                                    "conclusion_small",
+                                  ],
+                                },
+                                {
+                                  title: "Razrada toka časa",
+                                  fields: [
+                                    "introduction",
+                                    "main",
+                                    "conclusion",
+                                  ],
+                                },
+                              ].map(({ title, fields }) => (
+                                <div
+                                  key={title}
+                                  className={styles.lessonPartGroup}
+                                >
+                                  <table className={styles.lessonTable}>
+                                    <thead>
+                                      <tr>
+                                        <th
+                                          colSpan={2}
+                                          className={styles.lessonTableHeading}
+                                        >
+                                          <h3>{title}</h3>
+                                        </th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {fields.map((field) => (
+                                        <tr key={field}>
+                                          <th>
+                                            {LessonConfig[field as LessonField]
+                                              ?.label || field}
+                                          </th>
+                                          <td>
+                                            {lesson[field as LessonField] ? (
+                                              <span
+                                                dangerouslySetInnerHTML={{
+                                                  __html:
+                                                    lesson[
+                                                      field as LessonField
+                                                    ],
+                                                }}
+                                              />
+                                            ) : (
+                                              "-"
+                                            )}
+                                          </td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+
+                    {otherLessonPlan.length > itemsPerPage && (
+                      <div className={styles.paginationContainer}>
+                        <Pagination
+                          count={Math.ceil(
+                            otherLessonPlan.length / itemsPerPage,
+                          )}
+                          page={otherCurrentPage}
+                          onChange={(_, value) => setOtherCurrentPage(value)}
+                          color="primary"
+                          shape="rounded"
+                        />
+                      </div>
+                    )}
+                  </>
+                )}
+            </div>
           </div>
 
           <aside className={styles.sidebarWrap}>

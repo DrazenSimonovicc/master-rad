@@ -25,7 +25,6 @@ const Announcements = () => {
     announcements = [],
     error: onError,
     loading: onLoading,
-    refetch: refetchActivity,
   } = useFetchAnnouncements();
 
   const [page, setPage] = useState(1);
@@ -61,14 +60,19 @@ const Announcements = () => {
           <Title text="Važna obaveštenja" level={2} className={styles.title} />
 
           <div className={styles.announcementList}>
-            {currentAnnouncements.map((announcement) => (
-              <AnnouncementLink
-                key={announcement.id}
-                link={`/vazna-obavestenja/${announcement.id}`}
-                title={announcement.title}
-                date={announcement.date}
-              />
-            ))}
+            {currentAnnouncements
+              .sort(
+                (a, b) =>
+                  new Date(b.created).getTime() - new Date(a.created).getTime(),
+              )
+              .map((announcement) => (
+                <AnnouncementLink
+                  key={announcement.id}
+                  link={`/vazna-obavestenja/${announcement.id}`}
+                  title={announcement.title}
+                  date={announcement.date}
+                />
+              ))}
           </div>
 
           {totalPages > 1 && (

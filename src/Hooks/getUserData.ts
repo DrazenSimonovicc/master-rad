@@ -14,7 +14,9 @@ export const useFetchUserData = () => {
       setUserData(response.data.items || []);
       setError(null);
     } catch (error: any) {
-      setError("Error fetching to-do items. Please try again later.");
+      setError(
+        "Problem prilikom učitvanja podataka korisnika. Molimo Vas da pokušate kasnije.",
+      );
     } finally {
       setLoading(false);
     }

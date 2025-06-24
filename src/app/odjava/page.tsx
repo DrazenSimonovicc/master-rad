@@ -9,7 +9,7 @@ const LogoutPage: FC = () => {
   return (
     <div className={styles.loginPage}>
       <div className={styles.leftSide}>
-        <img src={"/loginPage/registration.jpg"} alt={"logout"} />
+        <img src={"/loginPage/registration.jpg"} alt={"odjava"} />
       </div>
 
       <div className={styles.rightSide}>

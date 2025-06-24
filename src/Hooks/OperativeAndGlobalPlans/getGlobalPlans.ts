@@ -16,7 +16,7 @@ export const useFetchGlobalPlans = (userId: string) => {
 
     try {
       const response = await axios.get(
-        `${PocketBaseCollection}/globalni_planovi/records`,
+        `${PocketBaseCollection}/global_plan/records`,
         {
           params: {
             filter: `user="${userId}"`,
@@ -26,7 +26,9 @@ export const useFetchGlobalPlans = (userId: string) => {
       setGlobalPlans(response.data.items || []);
       setError(null);
     } catch (error: any) {
-      setError("Error fetching plans. Please try again later.");
+      setError(
+        "Problem prilikom učitvanja globalnih planova. Molimo Vas da pokušate kasnije.",
+      );
     } finally {
       setLoading(false);
     }

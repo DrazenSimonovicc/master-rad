@@ -1,0 +1,92 @@
+@use "src/Styling/index" as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 45px 15px;
+  gap: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .referencesWrap {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    flex: 1;
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+      font-family: "Georgia", serif;
+      color: #222;
+      background-color: #fdfdfd;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .heading {
+      font-size: 2.2rem;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 2rem;
+      color: #2c3e50;
+    }
+
+    .section {
+      margin-bottom: 2rem;
+
+      h2 {
+        font-size: 1.5rem;
+        color: #34495e;
+        margin-bottom: 0.75rem;
+        border-bottom: 2px solid #ddd;
+        padding-bottom: 0.4rem;
+      }
+
+      p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+
+      ul {
+        padding-left: 1.2rem;
+        list-style: disc;
+
+        li {
+          font-size: 1.05rem;
+          line-height: 1.5;
+          margin-bottom: 0.5rem;
+        }
+      }
+    }
+  }
+}
+
+@include breakpoint("tablet") {
+  .container {
+    padding: 105px 15px 70px;
+  }
+}
+
+@include breakpoint("desktopSmall") {
+  .container {
+    flex-direction: row;
+    gap: 60px;
+
+    .sidebarWrap {
+      width: 280px;
+      margin-bottom: 45px;
+    }
+  }
+}
+
+@include breakpoint("desktop") {
+  .container {
+    .sidebarWrap {
+      width: 340px;
+    }
+  }
+}

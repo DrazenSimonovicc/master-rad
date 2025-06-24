@@ -1,4 +1,4 @@
-@import "src/Styling/index";
+@use "src/Styling/index" as *;
 
 .imageCard {
   width: 100%;
@@ -52,7 +52,14 @@
       border: 1px solid white;
       font-size: 14px;
       text-decoration: none;
-      color: white;
+      color: $white;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.25);
+        border: 1px solid $orange-color;
+        color: $orange-color;
+        transition: all 0.3s ease;
+      }
     }
   }
 

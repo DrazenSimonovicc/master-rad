@@ -1,4 +1,4 @@
-@import "src/Styling/index";
+@use "src/Styling/index" as *;
 
 .cardWrap {
   background-color: $white;
@@ -14,13 +14,19 @@
     color: #2f327d;
     font-size: $h3-mobile-size;
     line-height: $h3-mobile-size + $h-mobile-line-height-add;
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+
+    &:hover {
+      transition: all 0.3s ease;
+      color: $orange-color;
+    }
+
     @include breakpoint("desktop") {
       font-size: $h3-desktop-size;
       line-height: $h3-desktop-size + $h-desktop-line-height-add;
     }
-    text-decoration: none;
-    cursor: pointer;
-    text-align: center;
   }
 
   .description {

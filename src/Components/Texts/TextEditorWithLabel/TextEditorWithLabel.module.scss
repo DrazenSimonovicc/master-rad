@@ -1,4 +1,4 @@
-@import "src/Styling/index";
+@use "src/Styling/index" as *;
 
 .textEditorWrapper {
   display: flex;
@@ -11,4 +11,10 @@
   font-weight: bold;
   margin-bottom: 12px;
   font-size: 15px;
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 12px;
+  padding: 3px 14px 0;
 }

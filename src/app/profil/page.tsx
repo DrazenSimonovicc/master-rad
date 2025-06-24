@@ -190,7 +190,7 @@ const ProfilePage: FC = () => {
                     onChange={(event) =>
                       formik.setFieldValue("gender", event.target.value)
                     }
-                    options={["muški", "ženski"]}
+                    options={["Muški", "Ženski"]}
                     error={Boolean(formik.errors.gender)}
                   />
                 </div>
@@ -283,7 +283,7 @@ const ProfilePage: FC = () => {
                     alt="User Avatar"
                     className={styles.image}
                   />
-                ) : currentUser.gender === "muški" ? (
+                ) : currentUser.gender === "Muški" ? (
                   <img
                     src="/muskarac.png"
                     alt="muskarac"

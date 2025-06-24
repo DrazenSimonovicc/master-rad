@@ -1,5 +1,5 @@
-@import "colors";
-@import "sizes";
-@import "zindex";
+@forward "colors";
+@forward "sizes";
+@forward "zindex";
 
 $montserrat: "Montserrat", sans-serif;

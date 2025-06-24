@@ -1,24 +1,15 @@
 "use client";
-
 import { Footer } from "@/Components/Footer/Footer";
 import { TitleWithDescription } from "@/Components/Texts/TitleWithDescription/TitleWithDescription";
 import React from "react";
-
 import styles from "./page.module.scss";
 import { CardsWithIcons } from "@/Components/CardsWithIcons/CardsWithIcons";
 import { TextWithImage } from "@/Components/TextWithImageHomepage/TextWithImage";
-import { ImageCard } from "@/Components/Card/ImageCard/ImageCard";
 import HeroSlider from "@/Components/Hero/Hero";
 import { heroData } from "@/Components/Hero/mockedData";
+import { WorkDescription } from "@/Components/WorkDescription/WorkDescription";
 
 export default function Home() {
-  const breadCrumb = {
-    level1: "Početak",
-    level2: "Profil",
-    level1url: "/",
-    level2url: "/profil",
-  };
-
   return (
     <div style={{ backgroundColor: "#F5F5FC" }}>
       <HeroSlider data={heroData} />
@@ -35,37 +26,14 @@ export default function Home() {
           linkUrl={"/"}
         />
       </div>
-
       <div className={styles.backgroundWorkDescription}>
-        <div className={styles.workDescription}>
-          <div className={styles.frontPageTitleAndDescription}>
-            <h2 className={styles.title}>Čemu služi ovaj rad?</h2>
-            <p className={styles.description}>
-              Ovaj rad će omogućiti nastavniima da kreiraju online svoje
-              pripreme, koje će moći skladištiti u svojim materijalima. Takođe,
-              ovde će moći da razmenjuju iskustva sa drugim nastavnicima.
-            </p>
-          </div>
-
-          <div className={styles.imageCardsWrap}>
-            <ImageCard
-              imageUrl={"/priprema-za-cas.jpg"}
-              linkUrl={"/resursi-za-nastavu/priprema-za-nastavu"}
-              title={"Online pripreme za nastavu"}
-              imageDescription={"Online pripreme za nastavu fotografija"}
-              buttonText={"Pripremite svoj cas"}
-            />
-            <ImageCard
-              imageUrl={"/kalendar.jpg"}
-              linkUrl={"/kalendar-aktivnosti"}
-              title={"Kalendar aktivnosti"}
-              imageDescription={"opis"}
-              buttonText={"Prikaži sve aktivnosti"}
-            />
-          </div>
-        </div>
+        <WorkDescription
+          title={"Čemu služi ovaj rad?"}
+          text={
+            "Ovaj rad će omogućiti nastavniima da kreiraju online svoje pripreme, koje će moći skladištiti u svojim materijalima. Takođe, ovde će moći da razmenjuju iskustva sa drugim nastavnicima."
+          }
+        />
       </div>
-
       <div className={styles.thirdPart}>
         <TitleWithDescription
           title={"Sve-u-jednom softver za školu"}

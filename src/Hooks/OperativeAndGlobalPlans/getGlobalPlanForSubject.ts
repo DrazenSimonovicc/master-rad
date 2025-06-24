@@ -15,7 +15,7 @@ export const useFetchGlobalPlansWithSubject = () => {
 
     try {
       const response = await axios.get(
-        `${PocketBaseCollection}/globalni_planovi_za_predmet/records`,
+        `${PocketBaseCollection}/global_plan_for_subject/records`,
       );
       if (response.data && response.data.items) {
         setGlobalPlansForSubject(response.data.items);

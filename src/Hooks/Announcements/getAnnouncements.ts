@@ -18,7 +18,9 @@ export const useFetchAnnouncements = () => {
       setAnnouncements(response.data.items || []);
       setError(null);
     } catch (error: any) {
-      setError("Error fetching plans. Please try again later.");
+      setError(
+        "Problem prilikom učitvanja važnih obaveštenja. Molimo Vas da pokušate kasnije.",
+      );
     } finally {
       setLoading(false);
     }
@@ -32,6 +34,5 @@ export const useFetchAnnouncements = () => {
     announcements,
     error,
     loading,
-    refetch: fetchAnnouncements,
   };
 };

@@ -48,7 +48,7 @@ const SingleOperativnePlan = () => {
     refetch: refetchGlobal,
   } = useFetchGlobalPlansWithSubject();
 
-  const { userData, isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuth();
   const [open, setOpen] = useState(false);
   const handleOpenModal = () => setOpen(true);
 
@@ -72,7 +72,7 @@ const SingleOperativnePlan = () => {
     onSubmit: async (values, { resetForm }) => {
       try {
         await axios.post(
-          `${PocketBaseCollection}/operativni_plan_cas/records`,
+          `${PocketBaseCollection}/operative_plan_for_class/records`,
           values,
         );
         resetForm();
@@ -97,7 +97,7 @@ const SingleOperativnePlan = () => {
     onSubmit: async (values, { resetForm }) => {
       try {
         await axios.post(
-          `${PocketBaseCollection}/globalni_planovi_za_predmet/records`,
+          `${PocketBaseCollection}/global_plan_for_subject/records`,
           values,
         );
         resetForm();
@@ -137,7 +137,7 @@ const SingleOperativnePlan = () => {
             <Button
               title={type === "operative" ? "Dodaj čas" : "Dodaj nastavnu temu"}
               themes={[
-                "blue",
+                "orange",
                 "standardWide",
                 "standardHeight",
                 "noBorderRadius",
@@ -172,7 +172,7 @@ const SingleOperativnePlan = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredOperativePlans.map((plan, index) => (
+                    {filteredOperativePlans.map((plan) => (
                       <tr key={plan.id}>
                         <td>{plan.lesson_number}</td>
                         <td>{plan.teaching_topic}</td>
@@ -209,7 +209,7 @@ const SingleOperativnePlan = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredGlobalPlans.map((plan, index) => (
+                    {filteredGlobalPlans.map((plan) => (
                       <tr key={plan.id}>
                         <td>{plan.class_theme}</td>
                         <td>{plan.learning_objectives}</td>

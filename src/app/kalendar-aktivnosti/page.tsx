@@ -24,6 +24,7 @@ import { ClassScheduleTable } from "@/Components/ClassSchedule/ClassSchedule";
 import RequireAuth from "@/Components/RequireAuth/RequireAuth";
 import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
 import Preloader from "@/Components/Preloader/Preloader";
+import * as Yup from "yup";
 
 const MAX_SUBJECTS = 7;
 
@@ -55,18 +56,26 @@ const Calendar = () => {
     level2url: "/kalendar-aktivnosti",
   };
 
+  const classScheduleValidationSchema = Yup.object().shape({
+    dayName: Yup.string().required("Naziv dana je obavezno polje"),
+    subject: Yup.array()
+      .of(Yup.string().trim().required("Predmet ne može biti prazan"))
+      .min(1, "Unesite bar jedan predmet")
+      .max(MAX_SUBJECTS, `Maksimalno ${MAX_SUBJECTS} predmeta po danu`),
+  });
   const classScheduleFormik = useFormik({
     initialValues: {
       dayName: "",
       subject: [""],
     },
-    validate: (values) => {
+    validationSchema: classScheduleValidationSchema,
+    /*  validate: (values) => {
       const errors: { dayName?: string } = {};
       if (!values.dayName.trim()) {
         errors.dayName = "Naziv dana je obavezno polje";
       }
       return errors;
-    },
+    },*/
     onSubmit: async (values, { resetForm }) => {
       try {
         await axios.post(`${PocketBaseCollection}/class_schedule/records`, {
@@ -83,6 +92,16 @@ const Calendar = () => {
     },
   });
 
+  const activityValidationSchema = Yup.object().shape({
+    type_of_activity: Yup.string()
+      .trim()
+      .required("Vrsta aktivnosti je obavezna"),
+    title: Yup.string().trim().required("Naslov je obavezan"),
+    description: Yup.string().required("Opis je obavezan"),
+    date: Yup.string().required("Datum je obavezan"),
+    place: Yup.string().trim(),
+  });
+
   const activityFormik = useFormik({
     initialValues: {
       type_of_activity: "",
@@ -91,6 +110,7 @@ const Calendar = () => {
       date: "",
       place: "",
     },
+    validationSchema: activityValidationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
         await axios.post(`${PocketBaseCollection}/activity/records`, {
@@ -110,7 +130,13 @@ const Calendar = () => {
     return <Preloader page />;
   }
 
+  if (isLoggedIn && classScheduleLoading) {
+    return <Preloader page />;
+  }
+
   if (isLoggedIn && onError) return <div>Greška u učitavanju {onError}</div>;
+  if (isLoggedIn && classScheduleError)
+    return <div>Greška u učitavanju {onError}</div>;
 
   return (
     <div>
@@ -126,7 +152,7 @@ const Calendar = () => {
             <Button
               title="Dodaj raspored časova"
               themes={[
-                "blue",
+                "orange",
                 "standardWide",
                 "standardHeight",
                 "noBorderRadius",
@@ -137,7 +163,7 @@ const Calendar = () => {
             <Button
               title="Dodaj novu aktivnost"
               themes={[
-                "blue",
+                "orange",
                 "standardWide",
                 "standardHeight",
                 "noBorderRadius",
@@ -165,20 +191,18 @@ const Calendar = () => {
               <>
                 <Title text="Aktivnosti" level={2} className={styles.title} />
                 <div className={styles.activityWrapper}>
-                  {activity.map(
-                    ({ id, type_of_activity, title, date, description }) => (
-                      <Link
-                        key={id}
-                        href={{
-                          pathname: `/kalendar-aktivnosti/${id}`,
-                          query: { id, title },
-                        }}
-                        className={styles.link}
-                      >
-                        <strong>{type_of_activity}</strong> - {title} - {date}
-                      </Link>
-                    ),
-                  )}
+                  {activity.map(({ id, type_of_activity, title, date }) => (
+                    <Link
+                      key={id}
+                      href={{
+                        pathname: `/kalendar-aktivnosti/${id}`,
+                        query: { id, title },
+                      }}
+                      className={styles.link}
+                    >
+                      <strong>{type_of_activity}</strong> - {title} - {date}
+                    </Link>
+                  ))}
                 </div>
               </>
             )}
@@ -224,19 +248,34 @@ const Calendar = () => {
                 name="subject"
                 render={(arrayHelpers) => (
                   <div style={{ marginBottom: "32px" }}>
-                    {classScheduleFormik.values.subject.map((_, index) => (
-                      <TextField
-                        key={index}
-                        fullWidth
-                        variant="outlined"
-                        label={`Čas ${index + 1}`}
-                        name={`subject.${index}`}
-                        value={classScheduleFormik.values.subject[index]}
-                        onChange={classScheduleFormik.handleChange}
-                        onBlur={classScheduleFormik.handleBlur}
-                        margin="normal"
-                      />
-                    ))}
+                    {classScheduleFormik.values.subject.map((_, index) => {
+                      const touchedSubjects = classScheduleFormik.touched
+                        .subject as string[] | undefined;
+                      const errorSubjects = classScheduleFormik.errors
+                        .subject as string[] | undefined;
+
+                      return (
+                        <TextField
+                          key={index}
+                          fullWidth
+                          variant="outlined"
+                          label={`Čas ${index + 1}`}
+                          name={`subject.${index}`}
+                          value={classScheduleFormik.values.subject[index]}
+                          onChange={classScheduleFormik.handleChange}
+                          onBlur={classScheduleFormik.handleBlur}
+                          error={
+                            !!(
+                              touchedSubjects?.[index] && errorSubjects?.[index]
+                            )
+                          }
+                          helperText={
+                            touchedSubjects?.[index] && errorSubjects?.[index]
+                          }
+                          margin="normal"
+                        />
+                      );
+                    })}
 
                     <Button
                       title="Dodaj čas"
@@ -315,6 +354,25 @@ const Calendar = () => {
                     ]
                   }
                   onChange={activityFormik.handleChange}
+                  onBlur={activityFormik.handleBlur}
+                  error={
+                    activityFormik.touched[
+                      key as keyof typeof activityFormik.touched
+                    ] &&
+                    Boolean(
+                      activityFormik.errors[
+                        key as keyof typeof activityFormik.errors
+                      ],
+                    )
+                  }
+                  helperText={
+                    activityFormik.touched[
+                      key as keyof typeof activityFormik.touched
+                    ] &&
+                    activityFormik.errors[
+                      key as keyof typeof activityFormik.errors
+                    ]
+                  }
                 />
               );
             })}

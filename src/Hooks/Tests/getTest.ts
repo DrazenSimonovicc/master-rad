@@ -16,7 +16,9 @@ export const useFetchTest = () => {
       setTest(response.data.items || []);
       setError(null);
     } catch (error: any) {
-      setError("Error fetching plans. Please try again later.");
+      setError(
+        "Problem prilikom učitvanja podataka koji se nalaze u testovima. Molimo Vas da pokušate kasnije.",
+      );
     } finally {
       setLoading(false);
     }

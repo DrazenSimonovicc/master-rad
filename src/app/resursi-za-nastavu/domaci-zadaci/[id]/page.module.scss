@@ -1,4 +1,4 @@
-@import "src/Styling/index";
+@use "src/Styling/index" as *;
 
 .addButtonWrapper {
   max-width: 1200px;
@@ -18,8 +18,14 @@
   .referencesWrap {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 48px;
     flex: 1;
+
+    .testsWrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
     .paginationContainer {
       display: flex;

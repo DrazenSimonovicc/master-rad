@@ -94,7 +94,7 @@ export const Navigation: FC<NavigationProps> = ({ items }) => {
     localStorage.removeItem("authToken");
     sessionStorage.removeItem("authToken");
 
-    router.push("/logout");
+    router.push("/odjava");
 
     handleMenuClose();
   };

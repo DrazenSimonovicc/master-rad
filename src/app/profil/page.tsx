@@ -23,8 +23,13 @@ const ProfilePage: FC = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [avatar, setAvatar] = useState<string>(currentUser?.avatar || "");
 
-  const handleAvatarChange = async (event) => {
+  const handleAvatarChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = event.target.files ? event.target.files[0] : null;
+
+    if (!file || !currentUser) return;
+
     if (file) {
       try {
         const avatarData = await pb.collection("users").update(currentUser.id, {

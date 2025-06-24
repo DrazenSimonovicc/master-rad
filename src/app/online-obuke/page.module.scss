@@ -27,29 +27,29 @@
 
       .card {
         background-color: #f9f9f9;
-        border-radius: 1rem;
-        padding: 2rem;
+        border-radius: 16px;
+        padding: 32px;
         max-width: 600px;
-        margin: 2rem auto;
+        margin: 32px auto;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
         h2 {
-          margin-bottom: 1rem;
+          margin-bottom: 16px;
           color: #2a2a2a;
         }
 
         p {
-          margin-bottom: 1.5rem;
-          font-size: 1rem;
+          margin-bottom: 24px;
+          font-size: 16px;
           color: #555;
         }
 
         ul {
           list-style-type: disc;
-          padding-left: 1.5rem;
+          padding-left: 20px;
 
           li {
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
 
             a {
               color: #0070f3;

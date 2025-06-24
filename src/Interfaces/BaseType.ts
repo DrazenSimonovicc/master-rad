@@ -199,6 +199,7 @@ export interface LessonPlanType {
   main: string;
   conclusion: string;
   user: string;
+  file?: string;
 }
 
 export interface ActivityType {

@@ -29,7 +29,7 @@ const LessonPlan = () => {
   const breadCrumb = {
     level1: "Početak",
     level2: "Resursi za nastavu",
-    level3: "Pripreme za nastavu",
+    level3: "Pripreme za čas",
     level1url: "/",
     level2url: "/resursi-za-nastavu",
     level3url: "/resursi-za-nastavu/priprema-za-nastavu",
@@ -133,7 +133,7 @@ const LessonPlan = () => {
     <div>
       <div className={!isLoggedIn ? styles.blurWrapper : ""}>
         <Header
-          title={`Pripreme za nastavu - ${subject}`}
+          title={`Pripreme za čas - ${subject}`}
           imageUrl={"/forum-1.jpg"}
           breadcrumbItems={breadCrumb}
         />
@@ -141,7 +141,7 @@ const LessonPlan = () => {
         {isLoggedIn && (
           <div className={styles.addButtonWrapper}>
             <Button
-              title={"Dodaj pripremu za nastavu"}
+              title={"Dodaj pripremu za čas"}
               themes={[
                 "orange",
                 "standardWide",
@@ -157,116 +157,134 @@ const LessonPlan = () => {
         <section className={styles.container}>
           <div className={styles.referencesWrap}>
             <div className={styles.testsWrap}>
-              <Title level={3} text={"Moji testovi"} className={styles.title} />
-
-              {paginatedLessonPlan.map((lesson, index) => {
-                const isExpanded = expandedUnitId === lesson.id;
-                return (
-                  <div key={lesson.id || index} className={styles.lessonCard}>
-                    <div
-                      className={`${styles.teachingUnitTitle} ${isExpanded ? styles.expanded : ""}`}
-                      onClick={() => toggleExpandedUnit(lesson.id)}
-                    >
-                      {lesson.class_number} - {lesson.teaching_topic} -{" "}
-                      {lesson.lesson_name} - {lesson.date}
-                    </div>
-
-                    {isExpanded && (
-                      <div className={styles.lessonDetails}>
-                        {[
-                          {
-                            title: "Opšti podaci",
-                            fields: ["date", "class_number", "grade_and_class"],
-                          },
-                          {
-                            title: "Opšti metodički podaci",
-                            fields: [
-                              "subject",
-                              "teaching_topic",
-                              "lesson_name",
-                              "previous_lesson",
-                              "next_lesson",
-                              "type_of_lesson",
-                            ],
-                          },
-                          {
-                            title: "Operativni zadaci",
-                            fields: [
-                              "educational_objectives",
-                              "social_objectives",
-                              "functional_objectives",
-                              "teaching_methods",
-                              "forms_of_work",
-                              "instructional_materials",
-                              "correlation",
-                              "literature",
-                            ],
-                          },
-                          {
-                            title: "Struktura časa",
-                            fields: [
-                              "introduction_small",
-                              "main_activity_small",
-                              "conclusion_small",
-                            ],
-                          },
-                          {
-                            title: "Razrada toka časa",
-                            fields: ["introduction", "main", "conclusion"],
-                          },
-                        ].map(({ title, fields }) => (
-                          <div key={title} className={styles.lessonPartGroup}>
-                            <table className={styles.lessonTable}>
-                              <thead>
-                                <tr>
-                                  <th
-                                    colSpan={2}
-                                    className={styles.lessonTableHeading}
-                                  >
-                                    <h3>{title}</h3>
-                                  </th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {fields.map((field) => (
-                                  <tr key={field}>
-                                    <th>
-                                      {LessonConfig[field as LessonField]
-                                        ?.label || field}
-                                    </th>
-                                    <td>
-                                      {lesson[field as LessonField] ? (
-                                        <span
-                                          dangerouslySetInnerHTML={{
-                                            __html:
-                                              lesson[field as LessonField],
-                                          }}
-                                        />
-                                      ) : (
-                                        "-"
-                                      )}
-                                    </td>
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-              {myLessonPlan.length > itemsPerPage && (
-                <div className={styles.paginationContainer}>
-                  <Pagination
-                    count={Math.ceil(myLessonPlan.length / itemsPerPage)}
-                    page={myCurrentPage}
-                    onChange={(_, value) => setMyCurrentPage(value)} // ✅ correct setter
-                    color="primary"
-                    shape="rounded"
+              {paginatedLessonPlan && paginatedLessonPlan.length > 0 && (
+                <>
+                  <Title
+                    level={3}
+                    text={"Moje pripreme za čas"}
+                    className={styles.title}
                   />
-                </div>
+
+                  {paginatedLessonPlan.map((lesson, index) => {
+                    const isExpanded = expandedUnitId === lesson.id;
+                    return (
+                      <div
+                        key={lesson.id || index}
+                        className={styles.lessonCard}
+                      >
+                        <div
+                          className={`${styles.teachingUnitTitle} ${isExpanded ? styles.expanded : ""}`}
+                          onClick={() => toggleExpandedUnit(lesson.id)}
+                        >
+                          {lesson.class_number} - {lesson.teaching_topic} -{" "}
+                          {lesson.lesson_name} - {lesson.date}
+                        </div>
+
+                        {isExpanded && (
+                          <div className={styles.lessonDetails}>
+                            {[
+                              {
+                                title: "Opšti podaci",
+                                fields: [
+                                  "date",
+                                  "class_number",
+                                  "grade_and_class",
+                                ],
+                              },
+                              {
+                                title: "Opšti metodički podaci",
+                                fields: [
+                                  "subject",
+                                  "teaching_topic",
+                                  "lesson_name",
+                                  "previous_lesson",
+                                  "next_lesson",
+                                  "type_of_lesson",
+                                ],
+                              },
+                              {
+                                title: "Operativni zadaci",
+                                fields: [
+                                  "educational_objectives",
+                                  "social_objectives",
+                                  "functional_objectives",
+                                  "teaching_methods",
+                                  "forms_of_work",
+                                  "instructional_materials",
+                                  "correlation",
+                                  "literature",
+                                ],
+                              },
+                              {
+                                title: "Struktura časa",
+                                fields: [
+                                  "introduction_small",
+                                  "main_activity_small",
+                                  "conclusion_small",
+                                ],
+                              },
+                              {
+                                title: "Razrada toka časa",
+                                fields: ["introduction", "main", "conclusion"],
+                              },
+                            ].map(({ title, fields }) => (
+                              <div
+                                key={title}
+                                className={styles.lessonPartGroup}
+                              >
+                                <table className={styles.lessonTable}>
+                                  <thead>
+                                    <tr>
+                                      <th
+                                        colSpan={2}
+                                        className={styles.lessonTableHeading}
+                                      >
+                                        <h3>{title}</h3>
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {fields.map((field) => (
+                                      <tr key={field}>
+                                        <th>
+                                          {LessonConfig[field as LessonField]
+                                            ?.label || field}
+                                        </th>
+                                        <td>
+                                          {lesson[field as LessonField] ? (
+                                            <span
+                                              dangerouslySetInnerHTML={{
+                                                __html:
+                                                  lesson[field as LessonField],
+                                              }}
+                                            />
+                                          ) : (
+                                            "-"
+                                          )}
+                                        </td>
+                                      </tr>
+                                    ))}
+                                  </tbody>
+                                </table>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                  {myLessonPlan.length > itemsPerPage && (
+                    <div className={styles.paginationContainer}>
+                      <Pagination
+                        count={Math.ceil(myLessonPlan.length / itemsPerPage)}
+                        page={myCurrentPage}
+                        onChange={(_, value) => setMyCurrentPage(value)} // ✅ correct setter
+                        color="primary"
+                        shape="rounded"
+                      />
+                    </div>
+                  )}
+                </>
               )}
             </div>
 
@@ -276,7 +294,7 @@ const LessonPlan = () => {
                   <>
                     <Title
                       level={3}
-                      text={"Pripreme drugih autora"}
+                      text={"Pripreme za čas drugih autora"}
                       className={styles.title}
                     />
 
@@ -705,7 +723,7 @@ const LessonPlan = () => {
 
             <div style={{ marginTop: "60px" }}>
               <Button
-                title="Dodaj pripremu za nastavu"
+                title="Dodaj pripremu za čas"
                 themes={[
                   "blue",
                   "standardWide",

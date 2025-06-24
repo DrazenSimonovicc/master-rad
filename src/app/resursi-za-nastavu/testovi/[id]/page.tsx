@@ -203,7 +203,7 @@ const Test = () => {
                 <>
                   <Title
                     level={3}
-                    text={"Dodati od strane drugih"}
+                    text={"Testovi dodati od drugih"}
                     className={styles.title}
                   />
                   {paginatedOtherTests.map((t) => {

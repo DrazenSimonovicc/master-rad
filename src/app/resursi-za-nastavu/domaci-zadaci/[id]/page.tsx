@@ -202,7 +202,7 @@ const Homework = () => {
                 <>
                   <Title
                     level={3}
-                    text={"Dodati od strane drugih"}
+                    text={"Domaći zadaci dodati od drugih"}
                     className={styles.title}
                   />
                   {paginatedOtherTests.map((t) => {

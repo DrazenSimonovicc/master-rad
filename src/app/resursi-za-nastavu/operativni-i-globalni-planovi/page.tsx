@@ -22,6 +22,7 @@ import RequireAuth from "@/Components/RequireAuth/RequireAuth";
 import Preloader from "@/Components/Preloader/Preloader";
 import SubjectCard from "@/Components/SubjectCard/SubjectCard";
 import { Footer } from "@/Components/Footer";
+import * as Yup from "yup";
 
 const OperativeAndGlobalPlans = () => {
   const breadCrumb = {
@@ -54,6 +55,15 @@ const OperativeAndGlobalPlans = () => {
   const handleOpenOperativeModal = () => setOpenOperative(true);
   const handleOpenGlobalModal = () => setOpenGlobal(true);
 
+  const OperativeValidationSchema = Yup.object({
+    subject: Yup.string()
+      .required("Naziv predmeta je obavezan.")
+      .min(2, "Predmet mora imati bar 2 slova."),
+    grade: Yup.string().required("Razred je obavezan."),
+    month: Yup.string().required("Mesec je obavezan."),
+    school_year: Yup.string().required("Školska godina je obavezna."),
+  });
+
   const formikOperative = useFormik({
     initialValues: {
       subject: "",
@@ -62,9 +72,10 @@ const OperativeAndGlobalPlans = () => {
       school_year: "",
       teacher: "",
     },
+    validationSchema: OperativeValidationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
-        await axios.post(`${PocketBaseCollection}/operativni_planovi/records`, {
+        await axios.post(`${PocketBaseCollection}/operative_plan/records`, {
           ...values,
           user: userData.id,
         });
@@ -78,6 +89,14 @@ const OperativeAndGlobalPlans = () => {
     },
   });
 
+  const GlobalValidationSchema = Yup.object({
+    subject: Yup.string()
+      .required("Naziv predmeta je obavezan.")
+      .min(2, "Predmet mora imati bar 2 slova."),
+    grade: Yup.string().required("Razred je obavezan."),
+    school_year: Yup.string().required("Školska godina je obavezna."),
+  });
+
   const formikGlobal = useFormik({
     initialValues: {
       subject: "",
@@ -85,9 +104,10 @@ const OperativeAndGlobalPlans = () => {
       school_year: "",
       teacher: "",
     },
+    validationSchema: GlobalValidationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
-        await axios.post(`${PocketBaseCollection}/globalni_planovi/records`, {
+        await axios.post(`${PocketBaseCollection}/global_plan/records`, {
           ...values,
           user: userData.id,
         });
@@ -211,6 +231,22 @@ const OperativeAndGlobalPlans = () => {
                   ]
                 }
                 onChange={formikOperative.handleChange}
+                error={
+                  !!formikOperative.touched[
+                    key as keyof typeof formikOperative.touched
+                  ] &&
+                  !!formikOperative.errors[
+                    key as keyof typeof formikOperative.errors
+                  ]
+                }
+                helperText={
+                  formikOperative.touched[
+                    key as keyof typeof formikGlobal.touched
+                  ] &&
+                  formikOperative.errors[
+                    key as keyof typeof formikOperative.errors
+                  ]
+                }
               />
             ))}
 
@@ -248,6 +284,18 @@ const OperativeAndGlobalPlans = () => {
                   formikGlobal.values[key as keyof typeof formikGlobal.values]
                 }
                 onChange={formikGlobal.handleChange}
+                error={
+                  !!formikGlobal.touched[
+                    key as keyof typeof formikGlobal.touched
+                  ] &&
+                  !!formikGlobal.errors[key as keyof typeof formikGlobal.errors]
+                }
+                helperText={
+                  formikGlobal.touched[
+                    key as keyof typeof formikGlobal.touched
+                  ] &&
+                  formikGlobal.errors[key as keyof typeof formikGlobal.errors]
+                }
               />
             ))}
 

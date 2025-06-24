@@ -1,5 +1,13 @@
 @import "../../../../Styling/index";
 
+.errorBorder {
+  border: 1px solid #d32f2f !important;
+  border-radius: 4px;
+}
+.editorWrapper.errorBorder :global(.ProseMirror) {
+  border: none;
+  outline: none;
+}
 .editorWrapper {
   border: 1px solid #ccc;
   padding: 8px;
@@ -25,6 +33,7 @@
 
 .toolbar {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 12px;
 

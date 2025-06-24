@@ -121,8 +121,14 @@
   .referencesWrap {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 48px;
     flex: 1;
+
+    .testsWrap {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
   }
 
   .taskListWrapper {

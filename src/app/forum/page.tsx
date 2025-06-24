@@ -19,6 +19,7 @@ import { Button } from "@/Components/Button";
 import Preloader from "@/Components/Preloader/Preloader";
 import { useFetchNewsCategories } from "@/Hooks/getForumCategories";
 import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
+import { ForumNewsValidationSchema } from "@/app/forum/Validation";
 
 export default function Page() {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
@@ -54,7 +55,7 @@ export default function Page() {
       text: "",
       image_description: "",
     },
-
+    validationSchema: ForumNewsValidationSchema,
     onSubmit: async (values) => {
       try {
         const formData = new FormData();
@@ -192,8 +193,9 @@ export default function Page() {
             value={formik.values.title}
             onChange={formik.handleChange}
             name="title"
+            error={formik.touched.title && Boolean(formik.errors.title)}
+            helperText={formik.touched.title && formik.errors.title}
           />
-
           <TextField
             select
             label="Kategorija"
@@ -211,13 +213,16 @@ export default function Page() {
               </option>
             ))}
           </TextField>
-
           <TextEditorWithLabel
             onChange={(html) => formik.setFieldValue("text", html)}
             task={formik.values.text}
             label={"Tekst vesti"}
+            error={
+              formik.touched.text && formik.errors.text
+                ? formik.errors.text
+                : undefined
+            }
           />
-
           <div className={styles.imageUploadWrapper}>
             <div className={styles.inputWrapper}>
               <label>Dodajte fotografiju koju želite da objavite.</label>
@@ -238,19 +243,17 @@ export default function Page() {
             />
           </div>
 
-          <div>
-            <Button
-              title={"Dodaj vest"}
-              themes={[
-                "blue",
-                "standardWide",
-                "standardHeight",
-                "noBorderRadius",
-                "maxWidth",
-              ]}
-              type={"submit"}
-            />
-          </div>
+          <Button
+            title={"Dodaj vest"}
+            themes={[
+              "blue",
+              "standardWide",
+              "standardHeight",
+              "noBorderRadius",
+              "maxWidth",
+            ]}
+            type={"submit"}
+          />
         </form>
       </Modal>
     </main>

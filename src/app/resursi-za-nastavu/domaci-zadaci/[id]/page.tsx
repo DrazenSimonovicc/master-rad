@@ -20,6 +20,8 @@ import RequireAuth from "@/Components/RequireAuth/RequireAuth";
 import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
 import Preloader from "@/Components/Preloader/Preloader";
 import { Footer } from "@/Components/Footer";
+import { Title } from "@/Components/Texts/Title";
+import * as Yup from "yup";
 
 const Homework = () => {
   const searchParams = useSearchParams();
@@ -33,6 +35,10 @@ const Homework = () => {
     level3url: "/resursi-za-nastavu/domaci-zadaci",
   };
 
+  const [myCurrentPage, setMyCurrentPage] = useState(1);
+  const [otherCurrentPage, setOtherCurrentPage] = useState(1);
+  const itemsPerPage = 12;
+
   const {
     homework,
     error: onError,
@@ -44,12 +50,20 @@ const Homework = () => {
   const [open, setOpen] = useState(false);
   const handleOpenModal = () => setOpen(true);
 
+  const HomeworkValidationSchema = Yup.object().shape({
+    teaching_unit: Yup.string().required("Naziv nastavne jedinice je obavezan"),
+    tasks: Yup.array()
+      .of(Yup.string().required("Zadatak ne sme biti prazan"))
+      .min(1, "Potrebno je uneti bar jedan zadatak"),
+  });
+
   const formikHomework = useFormik({
     initialValues: {
       tasks: [""],
       subject: subject,
       teaching_unit: "",
     },
+    validationSchema: HomeworkValidationSchema,
     onSubmit: async (values, { resetForm }) => {
       const dataToSend = {
         ...values,
@@ -60,6 +74,7 @@ const Homework = () => {
           },
           {} as Record<string, string>,
         ),
+        user: userData?.id,
       };
 
       try {
@@ -77,7 +92,6 @@ const Homework = () => {
   });
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12;
 
   const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
     setCurrentPage(value);
@@ -96,6 +110,28 @@ const Homework = () => {
   }
 
   if (onError) return <div>Greška u učitavanju {onError}</div>;
+
+  const myHomeworks = homework.filter(
+    (t) =>
+      t.subject.toLowerCase() === subject.toLowerCase() &&
+      t.user === userData?.id,
+  );
+
+  const otherHomeworks = homework.filter(
+    (t) =>
+      t.subject.toLowerCase() === subject.toLowerCase() &&
+      t.user !== userData?.id,
+  );
+
+  const paginatedMyTests = myHomeworks.slice(
+    (myCurrentPage - 1) * itemsPerPage,
+    myCurrentPage * itemsPerPage,
+  );
+
+  const paginatedOtherTests = otherHomeworks.slice(
+    (otherCurrentPage - 1) * itemsPerPage,
+    otherCurrentPage * itemsPerPage,
+  );
 
   return (
     <div>
@@ -124,42 +160,96 @@ const Homework = () => {
 
         <section className={styles.container}>
           <div className={styles.referencesWrap}>
-            {filteredHomeworks
-              .slice(
-                (currentPage - 1) * itemsPerPage,
-                currentPage * itemsPerPage,
-              )
-              .map((plan) => {
-                const isExpanded = expandedUnitId === plan.id;
-
-                return (
-                  <div key={plan.id} className={styles.teachingUnitWrapper}>
-                    <div
-                      onClick={() => toggleExpandedUnit(plan.id)}
-                      className={`${styles.teachingUnitTitle} ${isExpanded ? styles.expanded : ""}`}
-                    >
-                      {plan.teaching_unit}
-                    </div>
-
-                    {isExpanded && (
-                      <div className={styles.taskListWrapper}>
-                        <TaskList plan={plan} expandedUnitId={expandedUnitId} />
+            <div className={styles.testsWrap}>
+              {myHomeworks.length > 0 && (
+                <>
+                  <Title
+                    level={3}
+                    text={"Moji domaći zadaci"}
+                    className={styles.title}
+                  />
+                  {paginatedMyTests.map((t) => {
+                    const isExpanded = expandedUnitId === t.id;
+                    return (
+                      <div key={t.id} className={styles.teachingUnitWrapper}>
+                        <div
+                          onClick={() => toggleExpandedUnit(t.id)}
+                          className={`${styles.teachingUnitTitle} ${
+                            isExpanded ? styles.expanded : ""
+                          }`}
+                        >
+                          {t.teaching_unit}
+                        </div>
+                        {isExpanded && (
+                          <div className={styles.taskListWrapper}>
+                            <TaskList
+                              plan={t}
+                              expandedUnitId={expandedUnitId}
+                            />
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                );
-              })}
-            {filteredHomeworks.length > itemsPerPage && (
-              <div className={styles.paginationContainer}>
-                <Pagination
-                  count={Math.ceil(filteredHomeworks.length / itemsPerPage)}
-                  page={currentPage}
-                  onChange={handlePageChange}
-                  color="primary"
-                  shape="rounded"
-                />
-              </div>
-            )}
+                    );
+                  })}
+                  {myHomeworks.length > itemsPerPage && (
+                    <div className={styles.paginationContainer}>
+                      <Pagination
+                        count={Math.ceil(myHomeworks.length / itemsPerPage)}
+                        page={myCurrentPage}
+                        onChange={(_, value) => setMyCurrentPage(value)}
+                        color="primary"
+                        shape="rounded"
+                      />
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+            <div className={styles.testsWrap}>
+              {otherHomeworks.length > 0 && (
+                <>
+                  <Title
+                    level={3}
+                    text={"Dodati od strane drugih"}
+                    className={styles.title}
+                  />
+                  {paginatedOtherTests.map((t) => {
+                    const isExpanded = expandedUnitId === t.id;
+                    return (
+                      <div key={t.id} className={styles.teachingUnitWrapper}>
+                        <div
+                          onClick={() => toggleExpandedUnit(t.id)}
+                          className={`${styles.teachingUnitTitle} ${
+                            isExpanded ? styles.expanded : ""
+                          }`}
+                        >
+                          {t.teaching_unit}
+                        </div>
+                        {isExpanded && (
+                          <div className={styles.taskListWrapper}>
+                            <TaskList
+                              plan={t}
+                              expandedUnitId={expandedUnitId}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                  {otherHomeworks.length > itemsPerPage && (
+                    <div className={styles.paginationContainer}>
+                      <Pagination
+                        count={Math.ceil(otherHomeworks.length / itemsPerPage)}
+                        page={otherCurrentPage}
+                        onChange={(_, value) => setOtherCurrentPage(value)}
+                        color="primary"
+                        shape="rounded"
+                      />
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
           </div>
           <aside className={styles.sidebarWrap}>
             <SidebarWrapper />
@@ -183,19 +273,37 @@ const Homework = () => {
               name="teaching_unit"
               value={formikHomework.values.teaching_unit}
               onChange={formikHomework.handleChange}
+              error={
+                formikHomework.touched.teaching_unit &&
+                Boolean(formikHomework.errors.teaching_unit)
+              }
+              helperText={
+                formikHomework.touched.teaching_unit &&
+                formikHomework.errors.teaching_unit
+              }
             />
 
-            {formikHomework.values.tasks.map((task, index) => (
-              <TextEditorWithLabel
-                key={index}
-                index={index}
-                task={task}
-                onChange={(val) =>
-                  formikHomework.setFieldValue(`tasks[${index}]`, val)
-                }
-                label={`Zadatak ${index + 1}`}
-              />
-            ))}
+            {formikHomework.values.tasks.map((task, index) => {
+              const taskError = (
+                formikHomework.errors.tasks as string[] | undefined
+              )?.[index];
+              const taskTouched = (
+                formikHomework.touched.tasks as boolean[] | undefined
+              )?.[index];
+
+              return (
+                <TextEditorWithLabel
+                  key={index}
+                  index={index}
+                  task={task}
+                  onChange={(val) =>
+                    formikHomework.setFieldValue(`tasks[${index}]`, val)
+                  }
+                  label={`Zadatak ${index + 1}`}
+                  error={taskTouched && taskError ? taskError : undefined}
+                />
+              );
+            })}
 
             <div style={{ marginTop: "32px" }}>
               <Button

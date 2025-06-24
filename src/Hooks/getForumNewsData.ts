@@ -17,7 +17,9 @@ export const useFetchForumNews = () => {
       setForumNews(response.data.items || []);
       setError(null);
     } catch (error: any) {
-      setError("Error fetching to-do items. Please try again later.");
+      setError(
+        "Problem prilikom učitvanja forumskih vesti. Molimo Vas da pokušate kasnije.",
+      );
     } finally {
       setLoading(false);
     }

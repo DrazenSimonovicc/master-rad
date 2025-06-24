@@ -5,6 +5,7 @@ import footerImage from "@/Assets/footerImages/img7.jpg";
 import { useFetchFooter } from "@/Hooks/getFooterData";
 import { Button } from "@/Components/Button";
 import TextInput from "@/Components/Inputs/TextInput/TextInput";
+import Link from "next/link";
 
 //ToDo: treba srediti dizajn da izgleda pristojno
 export const Footer: FC = () => {
@@ -22,8 +23,10 @@ export const Footer: FC = () => {
           <div className={styles.footerPart}>
             <div className={styles.footerHeader}>Podaci o studentu:</div>
             <div>
-              {data?.expand?.personal?.first_name}{" "}
-              {data?.expand?.personal?.last_name}
+              <Link href={"/drazen-simonovic"}>
+                {data?.expand?.personal?.first_name}{" "}
+                {data?.expand?.personal?.last_name}
+              </Link>
             </div>
             <p>{data?.expand.personal.title}</p>
             <p>{data?.expand?.personal?.index_number}</p>

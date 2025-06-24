@@ -82,9 +82,14 @@
   }
 
   &.maxWidth {
-    width: 300px;
+    width: 280px;
     padding: 12px;
-    max-width: 300px;
+    max-width: 280px;
+
+    @include breakpoint("375px") {
+      width: 300px;
+      max-width: 300px;
+    }
   }
 
   &.standardHeight {

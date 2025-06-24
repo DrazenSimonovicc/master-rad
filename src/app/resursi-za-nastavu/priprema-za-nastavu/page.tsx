@@ -18,6 +18,7 @@ import { useFetchLessonPlansForSubject } from "@/Hooks/LessonPlan/getLessonPlanF
 import { lessonPlanSubjectConfig } from "@/app/resursi-za-nastavu/priprema-za-nastavu/config";
 import Preloader from "@/Components/Preloader/Preloader";
 import { Footer } from "@/Components/Footer";
+import * as Yup from "yup";
 
 const LessonPlanSubjects = () => {
   const breadCrumb = {
@@ -41,11 +42,19 @@ const LessonPlanSubjects = () => {
 
   const handleOpenOperativeModal = () => setOpenTestModal(true);
 
+  const ValidationSchema = Yup.object({
+    subject: Yup.string()
+      .required("Naziv predmeta je obavezan")
+      .min(2, "Predmet mora imati bar 2 slova"),
+    grade: Yup.string().required("Razred je obavezan"),
+  });
+
   const formikOperative = useFormik({
     initialValues: {
       subject: "",
       grade: "",
     },
+    validationSchema: ValidationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
         await axios.post(
@@ -144,6 +153,22 @@ const LessonPlanSubjects = () => {
                   ]
                 }
                 onChange={formikOperative.handleChange}
+                error={
+                  !!formikOperative.touched[
+                    key as keyof typeof formikOperative.touched
+                  ] &&
+                  !!formikOperative.errors[
+                    key as keyof typeof formikOperative.errors
+                  ]
+                }
+                helperText={
+                  formikOperative.touched[
+                    key as keyof typeof formikOperative.touched
+                  ] &&
+                  formikOperative.errors[
+                    key as keyof typeof formikOperative.errors
+                  ]
+                }
               />
             ))}
 

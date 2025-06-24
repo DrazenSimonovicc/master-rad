@@ -19,6 +19,11 @@
         flex-direction: column;
         text-align: center;
 
+        a {
+          text-decoration: none;
+          color: $white;
+        }
+
         .footerHeader {
           font-weight: bold;
           margin-bottom: 16px;

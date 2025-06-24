@@ -11,12 +11,14 @@ export const useFetchFooter = () => {
   async function fetchFooterData() {
     try {
       const response = await axios.get(
-        `${PocketBaseCollection}/Footer_data/records?expand=faculty,personal`,
+        `${PocketBaseCollection}/footer_data/records?expand=faculty,personal`,
       );
       setFooterData(response.data.items || []);
       setError(null);
     } catch (error: any) {
-      setError("Error fetching footer data. Please try again later.");
+      setError(
+        "Problem prilikom učitvanja podataka koji se nalaze u futeru. Molimo Vas da pokušate kasnije.",
+      );
     } finally {
       setLoading(false);
     }

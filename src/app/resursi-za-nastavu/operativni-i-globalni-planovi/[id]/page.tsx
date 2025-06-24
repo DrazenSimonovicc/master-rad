@@ -72,7 +72,7 @@ const SingleOperativnePlan = () => {
     onSubmit: async (values, { resetForm }) => {
       try {
         await axios.post(
-          `${PocketBaseCollection}/operativni_plan_cas/records`,
+          `${PocketBaseCollection}/operative_plan_for_class/records`,
           values,
         );
         resetForm();
@@ -97,7 +97,7 @@ const SingleOperativnePlan = () => {
     onSubmit: async (values, { resetForm }) => {
       try {
         await axios.post(
-          `${PocketBaseCollection}/globalni_planovi_za_predmet/records`,
+          `${PocketBaseCollection}/global_plan_for_subject/records`,
           values,
         );
         resetForm();

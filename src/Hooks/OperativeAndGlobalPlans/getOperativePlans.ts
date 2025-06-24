@@ -18,7 +18,7 @@ export const useFetchOperativePlans = (userId: string) => {
 
     try {
       const response = await axios.get(
-        `${PocketBaseCollection}/operativni_planovi/records`,
+        `${PocketBaseCollection}/operative_plan/records`,
         {
           params: {
             filter: `user="${userId}"`,
@@ -28,7 +28,9 @@ export const useFetchOperativePlans = (userId: string) => {
       setOperativePlans(response.data.items || []);
       setError(null);
     } catch (error: any) {
-      setError("Error fetching plans. Please try again later.");
+      setError(
+        "Problem prilikom učitvanja operativnih planova. Molimo Vas da pokušate kasnije.",
+      );
     } finally {
       setLoading(false);
     }

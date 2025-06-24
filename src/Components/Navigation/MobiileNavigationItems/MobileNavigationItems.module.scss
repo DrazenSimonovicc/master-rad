@@ -41,7 +41,7 @@ $navGray: #404040;
   position: absolute;
   top: 0;
   right: 0;
-  background-color: $main-color-dark-blue;
+  background-color: $light-blue;
   border: none;
   width: 44px;
   height: 44px;
@@ -74,7 +74,7 @@ $navGray: #404040;
   }
 
   .submenuItem {
-    background-color: $main-color-dark-blue;
+    background-color: $light-blue;
     border-top: $navBorder;
     padding: 10px 20px 15px 30px;
     font-size: 13px;
@@ -136,7 +136,7 @@ $navGray: #404040;
   }
 
   .languageOption {
-    background-color: $main-color-dark-blue;
+    background-color: $light-blue;
     padding: 10px 20px;
     font-size: 15px;
     color: $navGray;

@@ -18,6 +18,7 @@ import SubjectCard from "@/Components/SubjectCard/SubjectCard";
 import RequireAuth from "@/Components/RequireAuth/RequireAuth";
 import Preloader from "@/Components/Preloader/Preloader";
 import { Footer } from "@/Components/Footer";
+import * as Yup from "yup";
 
 const TestsSubjects = () => {
   const breadCrumb = {
@@ -42,11 +43,19 @@ const TestsSubjects = () => {
 
   const handleOpenOperativeModal = () => setOpenTestModal(true);
 
+  const ValidationSchema = Yup.object({
+    subject: Yup.string()
+      .required("Naziv predmeta je obavezan")
+      .min(2, "Predmet mora imati bar 2 slova"),
+    grade: Yup.string().required("Razred je obavezan"),
+  });
+
   const formikOperative = useFormik({
     initialValues: {
       subject: "",
       grade: "",
     },
+    validationSchema: ValidationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
         await axios.post(`${PocketBaseCollection}/test_subjects/records`, {
@@ -142,6 +151,22 @@ const TestsSubjects = () => {
                   ]
                 }
                 onChange={formikOperative.handleChange}
+                error={
+                  !!formikOperative.touched[
+                    key as keyof typeof formikOperative.touched
+                  ] &&
+                  !!formikOperative.errors[
+                    key as keyof typeof formikOperative.errors
+                  ]
+                }
+                helperText={
+                  formikOperative.touched[
+                    key as keyof typeof formikOperative.touched
+                  ] &&
+                  formikOperative.errors[
+                    key as keyof typeof formikOperative.errors
+                  ]
+                }
               />
             ))}
 

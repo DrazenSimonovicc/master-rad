@@ -19,11 +19,13 @@ import styles from "./TextEditor.module.scss";
 interface RichTextEditorProps {
   content: string;
   onChange: (html: string) => void;
+  error?: boolean;
 }
 
 export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   content,
   onChange,
+  error,
 }) => {
   const editor = useEditor({
     extensions: [StarterKit, Underline],
@@ -41,7 +43,9 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   });
 
   return (
-    <div className={styles.editorWrapper}>
+    <div
+      className={`${styles.editorWrapper} ${error ? styles.errorBorder : ""}`}
+    >
       {editor && (
         <div className={styles.toolbar}>
           <button

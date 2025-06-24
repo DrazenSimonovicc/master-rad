@@ -18,7 +18,9 @@ export const useFetchLessonPlan = () => {
       setLessonPlan(response.data.items || []);
       setError(null);
     } catch (error: any) {
-      setError("Error fetching plans. Please try again later.");
+      setError(
+        "Problem prilikom učitvanja priprema za čas. Molimo Vas da pokušate kasnije.",
+      );
     } finally {
       setLoading(false);
     }

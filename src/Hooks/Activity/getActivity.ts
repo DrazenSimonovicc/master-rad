@@ -24,7 +24,9 @@ export const useFetchActivity = (userId?: string) => {
       setActivity(response.data.items || []);
       setError(null);
     } catch (error: any) {
-      setError("Error fetching activities. Please try again later.");
+      setError(
+        "Problem prilikom učitvanja podataka koji se nalaze u aktivnostima. Molimo Vas da pokušate kasnije.",
+      );
     } finally {
       setLoading(false);
     }

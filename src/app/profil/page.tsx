@@ -144,17 +144,17 @@ const ProfilePage: FC = () => {
                   <div className={styles.avatarUpload}>
                     <img
                       src={`http://127.0.0.1:8090/api/files/_pb_users_auth_/${currentUser.id}/${currentUser.avatar}`}
-                      alt="User Avatar"
+                      alt="Avatar"
                       className={styles.avatar}
                     />
                   </div>
                 ) : (
                   <div className={styles.avatarUpload}>
-                    <label>Upload Avatar</label>
+                    <label>Dodaj profilnu sliku</label>
                     {avatar && (
                       <img
                         src={`http://127.0.0.1:8090/api/files/_pb_users_auth_/${currentUser.id}/${avatar}`}
-                        alt="User Avatar"
+                        alt="Profilna slika"
                         className={styles.avatar}
                       />
                     )}
@@ -285,7 +285,7 @@ const ProfilePage: FC = () => {
                 {currentUser.avatar ? (
                   <img
                     src={`http://127.0.0.1:8090/api/files/_pb_users_auth_/${currentUser.id}/${currentUser.avatar}`}
-                    alt="User Avatar"
+                    alt="Avatar"
                     className={styles.image}
                   />
                 ) : currentUser.gender === "Muški" ? (

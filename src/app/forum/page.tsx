@@ -120,6 +120,16 @@ export default function Page() {
     return <div>Error: {forumNewsError || categoriesError}</div>;
   }
 
+  const mainNewsList = newsList.filter((news) => news.main_news);
+
+  const filteredNewsList = selectedCategoryId
+    ? newsList.filter(
+        (news) =>
+          news.expand.category?.id === selectedCategoryId ||
+          news.expand.category?.category_name === selectedCategoryId,
+      )
+    : newsList;
+
   return (
     <main>
       <Header
@@ -147,7 +157,7 @@ export default function Page() {
       <div className={styles.mainNewsWrapper}>
         <div className={styles.mainNews}>
           <Title text={"Glavna vest"} level={2} />
-          <ForumNews data={newsList.filter((a) => a.main_news)} />
+          <ForumNews data={mainNewsList} />
         </div>
       </div>
 
@@ -159,7 +169,7 @@ export default function Page() {
         <div className={styles.otherNews}>
           <Title text={"Ostale vesti"} level={2} />
           <ForumNews
-            data={newsList
+            data={filteredNewsList
               .filter((a) => !a.main_news)
               .sort(
                 (a, b) =>

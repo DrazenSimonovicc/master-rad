@@ -31,6 +31,13 @@ export interface ImageType {
   linkUrl?: string;
 }
 
+export interface NewsCategoriesItemType {
+  id: string;
+  category_name: string;
+  image: string;
+  image_description: string;
+}
+
 export interface ForumNewsItemType {
   id: string;
   author_name?: string;
@@ -48,7 +55,7 @@ export interface ForumNewsItemType {
   likes: number;
   dislikes: number;
   expand: {
-    category: { category_name: string; id: string };
+    category: NewsCategoriesItemType;
     user: {
       current_work: string;
       name: string;
@@ -58,13 +65,6 @@ export interface ForumNewsItemType {
     current_work: string;
     name: string;
   };
-}
-
-export interface NewsCategoriesItemType {
-  id: string;
-  category_name: string;
-  image: string;
-  image_description: string;
 }
 
 export interface userDataType {

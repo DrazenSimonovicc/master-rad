@@ -23,6 +23,7 @@ import Preloader from "@/Components/Preloader/Preloader";
 import { Footer } from "@/Components/Footer";
 import { Title } from "@/Components/Texts/Title";
 import clsx from "clsx";
+import * as Yup from "yup";
 
 const LessonPlan = () => {
   const searchParams = useSearchParams();
@@ -128,6 +129,41 @@ const LessonPlan = () => {
     );
   }, [lessonPlan, subject, userData?.id]);
 
+  const lessonPlanValidationSchema = Yup.object().shape({
+    date: Yup.string().required("Datum je obavezan"),
+    class_number: Yup.string().required("Broj časa je obavezan"),
+    grade_and_class: Yup.string().required("Razred i odeljenje su obavezni"),
+    teaching_topic: Yup.string().required("Tema časa je obavezna"),
+    lesson_name: Yup.string().required("Naziv časa je obavezan"),
+    previous_lesson: Yup.string().required("Prethodni čas je obavezan"),
+    next_lesson: Yup.string().required("Sledeći čas je obavezan"),
+    type_of_lesson: Yup.string().required("Tip časa je obavezan"),
+    educational_objectives: Yup.string().required(
+      "Obrazovni ciljevi su obavezni",
+    ),
+    social_objectives: Yup.string().required("Socijalni ciljevi su obavezni"),
+    functional_objectives: Yup.string().required(
+      "Funkcionalni ciljevi su obavezni",
+    ),
+    teaching_methods: Yup.string().required("Metode nastave su obavezne"),
+    forms_of_work: Yup.string().required("Oblici rada su obavezni"),
+    instructional_materials: Yup.string().required(
+      "Nastavna sredstva su obavezna",
+    ),
+    correlation: Yup.string().required("Korelacija je obavezna"),
+    literature: Yup.string().required("Literatura je obavezna"),
+    introduction_small: Yup.string().required("Uvod (kratak) je obavezan"),
+    main_activity_small: Yup.string().required(
+      "Glavna aktivnost (kratko) je obavezna",
+    ),
+    conclusion_small: Yup.string().required("Zaključak (kratko) je obavezan"),
+    introduction: Yup.string().required("Uvod je obavezan"),
+    main: Yup.string().required("Glavni deo je obavezan"),
+    conclusion: Yup.string().required("Zaključak je obavezan"),
+    subject: Yup.string().required("Predmet je obavezan"),
+    user: Yup.string().required("Korisnik nije validan"),
+  });
+
   const formikLessonPlan = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -157,6 +193,7 @@ const LessonPlan = () => {
       user: userData?.id,
       file: null,
     },
+    validationSchema: lessonPlanValidationSchema,
     onSubmit: async (values) => {
       try {
         const finalValues = {
@@ -600,6 +637,13 @@ const LessonPlan = () => {
                 name="date"
                 value={formikLessonPlan.values.date}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.date &&
+                  Boolean(formikLessonPlan.errors.date)
+                }
+                helperText={
+                  formikLessonPlan.touched.date && formikLessonPlan.errors.date
+                }
               />
 
               <TextField
@@ -611,6 +655,14 @@ const LessonPlan = () => {
                 name="class_number"
                 value={formikLessonPlan.values.class_number}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.class_number &&
+                  Boolean(formikLessonPlan.errors.class_number)
+                }
+                helperText={
+                  formikLessonPlan.touched.class_number &&
+                  formikLessonPlan.errors.class_number
+                }
               />
               <TextField
                 label={LessonConfig.grade_and_class.label}
@@ -621,6 +673,14 @@ const LessonPlan = () => {
                 name="grade_and_class"
                 value={formikLessonPlan.values.grade_and_class}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.grade_and_class &&
+                  Boolean(formikLessonPlan.errors.grade_and_class)
+                }
+                helperText={
+                  formikLessonPlan.touched.grade_and_class &&
+                  formikLessonPlan.errors.grade_and_class
+                }
               />
               <span
                 style={{
@@ -640,6 +700,14 @@ const LessonPlan = () => {
                 name="subject"
                 value={formikLessonPlan.values.subject}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.subject &&
+                  Boolean(formikLessonPlan.errors.subject)
+                }
+                helperText={
+                  formikLessonPlan.touched.subject &&
+                  formikLessonPlan.errors.subject
+                }
               />
               <TextField
                 label={LessonConfig.teaching_topic.label}
@@ -650,6 +718,14 @@ const LessonPlan = () => {
                 name="teaching_topic"
                 value={formikLessonPlan.values.teaching_topic}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.teaching_topic &&
+                  Boolean(formikLessonPlan.errors.teaching_topic)
+                }
+                helperText={
+                  formikLessonPlan.touched.teaching_topic &&
+                  formikLessonPlan.errors.teaching_topic
+                }
               />
               <TextField
                 label={LessonConfig.lesson_name.label}
@@ -660,6 +736,14 @@ const LessonPlan = () => {
                 name="lesson_name"
                 value={formikLessonPlan.values.lesson_name}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.lesson_name &&
+                  Boolean(formikLessonPlan.errors.lesson_name)
+                }
+                helperText={
+                  formikLessonPlan.touched.lesson_name &&
+                  formikLessonPlan.errors.lesson_name
+                }
               />
               <TextField
                 label={LessonConfig.previous_lesson.label}
@@ -670,6 +754,14 @@ const LessonPlan = () => {
                 name="previous_lesson"
                 value={formikLessonPlan.values.previous_lesson}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.previous_lesson &&
+                  Boolean(formikLessonPlan.errors.previous_lesson)
+                }
+                helperText={
+                  formikLessonPlan.touched.previous_lesson &&
+                  formikLessonPlan.errors.previous_lesson
+                }
               />
 
               <TextField
@@ -681,6 +773,14 @@ const LessonPlan = () => {
                 name="next_lesson"
                 value={formikLessonPlan.values.next_lesson}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.next_lesson &&
+                  Boolean(formikLessonPlan.errors.next_lesson)
+                }
+                helperText={
+                  formikLessonPlan.touched.next_lesson &&
+                  formikLessonPlan.errors.next_lesson
+                }
               />
               <TextField
                 label={LessonConfig.type_of_lesson.label}
@@ -691,6 +791,14 @@ const LessonPlan = () => {
                 name="type_of_lesson"
                 value={formikLessonPlan.values.type_of_lesson}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.type_of_lesson &&
+                  Boolean(formikLessonPlan.errors.type_of_lesson)
+                }
+                helperText={
+                  formikLessonPlan.touched.type_of_lesson &&
+                  formikLessonPlan.errors.type_of_lesson
+                }
               />
               <span
                 style={{
@@ -710,6 +818,14 @@ const LessonPlan = () => {
                 name="educational_objectives"
                 value={formikLessonPlan.values.educational_objectives}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.educational_objectives &&
+                  Boolean(formikLessonPlan.errors.educational_objectives)
+                }
+                helperText={
+                  formikLessonPlan.touched.educational_objectives &&
+                  formikLessonPlan.errors.educational_objectives
+                }
               />
               <TextField
                 label={LessonConfig.social_objectives.label}
@@ -720,6 +836,14 @@ const LessonPlan = () => {
                 name="social_objectives"
                 value={formikLessonPlan.values.social_objectives}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.social_objectives &&
+                  Boolean(formikLessonPlan.errors.social_objectives)
+                }
+                helperText={
+                  formikLessonPlan.touched.social_objectives &&
+                  formikLessonPlan.errors.social_objectives
+                }
               />
               <TextField
                 label={LessonConfig.functional_objectives.label}
@@ -730,6 +854,14 @@ const LessonPlan = () => {
                 name="functional_objectives"
                 value={formikLessonPlan.values.functional_objectives}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.functional_objectives &&
+                  Boolean(formikLessonPlan.errors.functional_objectives)
+                }
+                helperText={
+                  formikLessonPlan.touched.functional_objectives &&
+                  formikLessonPlan.errors.functional_objectives
+                }
               />
               <TextField
                 label={LessonConfig.teaching_methods.label}
@@ -740,6 +872,14 @@ const LessonPlan = () => {
                 name="teaching_methods"
                 value={formikLessonPlan.values.teaching_methods}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.teaching_methods &&
+                  Boolean(formikLessonPlan.errors.teaching_methods)
+                }
+                helperText={
+                  formikLessonPlan.touched.teaching_methods &&
+                  formikLessonPlan.errors.teaching_methods
+                }
               />
               <TextField
                 label={LessonConfig.forms_of_work.label}
@@ -750,6 +890,14 @@ const LessonPlan = () => {
                 name="forms_of_work"
                 value={formikLessonPlan.values.forms_of_work}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.forms_of_work &&
+                  Boolean(formikLessonPlan.errors.forms_of_work)
+                }
+                helperText={
+                  formikLessonPlan.touched.forms_of_work &&
+                  formikLessonPlan.errors.forms_of_work
+                }
               />
               <TextField
                 label={LessonConfig.instructional_materials.label}
@@ -760,6 +908,14 @@ const LessonPlan = () => {
                 name="instructional_materials"
                 value={formikLessonPlan.values.instructional_materials}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.instructional_materials &&
+                  Boolean(formikLessonPlan.errors.instructional_materials)
+                }
+                helperText={
+                  formikLessonPlan.touched.instructional_materials &&
+                  formikLessonPlan.errors.instructional_materials
+                }
               />
               <TextField
                 label={LessonConfig.correlation.label}
@@ -770,6 +926,14 @@ const LessonPlan = () => {
                 name="correlation"
                 value={formikLessonPlan.values.correlation}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.correlation &&
+                  Boolean(formikLessonPlan.errors.correlation)
+                }
+                helperText={
+                  formikLessonPlan.touched.correlation &&
+                  formikLessonPlan.errors.correlation
+                }
               />
               <TextField
                 label={LessonConfig.literature.label}
@@ -780,6 +944,14 @@ const LessonPlan = () => {
                 name="literature"
                 value={formikLessonPlan.values.literature}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.literature &&
+                  Boolean(formikLessonPlan.errors.literature)
+                }
+                helperText={
+                  formikLessonPlan.touched.literature &&
+                  formikLessonPlan.errors.literature
+                }
               />
               <span
                 style={{
@@ -799,6 +971,14 @@ const LessonPlan = () => {
                 name="introduction_small"
                 value={formikLessonPlan.values.introduction_small}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.introduction_small &&
+                  Boolean(formikLessonPlan.errors.introduction_small)
+                }
+                helperText={
+                  formikLessonPlan.touched.introduction_small &&
+                  formikLessonPlan.errors.introduction_small
+                }
               />
               <TextField
                 label={LessonConfig.main_activity_small.label}
@@ -809,6 +989,14 @@ const LessonPlan = () => {
                 name="main_activity_small"
                 value={formikLessonPlan.values.main_activity_small}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.main_activity_small &&
+                  Boolean(formikLessonPlan.errors.main_activity_small)
+                }
+                helperText={
+                  formikLessonPlan.touched.main_activity_small &&
+                  formikLessonPlan.errors.main_activity_small
+                }
               />
               <TextField
                 label={LessonConfig.conclusion_small.label}
@@ -819,6 +1007,14 @@ const LessonPlan = () => {
                 name="conclusion_small"
                 value={formikLessonPlan.values.conclusion_small}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.conclusion_small &&
+                  Boolean(formikLessonPlan.errors.conclusion_small)
+                }
+                helperText={
+                  formikLessonPlan.touched.conclusion_small &&
+                  formikLessonPlan.errors.conclusion_small
+                }
               />
               <span
                 style={{
@@ -836,6 +1032,12 @@ const LessonPlan = () => {
                   formikLessonPlan.setFieldValue("introduction", value)
                 }
                 label={LessonConfig.introduction.label}
+                error={
+                  formikLessonPlan.touched.introduction &&
+                  formikLessonPlan.errors.introduction
+                    ? formikLessonPlan.errors.introduction
+                    : undefined
+                }
               />
 
               <TextEditorWithLabel
@@ -845,6 +1047,11 @@ const LessonPlan = () => {
                   formikLessonPlan.setFieldValue("main", value)
                 }
                 label={LessonConfig.main.label}
+                error={
+                  formikLessonPlan.touched.main && formikLessonPlan.errors.main
+                    ? formikLessonPlan.errors.main
+                    : undefined
+                }
               />
 
               <TextEditorWithLabel
@@ -854,6 +1061,12 @@ const LessonPlan = () => {
                   formikLessonPlan.setFieldValue("conclusion", value)
                 }
                 label={LessonConfig.conclusion.label}
+                error={
+                  formikLessonPlan.touched.conclusion &&
+                  formikLessonPlan.errors.conclusion
+                    ? formikLessonPlan.errors.conclusion
+                    : undefined
+                }
               />
 
               <div style={{ marginTop: "60px" }}>
@@ -900,6 +1113,14 @@ const LessonPlan = () => {
                 name="class_number"
                 value={formikLessonPlan.values.class_number}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.class_number &&
+                  Boolean(formikLessonPlan.errors.class_number)
+                }
+                helperText={
+                  formikLessonPlan.touched.class_number &&
+                  formikLessonPlan.errors.class_number
+                }
               />
               <TextField
                 label={LessonConfig.date.label}
@@ -910,6 +1131,13 @@ const LessonPlan = () => {
                 name="date"
                 value={formikLessonPlan.values.date}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.date &&
+                  Boolean(formikLessonPlan.errors.date)
+                }
+                helperText={
+                  formikLessonPlan.touched.date && formikLessonPlan.errors.date
+                }
               />
               <TextField
                 label={LessonConfig.teaching_topic.label}
@@ -920,6 +1148,14 @@ const LessonPlan = () => {
                 name="teaching_topic"
                 value={formikLessonPlan.values.teaching_topic}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.teaching_topic &&
+                  Boolean(formikLessonPlan.errors.teaching_topic)
+                }
+                helperText={
+                  formikLessonPlan.touched.teaching_topic &&
+                  formikLessonPlan.errors.teaching_topic
+                }
               />
               <TextField
                 label={LessonConfig.lesson_name.label}
@@ -930,6 +1166,14 @@ const LessonPlan = () => {
                 name="lesson_name"
                 value={formikLessonPlan.values.lesson_name}
                 onChange={formikLessonPlan.handleChange}
+                error={
+                  formikLessonPlan.touched.lesson_name &&
+                  Boolean(formikLessonPlan.errors.lesson_name)
+                }
+                helperText={
+                  formikLessonPlan.touched.lesson_name &&
+                  formikLessonPlan.errors.lesson_name
+                }
               />
 
               <div style={{ marginTop: "60px" }}>

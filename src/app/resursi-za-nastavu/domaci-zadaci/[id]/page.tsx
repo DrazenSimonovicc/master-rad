@@ -91,14 +91,6 @@ const Homework = () => {
     },
   });
 
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const handlePageChange = (_: React.ChangeEvent<unknown>, value: number) => {
-    setCurrentPage(value);
-  };
-
-  const filteredHomeworks = homework.filter((plan) => plan.subject === subject);
-
   const [expandedUnitId, setExpandedUnitId] = useState<string | null>(null);
 
   const toggleExpandedUnit = (id: string) => {

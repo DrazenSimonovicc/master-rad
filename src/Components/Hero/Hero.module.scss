@@ -1,4 +1,4 @@
-@import "src/Styling/index";
+@use "src/Styling/index" as *;
 
 //TODO: za fontove proveriti da li da se radi calc 100vw / sa nekom vrenosti ili da se napravi da budu fixni, ovde su fixni
 

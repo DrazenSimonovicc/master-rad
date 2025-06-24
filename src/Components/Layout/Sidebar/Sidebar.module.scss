@@ -1,4 +1,5 @@
-@import "src/Styling/index";
+@use "src/Styling/index" as *;
+
 .container {
   .titleWrap {
     margin-bottom: 30px;

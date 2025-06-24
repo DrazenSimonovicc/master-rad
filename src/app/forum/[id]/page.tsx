@@ -21,7 +21,6 @@ const NewsArticle = () => {
 
   const [newsItem, setNewsItem] = useState<ForumNewsItemType | null>(null);
   const params = useParams();
-  const { userData } = useAuth();
 
   const [likes, setLikes] = useState<number>(0);
   const [dislikes, setDislikes] = useState<number>(0);

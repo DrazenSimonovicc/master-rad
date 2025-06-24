@@ -48,7 +48,7 @@ const SingleOperativnePlan = () => {
     refetch: refetchGlobal,
   } = useFetchGlobalPlansWithSubject();
 
-  const { userData, isLoggedIn } = useAuth();
+  const { isLoggedIn } = useAuth();
   const [open, setOpen] = useState(false);
   const handleOpenModal = () => setOpen(true);
 
@@ -172,7 +172,7 @@ const SingleOperativnePlan = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredOperativePlans.map((plan, index) => (
+                    {filteredOperativePlans.map((plan) => (
                       <tr key={plan.id}>
                         <td>{plan.lesson_number}</td>
                         <td>{plan.teaching_topic}</td>
@@ -209,7 +209,7 @@ const SingleOperativnePlan = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {filteredGlobalPlans.map((plan, index) => (
+                    {filteredGlobalPlans.map((plan) => (
                       <tr key={plan.id}>
                         <td>{plan.class_theme}</td>
                         <td>{plan.learning_objectives}</td>

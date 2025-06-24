@@ -130,7 +130,13 @@ const Calendar = () => {
     return <Preloader page />;
   }
 
+  if (isLoggedIn && classScheduleLoading) {
+    return <Preloader page />;
+  }
+
   if (isLoggedIn && onError) return <div>Greška u učitavanju {onError}</div>;
+  if (isLoggedIn && classScheduleError)
+    return <div>Greška u učitavanju {onError}</div>;
 
   return (
     <div>
@@ -185,20 +191,18 @@ const Calendar = () => {
               <>
                 <Title text="Aktivnosti" level={2} className={styles.title} />
                 <div className={styles.activityWrapper}>
-                  {activity.map(
-                    ({ id, type_of_activity, title, date, description }) => (
-                      <Link
-                        key={id}
-                        href={{
-                          pathname: `/kalendar-aktivnosti/${id}`,
-                          query: { id, title },
-                        }}
-                        className={styles.link}
-                      >
-                        <strong>{type_of_activity}</strong> - {title} - {date}
-                      </Link>
-                    ),
-                  )}
+                  {activity.map(({ id, type_of_activity, title, date }) => (
+                    <Link
+                      key={id}
+                      href={{
+                        pathname: `/kalendar-aktivnosti/${id}`,
+                        query: { id, title },
+                      }}
+                      className={styles.link}
+                    >
+                      <strong>{type_of_activity}</strong> - {title} - {date}
+                    </Link>
+                  ))}
                 </div>
               </>
             )}

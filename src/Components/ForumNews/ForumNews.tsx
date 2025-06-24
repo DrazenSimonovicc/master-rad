@@ -1,5 +1,5 @@
 "use client";
-import { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import styles from "./ForumNews.module.scss";
 import Image from "next/image";
 import { ForumNewsItemType } from "@/Interfaces/BaseType";

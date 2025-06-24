@@ -25,7 +25,6 @@ const Announcements = () => {
     announcements = [],
     error: onError,
     loading: onLoading,
-    refetch: refetchActivity,
   } = useFetchAnnouncements();
 
   const [page, setPage] = useState(1);

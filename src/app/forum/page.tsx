@@ -112,12 +112,6 @@ export default function Page() {
     level2url: "/forum",
   };
 
-  const filteredNews = selectedCategoryId
-    ? newsList.filter(
-        (news) => news.expand?.category?.category_name === selectedCategoryId,
-      )
-    : newsList;
-
   if (forumNewsLoading || categoriesLoading) {
     return <Preloader page />;
   }

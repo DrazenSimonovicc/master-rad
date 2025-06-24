@@ -1,4 +1,4 @@
-@import "src/Styling/index";
+@use "src/Styling/index" as *;
 
 .taskListWrapper {
   margin-top: -1px;

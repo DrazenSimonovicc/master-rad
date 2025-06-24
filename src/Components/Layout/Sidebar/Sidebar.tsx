@@ -2,7 +2,6 @@
 import React, { FC, useEffect, useState } from "react";
 import styles from "./Sidebar.module.scss";
 import clsx from "clsx";
-import Image from "next/image";
 
 import { ImageType } from "@/Interfaces/BaseType";
 import { Title } from "@/Components/Texts/Title";
@@ -25,7 +24,6 @@ interface SidebarProps {
   contactTitle: string;
   mainTitle?: string;
   searchSidebar?: boolean;
-  placeholderText?: string;
 }
 
 interface SidebarType {
@@ -41,15 +39,9 @@ export const Sidebar: FC<SidebarProps> = ({
   contactTitle,
   mainTitle,
   searchSidebar,
-  placeholderText,
 }) => {
   const [index, setIndex] = React.useState<number>(-1);
   const [open, setOpen] = useState(false);
-
-  const handleImageClick = (index: number) => () => {
-    setIndex(index);
-    setOpen(true);
-  };
 
   useEffect(() => {
     if (open) {

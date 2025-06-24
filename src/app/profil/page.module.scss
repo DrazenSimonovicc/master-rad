@@ -1,6 +1,4 @@
-@import "src/Styling/index";
-
-@import "src/Styling/index";
+@use "src/Styling/index" as *;
 
 .container {
   display: flex;

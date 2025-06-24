@@ -34,6 +34,5 @@ export const useFetchAnnouncements = () => {
     announcements,
     error,
     loading,
-    refetch: fetchAnnouncements,
   };
 };

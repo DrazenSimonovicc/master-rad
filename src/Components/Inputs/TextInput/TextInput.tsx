@@ -1,5 +1,5 @@
 "use client";
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import clsx from "clsx";
 import styles from "./TextInput.module.scss";

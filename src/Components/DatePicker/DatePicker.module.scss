@@ -1,4 +1,4 @@
-@import "src/Styling/index";
+@use "src/Styling/index" as *;
 
 .datePickerWrap {
   display: flex;

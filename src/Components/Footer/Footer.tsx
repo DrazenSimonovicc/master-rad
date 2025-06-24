@@ -3,11 +3,8 @@ import styles from "./Footer.module.scss";
 import Image from "next/image";
 import footerImage from "@/Assets/footerImages/img7.jpg";
 import { useFetchFooter } from "@/Hooks/getFooterData";
-import { Button } from "@/Components/Button";
-import TextInput from "@/Components/Inputs/TextInput/TextInput";
 import Link from "next/link";
 
-//ToDo: treba srediti dizajn da izgleda pristojno
 export const Footer: FC = () => {
   const { footerData, error, loading } = useFetchFooter();
 

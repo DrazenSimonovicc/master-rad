@@ -96,7 +96,7 @@ const LessonPlan = () => {
     onSubmit: async (values) => {
       try {
         await axios.post(`${PocketBaseCollection}/lesson_plan/records`, values);
-        refetchOperative();
+        await refetchOperative();
         handleCloseModal();
         formikLessonPlan.resetForm();
       } catch (error) {

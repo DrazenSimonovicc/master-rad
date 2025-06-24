@@ -8,6 +8,7 @@ import { useSearchParams } from "next/navigation";
 import { useFetchActivity } from "@/Hooks/Activity/getActivity";
 import { Title } from "@/Components/Texts/Title";
 import { useAuth } from "@/Hooks/useAuth";
+import Preloader from "@/Components/Preloader/Preloader";
 
 const SingleActivity = () => {
   const searchParams = useSearchParams();
@@ -21,15 +22,25 @@ const SingleActivity = () => {
     level2url: "/kalendar-aktivnosti",
   };
 
-  const { userData, isLoggedIn } = useAuth();
+  const { userData } = useAuth();
 
   const {
     activity,
-    error: operativeError,
-    loading: operativeLoading,
+    error: ActivityError,
+    loading: ActivityLoading,
   } = useFetchActivity(userData?.id);
 
   const filteredActivity = activity.filter((plan) => plan.id === id);
+
+  if (ActivityLoading)
+    return (
+      <div>
+        <Preloader page />
+      </div>
+    );
+
+  if (ActivityError)
+    return <div>Greška u učitavanju vesti: {ActivityError}</div>;
 
   return (
     <div>

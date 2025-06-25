@@ -2,47 +2,61 @@
 
 .taskListWrapper {
   margin-top: -1px;
-}
 
-.taskItem {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 20px;
-  font-size: 16px;
-  line-height: 24px;
-  color: #333;
+  .taskItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 24px;
+    color: #333;
 
-  .taskNumber {
-    font-weight: 600;
-    color: #007acc;
-    flex-shrink: 0;
+    .taskNumber {
+      font-weight: 600;
+      color: #007acc;
+      flex-shrink: 0;
+    }
+
+    .taskContent {
+      flex: 1;
+      width: 240px;
+
+      p {
+        margin: 0 0 8px;
+      }
+
+      ul,
+      ol {
+        padding-left: 24px;
+        margin: 8px 0;
+      }
+
+      li {
+        margin-bottom: 6px;
+      }
+
+      strong {
+        font-weight: 600;
+      }
+
+      em {
+        font-style: italic;
+      }
+    }
   }
 
-  .taskContent {
-    flex: 1;
-    width: 240px;
+  .downloadButton {
+    margin-top: 16px;
+    padding: 10px 16px;
+    background-color: #1976d2; /* or your theme color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
 
-    p {
-      margin: 0 0 8px;
-    }
-
-    ul,
-    ol {
-      padding-left: 24px;
-      margin: 8px 0;
-    }
-
-    li {
-      margin-bottom: 6px;
-    }
-
-    strong {
-      font-weight: 600;
-    }
-
-    em {
-      font-style: italic;
-    }
+  .downloadButton:hover {
+    background-color: #1565c0;
   }
 }

@@ -22,6 +22,9 @@ import Preloader from "@/Components/Preloader/Preloader";
 import { Footer } from "@/Components/Footer";
 import { Title } from "@/Components/Texts/Title";
 import * as Yup from "yup";
+import { HomeworkItemType } from "@/Interfaces/BaseType";
+import TeachingUnitTitle from "@/Components/TeachingUnitTitle/TeachingUnitTitle";
+import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
 
 const Homework = () => {
   const searchParams = useSearchParams();
@@ -38,6 +41,38 @@ const Homework = () => {
   const [myCurrentPage, setMyCurrentPage] = useState(1);
   const [otherCurrentPage, setOtherCurrentPage] = useState(1);
   const itemsPerPage = 12;
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [editingHomework, setEditingHomework] =
+    useState<HomeworkItemType | null>(null);
+
+  const handleEdit = (homeworkItem: HomeworkItemType) => {
+    setEditingHomework(homeworkItem);
+    setOpenEditModal(true);
+  };
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  const handleDelete = (id: string) => {
+    setDeleteId(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteId) return;
+
+    try {
+      await axios.delete(
+        `${PocketBaseCollection}/homework/records/${deleteId}`,
+      );
+      await refetchOperative();
+    } catch (error) {
+      console.error("Greška prilikom brisanja:", error);
+    } finally {
+      setIsDeleteModalOpen(false);
+      setDeleteId(null);
+    }
+  };
 
   const {
     homework,
@@ -55,6 +90,50 @@ const Homework = () => {
     tasks: Yup.array()
       .of(Yup.string().required("Zadatak ne sme biti prazan"))
       .min(1, "Potrebno je uneti bar jedan zadatak"),
+  });
+
+  const formikEdit = useFormik({
+    enableReinitialize: true,
+    initialValues: editingHomework
+      ? {
+          teaching_unit: editingHomework.teaching_unit,
+          tasks: [
+            editingHomework.task1,
+            editingHomework.task2 /* ... up to task10 */,
+          ],
+          subject: editingHomework.subject,
+        }
+      : {
+          teaching_unit: "",
+          tasks: [""],
+          subject: subject,
+        },
+    validationSchema: HomeworkValidationSchema,
+    onSubmit: async (values) => {
+      try {
+        const dataToSend = {
+          teaching_unit: values.teaching_unit,
+          subject: values.subject,
+          ...values.tasks.reduce(
+            (acc, task, i) => {
+              acc[`task${i + 1}`] = task;
+              return acc;
+            },
+            {} as Record<string, string>,
+          ),
+        };
+        if (editingHomework) {
+          await axios.patch(
+            `${PocketBaseCollection}/homework/records/${editingHomework.id}`,
+            dataToSend,
+          );
+          setOpenEditModal(false);
+          await refetchOperative();
+        }
+      } catch (error) {
+        console.error("Greška prilikom izmene:", error);
+      }
+    },
   });
 
   const formikHomework = useFormik({
@@ -164,25 +243,27 @@ const Homework = () => {
                     const isExpanded = expandedUnitId === t.id;
                     return (
                       <div key={t.id} className={styles.teachingUnitWrapper}>
-                        <div
-                          onClick={() => toggleExpandedUnit(t.id)}
-                          className={`${styles.teachingUnitTitle} ${
-                            isExpanded ? styles.expanded : ""
-                          }`}
-                        >
-                          {t.teaching_unit}
-                        </div>
+                        <TeachingUnitTitle
+                          title={t.teaching_unit}
+                          isExpanded={isExpanded}
+                          onToggle={() => toggleExpandedUnit(t.id)}
+                          onEdit={() => handleEdit(t)}
+                          onDelete={() => handleDelete(t.id)}
+                          canEdit={t.user === userData?.id}
+                        />
                         {isExpanded && (
                           <div className={styles.taskListWrapper}>
                             <TaskList
                               plan={t}
                               expandedUnitId={expandedUnitId}
+                              type={"homework"}
                             />
                           </div>
                         )}
                       </div>
                     );
                   })}
+
                   {myHomeworks.length > itemsPerPage && (
                     <div className={styles.paginationContainer}>
                       <Pagination
@@ -209,19 +290,20 @@ const Homework = () => {
                     const isExpanded = expandedUnitId === t.id;
                     return (
                       <div key={t.id} className={styles.teachingUnitWrapper}>
-                        <div
-                          onClick={() => toggleExpandedUnit(t.id)}
-                          className={`${styles.teachingUnitTitle} ${
-                            isExpanded ? styles.expanded : ""
-                          }`}
-                        >
-                          {t.teaching_unit}
-                        </div>
+                        <TeachingUnitTitle
+                          title={t.teaching_unit}
+                          isExpanded={isExpanded}
+                          onToggle={() => toggleExpandedUnit(t.id)}
+                          onEdit={() => handleEdit(t)}
+                          onDelete={() => handleDelete(t.id)}
+                          canEdit={t.user === userData?.id}
+                        />
                         {isExpanded && (
                           <div className={styles.taskListWrapper}>
                             <TaskList
                               plan={t}
                               expandedUnitId={expandedUnitId}
+                              type={"homework"}
                             />
                           </div>
                         )}
@@ -247,6 +329,85 @@ const Homework = () => {
             <SidebarWrapper />
           </aside>
         </section>
+
+        <Modal
+          title="Izmeni domaći zadatak"
+          isOpen={openEditModal}
+          setIsOpen={setOpenEditModal}
+          description="Izmenite podatke o domaćem zadatku."
+          theme="halfScreen"
+        >
+          <form onSubmit={formikEdit.handleSubmit} className={styles.form}>
+            <TextField
+              label={homeworkConfig.teaching_unit.label}
+              placeholder={homeworkConfig.teaching_unit.placeholder}
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              name="teaching_unit"
+              value={formikEdit.values.teaching_unit}
+              onChange={formikEdit.handleChange}
+              error={
+                formikEdit.touched.teaching_unit &&
+                Boolean(formikEdit.errors.teaching_unit)
+              }
+              helperText={
+                formikEdit.touched.teaching_unit &&
+                formikEdit.errors.teaching_unit
+              }
+            />
+
+            {formikEdit.values.tasks.map((task, index) => {
+              const taskError = (
+                formikEdit.errors.tasks as string[] | undefined
+              )?.[index];
+              const taskTouched = (
+                formikEdit.touched.tasks as boolean[] | undefined
+              )?.[index];
+
+              return (
+                <TextEditorWithLabel
+                  key={index}
+                  index={index}
+                  task={task}
+                  onChange={(val) =>
+                    formikEdit.setFieldValue(`tasks[${index}]`, val)
+                  }
+                  label={`Zadatak ${index + 1}`}
+                  error={taskTouched && taskError ? taskError : undefined}
+                />
+              );
+            })}
+
+            <div style={{ marginTop: "32px" }}>
+              <Button
+                themes={["standardWide", "blue", "noBorderRadius"]}
+                title={"Dodaj zadatak"}
+                type={"button"}
+                onClick={() => {
+                  formikEdit.setFieldValue("tasks", [
+                    ...formikEdit.values.tasks,
+                    "",
+                  ]);
+                }}
+              />
+            </div>
+
+            <div style={{ marginTop: "60px" }}>
+              <Button
+                title="Sačuvaj izmene"
+                themes={[
+                  "blue",
+                  "standardWide",
+                  "standardHeight",
+                  "noBorderRadius",
+                  "maxWidth",
+                ]}
+                type={"submit"}
+              />
+            </div>
+          </form>
+        </Modal>
 
         <Modal
           title="Dodaj domaci zadatak"
@@ -326,6 +487,13 @@ const Homework = () => {
             </div>
           </form>
         </Modal>
+        <DeleteConfirmationModal
+          isOpen={isDeleteModalOpen}
+          setIsOpen={setIsDeleteModalOpen}
+          onConfirm={confirmDelete}
+          title="Potvrda brisanja domaćeg zadatka"
+          description="Da li ste sigurni da želite da obrišete ovaj domaći zadatak?"
+        />
       </div>
       <Footer />
       {!isLoggedIn && <RequireAuth />}

@@ -21,6 +21,10 @@ import Preloader from "@/Components/Preloader/Preloader";
 import { Footer } from "@/Components/Footer";
 import { Title } from "@/Components/Texts/Title";
 import * as Yup from "yup";
+import { HomeworkItemType, TestItemType } from "@/Interfaces/BaseType";
+import TeachingUnitTitle from "@/Components/TeachingUnitTitle/TeachingUnitTitle";
+import { homeworkConfig } from "@/app/resursi-za-nastavu/domaci-zadaci/config";
+import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
 
 const Test = () => {
   const searchParams = useSearchParams();
@@ -37,6 +41,35 @@ const Test = () => {
   const [myCurrentPage, setMyCurrentPage] = useState(1);
   const [otherCurrentPage, setOtherCurrentPage] = useState(1);
   const itemsPerPage = 12;
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [editingTest, setEditingHomework] = useState<TestItemType | null>(null);
+
+  const handleEdit = (testItem: TestItemType) => {
+    setEditingHomework(testItem);
+    setOpenEditModal(true);
+  };
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+
+  const handleDelete = (id: string) => {
+    setDeleteId(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteId) return;
+
+    try {
+      await axios.delete(`${PocketBaseCollection}/test/records/${deleteId}`);
+      await refetchOperative();
+    } catch (error) {
+      console.error("Greška prilikom brisanja:", error);
+    } finally {
+      setIsDeleteModalOpen(false);
+      setDeleteId(null);
+    }
+  };
 
   const {
     test,
@@ -87,6 +120,50 @@ const Test = () => {
         await refetchOperative();
       } catch (error) {
         console.error("Error submitting form:", error);
+      }
+    },
+  });
+
+  const formikEdit = useFormik({
+    enableReinitialize: true,
+    initialValues: editingTest
+      ? {
+          teaching_unit: editingTest.teaching_unit,
+          tasks: [editingTest.task1, editingTest.task2],
+          subject: editingTest.subject,
+          date: editingTest.date, // Add date to edit form initial values
+        }
+      : {
+          teaching_unit: "",
+          tasks: [""],
+          subject: subject,
+          date: "",
+        },
+    validationSchema: testValidationSchema,
+    onSubmit: async (values) => {
+      try {
+        const dataToSend = {
+          teaching_unit: values.teaching_unit,
+          subject: values.subject,
+          date: values.date,
+          ...values.tasks.reduce(
+            (acc, task, i) => {
+              acc[`task${i + 1}`] = task;
+              return acc;
+            },
+            {} as Record<string, string>,
+          ),
+        };
+        if (editingTest) {
+          await axios.patch(
+            `${PocketBaseCollection}/test/records/${editingTest.id}`, // <-- Fixed URL here
+            dataToSend,
+          );
+          setOpenEditModal(false);
+          await refetchOperative();
+        }
+      } catch (error) {
+        console.error("Greška prilikom izmene:", error);
       }
     },
   });
@@ -164,19 +241,20 @@ const Test = () => {
                     const isExpanded = expandedUnitId === t.id;
                     return (
                       <div key={t.id} className={styles.teachingUnitWrapper}>
-                        <div
-                          onClick={() => toggleExpandedUnit(t.id)}
-                          className={`${styles.teachingUnitTitle} ${
-                            isExpanded ? styles.expanded : ""
-                          }`}
-                        >
-                          {t.teaching_unit} - {t.date}
-                        </div>
+                        <TeachingUnitTitle
+                          title={` ${t.teaching_unit} - ${t.date}`}
+                          isExpanded={isExpanded}
+                          onToggle={() => toggleExpandedUnit(t.id)}
+                          onEdit={() => handleEdit(t)}
+                          onDelete={() => handleDelete(t.id)}
+                          canEdit={t.user === userData?.id}
+                        />
                         {isExpanded && (
                           <div className={styles.taskListWrapper}>
                             <TaskList
                               plan={t}
                               expandedUnitId={expandedUnitId}
+                              type={"test"}
                             />
                           </div>
                         )}
@@ -210,19 +288,20 @@ const Test = () => {
                     const isExpanded = expandedUnitId === t.id;
                     return (
                       <div key={t.id} className={styles.teachingUnitWrapper}>
-                        <div
-                          onClick={() => toggleExpandedUnit(t.id)}
-                          className={`${styles.teachingUnitTitle} ${
-                            isExpanded ? styles.expanded : ""
-                          }`}
-                        >
-                          {t.teaching_unit} - {t.date}
-                        </div>
+                        <TeachingUnitTitle
+                          title={` ${t.teaching_unit} - ${t.date}`}
+                          isExpanded={isExpanded}
+                          onToggle={() => toggleExpandedUnit(t.id)}
+                          onEdit={() => handleEdit(t)}
+                          onDelete={() => handleDelete(t.id)}
+                          canEdit={t.user === userData?.id}
+                        />
                         {isExpanded && (
                           <div className={styles.taskListWrapper}>
                             <TaskList
                               plan={t}
                               expandedUnitId={expandedUnitId}
+                              type={"test"}
                             />
                           </div>
                         )}
@@ -340,6 +419,108 @@ const Test = () => {
             </div>
           </form>
         </Modal>
+
+        <Modal
+          title="Izmeni domaći zadatak"
+          isOpen={openEditModal}
+          setIsOpen={setOpenEditModal}
+          description="Izmenite podatke o domaćem zadatku."
+          theme="halfScreen"
+        >
+          <form onSubmit={formikEdit.handleSubmit} className={styles.form}>
+            <TextField
+              label={testConfig.teaching_unit.label}
+              placeholder={testConfig.teaching_unit.placeholder}
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              name="teaching_unit"
+              value={formikEdit.values.teaching_unit}
+              onChange={formikEdit.handleChange}
+              onBlur={formikEdit.handleBlur}
+              error={
+                formikEdit.touched.teaching_unit &&
+                Boolean(formikEdit.errors.teaching_unit)
+              }
+              helperText={
+                formikEdit.touched.teaching_unit &&
+                formikEdit.errors.teaching_unit
+              }
+            />
+
+            <TextField
+              label={testConfig.date.label}
+              placeholder={testConfig.date.placeholder}
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              name="date"
+              value={formikEdit.values.date}
+              onChange={formikEdit.handleChange}
+              onBlur={formikEdit.handleBlur}
+              error={formikEdit.touched.date && Boolean(formikEdit.errors.date)}
+              helperText={formikEdit.touched.date && formikEdit.errors.date}
+            />
+
+            {formikEdit.values.tasks.map((task, index) => {
+              const taskError = (
+                formikEdit.errors.tasks as string[] | undefined
+              )?.[index];
+              const taskTouched = (
+                formikEdit.touched.tasks as boolean[] | undefined
+              )?.[index];
+
+              return (
+                <TextEditorWithLabel
+                  key={index}
+                  index={index}
+                  task={task}
+                  onChange={(val) =>
+                    formikEdit.setFieldValue(`tasks[${index}]`, val)
+                  }
+                  label={`Zadatak ${index + 1}`}
+                  error={taskTouched && taskError ? taskError : undefined}
+                />
+              );
+            })}
+
+            <div style={{ marginTop: "32px" }}>
+              <Button
+                themes={["standardWide", "blue", "noBorderRadius"]}
+                title={"Dodaj zadatak"}
+                type={"button"}
+                onClick={() => {
+                  formikEdit.setFieldValue("tasks", [
+                    ...formikEdit.values.tasks,
+                    "",
+                  ]);
+                }}
+              />
+            </div>
+
+            <div style={{ marginTop: "60px" }}>
+              <Button
+                title="Sačuvaj izmene"
+                themes={[
+                  "blue",
+                  "standardWide",
+                  "standardHeight",
+                  "noBorderRadius",
+                  "maxWidth",
+                ]}
+                type={"submit"}
+              />
+            </div>
+          </form>
+        </Modal>
+
+        <DeleteConfirmationModal
+          isOpen={isDeleteModalOpen}
+          setIsOpen={setIsDeleteModalOpen}
+          onConfirm={confirmDelete}
+          title="Potvrda brisanja domaćeg zadatka"
+          description="Da li ste sigurni da želite da obrišete ovaj domaći zadatak?"
+        />
       </div>
       <Footer />
       {!isLoggedIn && <RequireAuth />}

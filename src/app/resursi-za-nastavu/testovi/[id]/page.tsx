@@ -124,14 +124,29 @@ const Test = () => {
     },
   });
 
+  const taskKeys = [
+    "task1",
+    "task2",
+    "task3",
+    "task4",
+    "task5",
+    "task6",
+    "task7",
+    "task8",
+    "task9",
+    "task10",
+  ] as const;
+
   const formikEdit = useFormik({
     enableReinitialize: true,
     initialValues: editingTest
       ? {
           teaching_unit: editingTest.teaching_unit,
-          tasks: [editingTest.task1, editingTest.task2],
+          tasks: taskKeys
+            .map((key) => editingTest[key] || "")
+            .filter((task) => task !== ""),
           subject: editingTest.subject,
-          date: editingTest.date, // Add date to edit form initial values
+          date: editingTest.date,
         }
       : {
           teaching_unit: "",
@@ -248,13 +263,14 @@ const Test = () => {
                           onEdit={() => handleEdit(t)}
                           onDelete={() => handleDelete(t.id)}
                           canEdit={t.user === userData?.id}
+                          plan={t}
+                          type={"test"}
                         />
                         {isExpanded && (
                           <div className={styles.taskListWrapper}>
                             <TaskList
                               plan={t}
                               expandedUnitId={expandedUnitId}
-                              type={"test"}
                             />
                           </div>
                         )}
@@ -295,13 +311,14 @@ const Test = () => {
                           onEdit={() => handleEdit(t)}
                           onDelete={() => handleDelete(t.id)}
                           canEdit={t.user === userData?.id}
+                          plan={t}
+                          type={"test"}
                         />
                         {isExpanded && (
                           <div className={styles.taskListWrapper}>
                             <TaskList
                               plan={t}
                               expandedUnitId={expandedUnitId}
-                              type={"test"}
                             />
                           </div>
                         )}

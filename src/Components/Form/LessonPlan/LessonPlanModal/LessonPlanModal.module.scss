@@ -1,0 +1,12 @@
+@use "src/Styling/index" as *;
+
+.modalButtonWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+
+  @include breakpoint("tablet") {
+    flex-direction: row;
+  }
+}

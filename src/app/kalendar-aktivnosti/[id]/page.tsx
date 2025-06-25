@@ -10,6 +10,10 @@ import { Title } from "@/Components/Texts/Title";
 import { useAuth } from "@/Hooks/useAuth";
 import Preloader from "@/Components/Preloader/Preloader";
 
+import DownloadIcon from "@mui/icons-material/Download";
+import IconButton from "@mui/material/IconButton";
+import { useDownloadActivity } from "@/Hooks/Download/useDownloadActivity";
+
 const SingleActivity = () => {
   const searchParams = useSearchParams();
   const id = searchParams.get("id") || "";
@@ -42,6 +46,8 @@ const SingleActivity = () => {
   if (ActivityError)
     return <div>Greška u učitavanju vesti: {ActivityError}</div>;
 
+  const { downloadActivity } = useDownloadActivity();
+
   return (
     <div>
       <div>
@@ -58,11 +64,20 @@ const SingleActivity = () => {
                 <div className={styles.typeOfActivity}>
                   {activity.type_of_activity}
                 </div>
-                <Title
-                  level={3}
-                  text={activity.title}
-                  className={styles.title}
-                />
+                <div className={styles.titleWrapper}>
+                  <Title
+                    level={3}
+                    text={activity.title}
+                    className={styles.title}
+                  />
+                  <IconButton
+                    onClick={() => downloadActivity(activity)}
+                    aria-label="Preuzmi aktivnost"
+                  >
+                    <DownloadIcon />
+                  </IconButton>
+                </div>
+
                 <div className={styles.afterTitle}>
                   <span>{activity.date}</span>
                   <span>{activity.place}</span>

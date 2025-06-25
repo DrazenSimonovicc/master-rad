@@ -25,6 +25,7 @@ import * as Yup from "yup";
 import { HomeworkItemType } from "@/Interfaces/BaseType";
 import TeachingUnitTitle from "@/Components/TeachingUnitTitle/TeachingUnitTitle";
 import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
+import { useDownloadTasks } from "@/Hooks/Download/useDownloadTasks";
 
 const Homework = () => {
   const searchParams = useSearchParams();
@@ -92,15 +93,27 @@ const Homework = () => {
       .min(1, "Potrebno je uneti bar jedan zadatak"),
   });
 
+  const taskKeys = [
+    "task1",
+    "task2",
+    "task3",
+    "task4",
+    "task5",
+    "task6",
+    "task7",
+    "task8",
+    "task9",
+    "task10",
+  ] as const;
+
   const formikEdit = useFormik({
     enableReinitialize: true,
     initialValues: editingHomework
       ? {
           teaching_unit: editingHomework.teaching_unit,
-          tasks: [
-            editingHomework.task1,
-            editingHomework.task2 /* ... up to task10 */,
-          ],
+          tasks: taskKeys
+            .map((key) => editingHomework[key] || "")
+            .filter((task) => task !== ""),
           subject: editingHomework.subject,
         }
       : {
@@ -250,13 +263,14 @@ const Homework = () => {
                           onEdit={() => handleEdit(t)}
                           onDelete={() => handleDelete(t.id)}
                           canEdit={t.user === userData?.id}
+                          plan={t}
+                          type={"homework"}
                         />
                         {isExpanded && (
                           <div className={styles.taskListWrapper}>
                             <TaskList
                               plan={t}
                               expandedUnitId={expandedUnitId}
-                              type={"homework"}
                             />
                           </div>
                         )}
@@ -297,13 +311,14 @@ const Homework = () => {
                           onEdit={() => handleEdit(t)}
                           onDelete={() => handleDelete(t.id)}
                           canEdit={t.user === userData?.id}
+                          plan={t}
+                          type={"homework"}
                         />
                         {isExpanded && (
                           <div className={styles.taskListWrapper}>
                             <TaskList
                               plan={t}
                               expandedUnitId={expandedUnitId}
-                              type={"homework"}
                             />
                           </div>
                         )}

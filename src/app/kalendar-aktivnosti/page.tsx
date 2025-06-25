@@ -26,6 +26,10 @@ import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEdit
 import Preloader from "@/Components/Preloader/Preloader";
 import * as Yup from "yup";
 
+import DownloadIcon from "@mui/icons-material/Download";
+import IconButton from "@mui/material/IconButton";
+import { useDownloadClassScheduleCsv } from "@/Hooks/Download/useDownloadClassScheduleCsv";
+
 const MAX_SUBJECTS = 7;
 
 const Calendar = () => {
@@ -55,6 +59,8 @@ const Calendar = () => {
     level1url: "/",
     level2url: "/kalendar-aktivnosti",
   };
+
+  const { downloadCsv } = useDownloadClassScheduleCsv(classSchedule || []);
 
   const classScheduleValidationSchema = Yup.object().shape({
     dayName: Yup.string().required("Naziv dana je obavezno polje"),
@@ -178,11 +184,19 @@ const Calendar = () => {
           <div className={styles.referencesWrap}>
             {classSchedule && classSchedule.length > 0 && (
               <>
-                <Title
-                  text="Raspored časova"
-                  level={2}
-                  className={styles.title}
-                />
+                <div className={styles.titleWithButton}>
+                  <Title
+                    text="Raspored časova"
+                    level={2}
+                    className={styles.title}
+                  />
+                  <IconButton
+                    onClick={downloadCsv}
+                    aria-label="Preuzmi raspored"
+                  >
+                    <DownloadIcon />
+                  </IconButton>
+                </div>
                 <ClassScheduleTable classSchedule={classSchedule} />
               </>
             )}

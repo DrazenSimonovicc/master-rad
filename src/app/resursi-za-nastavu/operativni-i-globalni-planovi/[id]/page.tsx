@@ -20,6 +20,7 @@ import { useSearchParams } from "next/navigation";
 import { useFetchGlobalPlansWithSubject } from "@/Hooks/OperativeAndGlobalPlans/getGlobalPlanForSubject";
 import Preloader from "@/Components/Preloader/Preloader";
 import { Footer } from "@/Components/Footer";
+import { useExportCSV } from "@/Hooks/Download/useExportCSV";
 
 const SingleOperativnePlan = () => {
   const searchParams = useSearchParams();
@@ -124,6 +125,8 @@ const SingleOperativnePlan = () => {
   if (operativeError || globalError)
     return <div>Greška u učitavanju {operativeError || globalError}</div>;
 
+  const { downloadCSV } = useExportCSV();
+
   return (
     <div>
       <Header
@@ -134,20 +137,43 @@ const SingleOperativnePlan = () => {
       {isLoggedIn && (
         <div className={styles.addButtonWrapper}>
           {(type === "operative" || type === "global") && (
-            <Button
-              title={type === "operative" ? "Dodaj čas" : "Dodaj nastavnu temu"}
-              themes={[
-                "orange",
-                "standardWide",
-                "standardHeight",
-                "noBorderRadius",
-                "maxWidth",
-              ]}
-              onClick={handleOpenModal}
-            />
+            <>
+              <Button
+                title={
+                  type === "operative" ? "Dodaj čas" : "Dodaj nastavnu temu"
+                }
+                themes={[
+                  "orange",
+                  "standardWide",
+                  "standardHeight",
+                  "noBorderRadius",
+                  "maxWidth",
+                ]}
+                onClick={handleOpenModal}
+              />
+              <Button
+                title="Preuzmi tabelu"
+                themes={[
+                  "blue",
+                  "standardWide",
+                  "standardHeight",
+                  "noBorderRadius",
+                  "maxWidth",
+                ]}
+                onClick={() =>
+                  downloadCSV(
+                    type as "operative" | "global",
+                    filteredOperativePlans,
+                    filteredGlobalPlans,
+                    `${subject}-`,
+                  )
+                }
+              />
+            </>
           )}
         </div>
       )}
+
       <section className={styles.container}>
         <div className={styles.referencesWrap}>
           {type === "operative" ? (

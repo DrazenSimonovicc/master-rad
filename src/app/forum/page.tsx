@@ -157,7 +157,7 @@ export default function Page() {
       <div className={styles.mainNewsWrapper}>
         <div className={styles.mainNews}>
           <Title text={"Glavna vest"} level={2} />
-          <ForumNews data={mainNewsList} />
+          <ForumNews data={mainNewsList} triggerOnView={false} />
         </div>
       </div>
 
@@ -175,6 +175,7 @@ export default function Page() {
                 (a, b) =>
                   new Date(b.created).getTime() - new Date(a.created).getTime(),
               )}
+            triggerOnView
           />
         </div>
       </div>

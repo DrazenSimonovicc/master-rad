@@ -3,12 +3,13 @@ import { FC, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
-import styles from "./page.module.scss";
-import { pb } from "@/libs/pocketbase";
-import { useFetchUserData } from "@/Hooks/getUserData";
-import { userDataType } from "@/Interfaces/BaseType";
+import dayjs, { Dayjs } from "dayjs";
+
 import { Header } from "@/Components/Header/Header";
 import TextInput from "@/Components/Inputs/TextInput/TextInput";
+import { Button } from "@/Components/Button";
+import { Title } from "@/Components/Texts/Title";
+
 import {
   Select,
   MenuItem,
@@ -20,9 +21,15 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs, { Dayjs } from "dayjs";
-import { Button } from "@/Components/Button";
-import { Title } from "@/Components/Texts/Title";
+
+import { pb } from "@/libs/pocketbase";
+
+import { useFetchUserData } from "@/Hooks/getUserData";
+
+import { userDataType } from "@/Interfaces/BaseType";
+
+import styles from "./page.module.scss";
+import { PersonValidationSchema } from "@/app/podaci-o-korisniku/Validation";
 
 //TODO:padding na label
 
@@ -40,12 +47,6 @@ const Page: FC = () => {
     }
   }, [userData]);
 
-  const validationSchema = Yup.object({
-    name: Yup.string().required("Ime i prezime je obavezno"),
-    current_work: Yup.string().required("Trenutno radno mesto je obavezno"),
-    gender: Yup.string().required("Pol je obavezan"),
-  });
-
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -54,7 +55,7 @@ const Page: FC = () => {
       gender: "",
     },
     enableReinitialize: true,
-    validationSchema,
+    validationSchema: PersonValidationSchema,
     onSubmit: (values) => {
       if (!currentUser) {
         console.error("No user data available");

@@ -1,31 +1,36 @@
 "use client";
 
-import { Header } from "@/Components/Header/Header";
-
-import { useAuth } from "@/Hooks/useAuth";
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
-import { PocketBaseCollection } from "@/libs/pocketbase";
-import styles from "./page.module.scss";
-import { Button } from "@/Components/Button";
-import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
-import { Modal } from "@/Components/Modal";
-import { Pagination, TextField } from "@mui/material";
 import { useSearchParams } from "next/navigation";
-import { useFetchHomeworks } from "@/Hooks/Homework/getHomeworks";
-import { homeworkConfig } from "@/app/resursi-za-nastavu/domaci-zadaci/config";
+import { Pagination, TextField } from "@mui/material";
+
+import { Header } from "@/Components/Header/Header";
+import TeachingUnitTitle from "@/Components/TeachingUnitTitle/TeachingUnitTitle";
+import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
 import TaskList from "@/Components/TaskList/TaskList";
 import RequireAuth from "@/Components/RequireAuth/RequireAuth";
 import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
 import Preloader from "@/Components/Preloader/Preloader";
 import { Footer } from "@/Components/Footer";
 import { Title } from "@/Components/Texts/Title";
-import * as Yup from "yup";
+import { Button } from "@/Components/Button";
+import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
+import { Modal } from "@/Components/Modal";
+
+import { useAuth } from "@/Hooks/useAuth";
+import { useFetchHomeworks } from "@/Hooks/Homework/getHomeworks";
+
+import { homeworkConfig } from "@/app/resursi-za-nastavu/domaci-zadaci/config";
+
 import { HomeworkItemType } from "@/Interfaces/BaseType";
-import TeachingUnitTitle from "@/Components/TeachingUnitTitle/TeachingUnitTitle";
-import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
-import { useDownloadTasks } from "@/Hooks/Download/useDownloadTasks";
+
+import { PocketBaseCollection } from "@/libs/pocketbase";
+
+import * as Yup from "yup";
+
+import styles from "./page.module.scss";
 
 const Homework = () => {
   const searchParams = useSearchParams();

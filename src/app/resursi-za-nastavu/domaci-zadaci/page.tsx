@@ -1,24 +1,29 @@
 "use client";
 
+import React, { useState } from "react";
+import axios from "axios";
+import { useFormik } from "formik";
+import { PocketBaseCollection } from "@/libs/pocketbase";
+
 import { Header } from "@/Components/Header/Header";
 import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
 import { Button } from "@/Components/Button";
-import React, { useState } from "react";
-import { useAuth } from "@/Hooks/useAuth";
-import { Modal } from "@/Components/Modal";
-import styles from "./page.module.scss";
-import { useFormik } from "formik";
-import axios from "axios";
-import { TextField } from "@mui/material";
-import { PocketBaseCollection } from "@/libs/pocketbase";
-import { Title } from "@/Components/Texts/Title";
-import { homeworkSubjectConfig } from "@/app/resursi-za-nastavu/domaci-zadaci/config";
-import { useFetchHomeworkSubjects } from "@/Hooks/Homework/getHomeworkSubjects";
 import SubjectCard from "@/Components/SubjectCard/SubjectCard";
 import RequireAuth from "@/Components/RequireAuth/RequireAuth";
 import Preloader from "@/Components/Preloader/Preloader";
 import { Footer } from "@/Components/Footer";
-import * as Yup from "yup";
+import { Modal } from "@/Components/Modal";
+import { Title } from "@/Components/Texts/Title";
+
+import { homeworkSubjectConfig } from "@/app/resursi-za-nastavu/domaci-zadaci/config";
+import { HomeworkValidationSchema } from "@/app/resursi-za-nastavu/domaci-zadaci/Validation";
+
+import { TextField } from "@mui/material";
+
+import { useFetchHomeworkSubjects } from "@/Hooks/Homework/getHomeworkSubjects";
+import { useAuth } from "@/Hooks/useAuth";
+
+import styles from "./page.module.scss";
 
 const HomeworkSubjects = () => {
   const breadCrumb = {
@@ -42,19 +47,12 @@ const HomeworkSubjects = () => {
     refetch: refetchOperative,
   } = useFetchHomeworkSubjects(userData?.id);
 
-  const ValidationSchema = Yup.object({
-    subject: Yup.string()
-      .required("Naziv predmeta je obavezan")
-      .min(2, "Predmet mora imati bar 2 slova"),
-    grade: Yup.string().required("Razred je obavezan"),
-  });
-
   const formikOperative = useFormik({
     initialValues: {
       subject: "",
       grade: "",
     },
-    validationSchema: ValidationSchema,
+    validationSchema: HomeworkValidationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
         await axios.post(`${PocketBaseCollection}/homework_subjects/records`, {

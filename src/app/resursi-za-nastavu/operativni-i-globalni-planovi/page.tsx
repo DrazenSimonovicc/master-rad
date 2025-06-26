@@ -4,7 +4,7 @@ import { Header } from "@/Components/Header/Header";
 import { useFetchOperativePlans } from "@/Hooks/OperativeAndGlobalPlans/getOperativePlans";
 import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
 import { Button } from "@/Components/Button";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useAuth } from "@/Hooks/useAuth";
 import { Modal } from "@/Components/Modal";
 import styles from "./page.module.scss";

@@ -9,6 +9,21 @@
   max-width: 1200px;
   margin: 0 auto;
 
+  .iconsWrapper {
+    display: flex;
+    gap: 12px;
+  }
+
+  .icon {
+    cursor: pointer;
+    color: $main-color-light-blue;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: $orange-color;
+    }
+  }
+
   .referencesWrap {
     display: flex;
     flex-direction: column;
@@ -30,6 +45,7 @@
       flex-direction: column;
       gap: 12px;
       align-items: flex-start;
+      margin-bottom: 24px;
 
       @include breakpoint("tablet") {
         flex-direction: row;
@@ -38,7 +54,6 @@
       }
     }
     .title {
-      margin-bottom: 12px;
       font-size: 20px;
       font-weight: 700;
       color: $title-dark;

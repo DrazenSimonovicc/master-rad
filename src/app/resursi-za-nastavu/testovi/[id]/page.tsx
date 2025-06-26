@@ -21,9 +21,8 @@ import Preloader from "@/Components/Preloader/Preloader";
 import { Footer } from "@/Components/Footer";
 import { Title } from "@/Components/Texts/Title";
 import * as Yup from "yup";
-import { HomeworkItemType, TestItemType } from "@/Interfaces/BaseType";
+import { TestItemType } from "@/Interfaces/BaseType";
 import TeachingUnitTitle from "@/Components/TeachingUnitTitle/TeachingUnitTitle";
-import { homeworkConfig } from "@/app/resursi-za-nastavu/domaci-zadaci/config";
 import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
 
 const Test = () => {

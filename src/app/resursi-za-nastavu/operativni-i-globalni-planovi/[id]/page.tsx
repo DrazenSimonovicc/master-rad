@@ -258,9 +258,9 @@ const SingleOperativnePlan = () => {
             <p>Tip plana nije prepoznat.</p>
           )}
         </div>
-        <aside className={styles.sidebarWrap}>
+        {/*<aside className={styles.sidebarWrap}>
           <SidebarWrapper />
-        </aside>
+        </aside>*/}
       </section>
       <Modal
         title="Dodaj novi čas"

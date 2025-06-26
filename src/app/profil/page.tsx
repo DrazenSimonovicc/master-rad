@@ -1,13 +1,7 @@
 "use client";
 import React, { FC, useEffect, useState } from "react";
 import { useFormik } from "formik";
-import styles from "./page.module.scss";
 import { pb } from "@/libs/pocketbase";
-import { useFetchUserData } from "@/Hooks/getUserData";
-import { userDataType } from "@/Interfaces/BaseType";
-import { Header } from "@/Components/Header/Header";
-import TextInput from "@/Components/Inputs/TextInput/TextInput";
-
 import dayjs, { Dayjs } from "dayjs";
 
 import { ProfileInfoDescription } from "@/Components/ProfileInfoDescription/ProfileInfoDescription";
@@ -16,6 +10,13 @@ import { EditButton } from "@/Components/Button/EditButton/EditButton";
 import DatePickerField from "@/Components/DatePicker/DatePicker";
 import SelectField from "@/Components/Inputs/SelectField/SelectField";
 import { Footer } from "@/Components/Footer";
+import { Header } from "@/Components/Header/Header";
+import TextInput from "@/Components/Inputs/TextInput/TextInput";
+
+import { useFetchUserData } from "@/Hooks/getUserData";
+import { userDataType } from "@/Interfaces/BaseType";
+
+import styles from "./page.module.scss";
 
 const ProfilePage: FC = () => {
   const { userData, error, loading } = useFetchUserData();

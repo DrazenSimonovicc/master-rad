@@ -2,42 +2,67 @@
 
 import React, { useState } from "react";
 import axios from "axios";
+import * as Yup from "yup";
 import { useFormik, FieldArray, FormikProvider } from "formik";
 import { TextField } from "@mui/material";
-import Link from "next/link";
 
 import { Header } from "@/Components/Header/Header";
 import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
 import { Button } from "@/Components/Button";
 import { Modal } from "@/Components/Modal";
 import { Title } from "@/Components/Texts/Title";
-
-import { useAuth } from "@/Hooks/useAuth";
-import { useFetchActivity } from "@/Hooks/Activity/getActivity";
-import { useFetchClassSchedule } from "@/Hooks/Activity/getClassSchedule";
-
-import { PocketBaseCollection } from "@/libs/pocketbase";
-import { ActivityConfig } from "@/app/kalendar-aktivnosti/config";
-
-import styles from "./page.module.scss";
 import { ClassScheduleTable } from "@/Components/ClassSchedule/ClassSchedule";
 import RequireAuth from "@/Components/RequireAuth/RequireAuth";
 import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
 import Preloader from "@/Components/Preloader/Preloader";
-import * as Yup from "yup";
+import { ActivityCard } from "@/Components/Card/ActivityCard/ActivityCard";
+import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
 
 import DownloadIcon from "@mui/icons-material/Download";
-import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
+
 import { useDownloadClassScheduleCsv } from "@/Hooks/Download/useDownloadClassScheduleCsv";
+import { useAuth } from "@/Hooks/useAuth";
+import { useFetchActivity } from "@/Hooks/Activity/getActivity";
+import { useFetchClassSchedule } from "@/Hooks/Activity/getClassSchedule";
+
+import { ClassScheduleType } from "@/Interfaces/BaseType";
+
+import { PocketBaseCollection } from "@/libs/pocketbase";
+import { ActivityConfig } from "@/app/kalendar-aktivnosti/config";
+
+import {
+  activityValidationSchema,
+  classScheduleValidationSchema,
+} from "@/app/kalendar-aktivnosti/Validation";
+
+import styles from "./page.module.scss";
 
 const MAX_SUBJECTS = 7;
 
 const Calendar = () => {
+  const breadCrumb = {
+    level1: "Početak",
+    level2: "Kalendar aktivnosti",
+    level1url: "/",
+    level2url: "/kalendar-aktivnosti",
+  };
+
   const { userData, isLoggedIn } = useAuth();
 
   const [isClassScheduleModalOpen, setIsClassScheduleModalOpen] =
     useState(false);
   const [isActivityModalOpen, setIsActivityModalOpen] = useState(false);
+  const [isChangeable, setIsChangeable] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [editClassData, setEditClassData] = useState<ClassScheduleType | null>(
+    null,
+  );
+
+  const handleChangeable = () => {
+    setIsChangeable(!isChangeable);
+  };
 
   const {
     activity,
@@ -53,59 +78,78 @@ const Calendar = () => {
     refetch: refetchClassSchedule,
   } = useFetchClassSchedule(userData?.id);
 
-  const breadCrumb = {
-    level1: "Početak",
-    level2: "Kalendar aktivnosti",
-    level1url: "/",
-    level2url: "/kalendar-aktivnosti",
-  };
-
   const { downloadCsv } = useDownloadClassScheduleCsv(classSchedule || []);
 
-  const classScheduleValidationSchema = Yup.object().shape({
-    dayName: Yup.string().required("Naziv dana je obavezno polje"),
-    subject: Yup.array()
-      .of(Yup.string().trim().required("Predmet ne može biti prazan"))
-      .min(1, "Unesite bar jedan predmet")
-      .max(MAX_SUBJECTS, `Maksimalno ${MAX_SUBJECTS} predmeta po danu`),
-  });
+  const handleDelete = (id: string) => {
+    setDeleteId(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteId) return;
+
+    try {
+      await axios.delete(
+        `${PocketBaseCollection}/class_schedule/records/${deleteId}`,
+      );
+      await refetchClassSchedule();
+    } catch (error) {
+      console.error("Greška prilikom brisanja:", error);
+    } finally {
+      setIsDeleteModalOpen(false);
+      setDeleteId(null);
+    }
+  };
+
+  const handleEditSchedule = (id: string) => {
+    const scheduleToEdit = classSchedule?.find((item) => item.id === id);
+    if (scheduleToEdit) {
+      setEditClassData(scheduleToEdit);
+      classScheduleFormik.setValues({
+        dayName: scheduleToEdit.dayName,
+        subject:
+          typeof scheduleToEdit.subject === "string"
+            ? scheduleToEdit.subject.split(",").map((s) => s.trim())
+            : scheduleToEdit.subject,
+      });
+      setIsClassScheduleModalOpen(true);
+    }
+  };
+
   const classScheduleFormik = useFormik({
     initialValues: {
       dayName: "",
       subject: [""],
     },
     validationSchema: classScheduleValidationSchema,
-    /*  validate: (values) => {
-      const errors: { dayName?: string } = {};
-      if (!values.dayName.trim()) {
-        errors.dayName = "Naziv dana je obavezno polje";
-      }
-      return errors;
-    },*/
     onSubmit: async (values, { resetForm }) => {
       try {
-        await axios.post(`${PocketBaseCollection}/class_schedule/records`, {
+        const payload = {
           ...values,
           user: userData.id,
           subject: values.subject.join(", "),
-        });
+        };
+
+        if (editClassData) {
+          await axios.patch(
+            `${PocketBaseCollection}/class_schedule/records/${editClassData.id}`,
+            payload,
+          );
+        } else {
+          await axios.post(
+            `${PocketBaseCollection}/class_schedule/records`,
+            payload,
+          );
+        }
+
         resetForm();
+        setEditClassData(null); // Reset editing mode
         setIsClassScheduleModalOpen(false);
         await refetchClassSchedule();
       } catch (error) {
-        console.error("Error submitting activity:", error);
+        console.error("Error submitting class schedule:", error);
       }
     },
-  });
-
-  const activityValidationSchema = Yup.object().shape({
-    type_of_activity: Yup.string()
-      .trim()
-      .required("Vrsta aktivnosti je obavezna"),
-    title: Yup.string().trim().required("Naslov je obavezan"),
-    description: Yup.string().required("Opis je obavezan"),
-    date: Yup.string().required("Datum je obavezan"),
-    place: Yup.string().trim(),
   });
 
   const activityFormik = useFormik({
@@ -141,6 +185,7 @@ const Calendar = () => {
   }
 
   if (isLoggedIn && onError) return <div>Greška u učitavanju {onError}</div>;
+
   if (isLoggedIn && classScheduleError)
     return <div>Greška u učitavanju {onError}</div>;
 
@@ -190,14 +235,23 @@ const Calendar = () => {
                     level={2}
                     className={styles.title}
                   />
-                  <IconButton
-                    onClick={downloadCsv}
-                    aria-label="Preuzmi raspored"
-                  >
-                    <DownloadIcon />
-                  </IconButton>
+                  <div className={styles.iconsWrapper}>
+                    <DownloadIcon
+                      onClick={downloadCsv}
+                      className={styles.icon}
+                    />
+                    <EditIcon
+                      className={styles.icon}
+                      onClick={handleChangeable}
+                    />
+                  </div>
                 </div>
-                <ClassScheduleTable classSchedule={classSchedule} />
+                <ClassScheduleTable
+                  classSchedule={classSchedule}
+                  onEdit={handleEditSchedule}
+                  onDelete={handleDelete}
+                  changable={isChangeable}
+                />
               </>
             )}
 
@@ -206,16 +260,16 @@ const Calendar = () => {
                 <Title text="Aktivnosti" level={2} className={styles.title} />
                 <div className={styles.activityWrapper}>
                   {activity.map(({ id, type_of_activity, title, date }) => (
-                    <Link
+                    <ActivityCard
                       key={id}
                       href={{
                         pathname: `/kalendar-aktivnosti/${id}`,
                         query: { id, title },
                       }}
-                      className={styles.link}
-                    >
-                      <strong>{type_of_activity}</strong> - {title} - {date}
-                    </Link>
+                      type_of_activity={type_of_activity}
+                      title={title}
+                      date={date}
+                    />
                   ))}
                 </div>
               </>
@@ -228,7 +282,7 @@ const Calendar = () => {
         </section>
 
         <Modal
-          title="Dodaj radni dan"
+          title={editClassData ? "Izmeni raspored dana" : "Dodaj radni dan"}
           isOpen={isClassScheduleModalOpen}
           setIsOpen={setIsClassScheduleModalOpen}
           description="Kreirajte raspored tako što ćete dodati radni dan i dodeliti mu predmete. Svakom danu možete pojedinačno dodavati predmete prema rasporedu."
@@ -404,6 +458,14 @@ const Calendar = () => {
             />
           </form>
         </Modal>
+
+        <DeleteConfirmationModal
+          isOpen={isDeleteModalOpen}
+          setIsOpen={setIsDeleteModalOpen}
+          onConfirm={confirmDelete}
+          title="Potvrda brisanja domaćeg zadatka"
+          description="Da li ste sigurni da želite da obrišete ovaj domaći zadatak?"
+        />
       </div>
       {!isLoggedIn && <RequireAuth />}
     </div>

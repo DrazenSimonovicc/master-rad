@@ -5,7 +5,6 @@ import { Header } from "@/Components/Header/Header";
 import { ForumNewsItemType } from "@/Interfaces/BaseType";
 import { useFetchForumNews } from "@/Hooks/getForumNewsData";
 import { Footer } from "@/Components/Footer";
-import { useAuth } from "@/Hooks/useAuth";
 import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
 
 import styles from "./page.module.scss";

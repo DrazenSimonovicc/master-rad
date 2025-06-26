@@ -27,7 +27,7 @@ interface TeachingUnitTitleProps {
   download?: () => void;
   plan?: Record<string, any>;
   type?: TaskType;
-  lesson?: Record<string, any>; // raw input, could be anything
+  lesson?: Record<string, any>;
 }
 
 const TeachingUnitTitle: React.FC<TeachingUnitTitleProps> = ({
@@ -43,10 +43,8 @@ const TeachingUnitTitle: React.FC<TeachingUnitTitleProps> = ({
   type,
   lesson,
 }) => {
-  // Hook for downloading tasks, fallback plan to empty object
   const { downloadAllTasks } = useDownloadTasks({ plan: plan ?? {}, type });
 
-  // Your type guard to validate lesson shape
   function isLessonPlanType(obj: any): obj is LessonPlanType {
     return (
       obj &&
@@ -78,11 +76,10 @@ const TeachingUnitTitle: React.FC<TeachingUnitTitleProps> = ({
     );
   }
 
-  // Only call hook if lesson exists AND passes the type guard
   const { downloadLessonPlan } =
     lesson && isLessonPlanType(lesson)
       ? useDownloadLessonPlan({ lesson })
-      : { downloadLessonPlan: () => {} }; // fallback no-op
+      : { downloadLessonPlan: () => {} };
 
   const handleDownload = () => {
     if (download) {
@@ -103,26 +100,34 @@ const TeachingUnitTitle: React.FC<TeachingUnitTitleProps> = ({
         <div className={styles.content}>
           {title}
 
-          <IconButton
-            onClick={(e) => {
-              e.stopPropagation();
-              handleDownload();
-            }}
-            aria-label="Preuzmi aktivnost"
-          >
-            <DownloadIcon />
-          </IconButton>
+          <div className={styles.iconsWrapper}>
+            <DownloadIcon
+              onClick={(e) => {
+                e.stopPropagation();
+                handleDownload();
+              }}
+              className={styles.icon}
+            />
 
-          {canEdit &&
-            (!isFile ? (
-              <div className={styles.iconsWrapper}>
-                <EditIcon
-                  className={styles.icon}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onEdit();
-                  }}
-                />
+            {canEdit &&
+              (!isFile ? (
+                <>
+                  <EditIcon
+                    className={styles.icon}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onEdit();
+                    }}
+                  />
+                  <DeleteIcon
+                    className={styles.icon}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDelete();
+                    }}
+                  />
+                </>
+              ) : (
                 <DeleteIcon
                   className={styles.icon}
                   onClick={(e) => {
@@ -130,18 +135,8 @@ const TeachingUnitTitle: React.FC<TeachingUnitTitleProps> = ({
                     onDelete();
                   }}
                 />
-              </div>
-            ) : (
-              <div className={styles.iconsWrapper}>
-                <DeleteIcon
-                  className={styles.icon}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onDelete();
-                  }}
-                />
-              </div>
-            ))}
+              ))}
+          </div>
         </div>
       </div>
     </div>

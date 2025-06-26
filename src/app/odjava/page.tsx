@@ -1,9 +1,9 @@
 import { FC } from "react";
 
-import styles from "./page.module.scss";
-
 import { Description } from "@/Components/Texts/Description";
 import { Button } from "@/Components/Button";
+
+import styles from "./page.module.scss";
 
 const LogoutPage: FC = () => {
   return (

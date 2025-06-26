@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "./ClassSchedule.module.scss";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 interface ClassSchedule {
   id: string;
@@ -9,6 +11,9 @@ interface ClassSchedule {
 
 interface ClassScheduleTableProps {
   classSchedule: ClassSchedule[];
+  changable: boolean;
+  onEdit: (id: string) => void;
+  onDelete: (id: string) => void;
 }
 
 const times = [
@@ -22,6 +27,9 @@ const times = [
 
 export const ClassScheduleTable: React.FC<ClassScheduleTableProps> = ({
   classSchedule,
+  onEdit,
+  onDelete,
+  changable,
 }) => {
   const subjectArrays = classSchedule.map(({ subject }) => {
     if (typeof subject === "string") {
@@ -43,7 +51,21 @@ export const ClassScheduleTable: React.FC<ClassScheduleTableProps> = ({
             <th className={styles.noOfClass}>Čas br.</th>
             {classSchedule.map(({ id, dayName }) => (
               <th key={id} className={styles.dayName}>
-                {dayName}
+                <div>
+                  {dayName}
+                  {changable && (
+                    <div className={styles.iconsWrapper}>
+                      <EditIcon
+                        className={styles.icon}
+                        onClick={() => onEdit(id)}
+                      />
+                      <DeleteIcon
+                        className={styles.icon}
+                        onClick={() => onDelete(id)}
+                      />
+                    </div>
+                  )}
+                </div>
               </th>
             ))}
             <th className={styles.noOfClass}>Vreme</th>

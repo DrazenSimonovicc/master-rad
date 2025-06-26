@@ -16,6 +16,7 @@ import { useFormattedSerbianDate } from "@/Hooks/useFormattedSerbianDate";
 interface ServicesBoxProps {
   data: ForumNewsItemType[];
   className?: string;
+  triggerOnView?: boolean;
 }
 
 const updateLikeDislikeCount = async (
@@ -50,7 +51,11 @@ const containerVariants = {
   }),
 };
 
-export const ForumNews: FC<ServicesBoxProps> = ({ data, className }) => {
+export const ForumNews: FC<ServicesBoxProps> = ({
+  data,
+  className,
+  triggerOnView,
+}) => {
   const [likes, setLikes] = useState<number[]>(data.map((item) => item.likes));
   const [unlikes, setUnlikes] = useState<number[]>(
     data.map((item) => item.dislikes),
@@ -163,8 +168,9 @@ export const ForumNews: FC<ServicesBoxProps> = ({ data, className }) => {
           key={d.id}
           custom={index}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+          animate={triggerOnView ? undefined : "visible"}
+          whileInView={triggerOnView ? "visible" : undefined}
+          viewport={triggerOnView ? { once: true, amount: 0.1 } : undefined}
           variants={containerVariants}
         >
           {d.image_url && (

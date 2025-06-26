@@ -56,6 +56,7 @@ export const CategoryPicker: FC<CategoryPickerProps> = ({
                 imageDescription={data.image_description}
                 description={data.category_name}
                 onClick={() => handleCategoryClick(data.category_name)}
+                isSelected={selectedCategory === data.category_name}
               />
             </motion.div>
           ))}

@@ -9,6 +9,7 @@ interface CategoryCardProps {
   imageDescription: string;
   onClick: (category: string) => void;
   description: string;
+  isSelected?: boolean;
 }
 
 export const CategoryCard: FC<CategoryCardProps> = ({
@@ -17,6 +18,7 @@ export const CategoryCard: FC<CategoryCardProps> = ({
   imageUrl,
   onClick,
   description,
+  isSelected,
 }) => (
   <div className={clsx(styles.imageWrap, className)}>
     <Image
@@ -29,7 +31,9 @@ export const CategoryCard: FC<CategoryCardProps> = ({
     <div className={styles.overlay}>
       <button
         onClick={() => onClick(description)}
-        className={styles.descriptionWrapper}
+        className={clsx(styles.descriptionWrapper, {
+          [styles.selected]: isSelected,
+        })}
       >
         {description}
       </button>

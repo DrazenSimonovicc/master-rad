@@ -1,12 +1,11 @@
+import dayjs, { Dayjs } from "dayjs";
 import React from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs, { Dayjs } from "dayjs";
-
-import styles from "./DatePicker.module.scss";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import clsx from "clsx";
+import styles from "./DatePicker.module.scss";
 
 interface DatePickerFieldProps {
   value: string;

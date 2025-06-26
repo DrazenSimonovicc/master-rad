@@ -1,5 +1,5 @@
-import clsx from "clsx";
 import { FC, JSX } from "react";
+import clsx from "clsx";
 import styles from "./Title.module.scss";
 
 type themeType = "bold" | "regular" | "light" | "white" | "underline";

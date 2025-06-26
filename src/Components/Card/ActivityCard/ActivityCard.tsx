@@ -1,6 +1,6 @@
+import { UrlObject } from "url";
 import Link from "next/link";
 import styles from "./ActivityCard.module.scss";
-import { UrlObject } from "url";
 
 interface ActivityCardProps {
   href: UrlObject;

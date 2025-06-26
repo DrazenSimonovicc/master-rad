@@ -1,13 +1,12 @@
 "use client";
 
-import React, { FC, useState, useEffect } from "react";
-import { Close } from "@mui/icons-material";
+import React, { FC, useEffect, useState } from "react";
 import Link from "next/link";
-import clsx from "clsx";
-import styles from "./Navigation.module.scss";
-
+import { Close } from "@mui/icons-material";
 import { MobileNavigationItems } from "@/Components/Navigation/MobiileNavigationItems/MobileNavigationItems";
 import { NavigationItemType } from "@/Interfaces/BaseType";
+import clsx from "clsx";
+import styles from "./Navigation.module.scss";
 
 interface MobileNavigationProps {
   items: NavigationItemType[];

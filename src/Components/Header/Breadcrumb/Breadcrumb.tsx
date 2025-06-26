@@ -1,8 +1,8 @@
 import { FC } from "react";
-import styles from "./Breadcrumb.module.scss";
-import clsx from "clsx";
 import Link from "next/link";
 import { BreadcrumbItemType } from "@/Interfaces/BaseType";
+import clsx from "clsx";
+import styles from "./Breadcrumb.module.scss";
 
 interface BreadcrumbProps {
   items: BreadcrumbItemType;

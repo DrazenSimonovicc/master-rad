@@ -1,19 +1,19 @@
 "use client";
+
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { Header } from "@/Components/Header/Header";
-import { ForumNewsItemType } from "@/Interfaces/BaseType";
-import { useFetchForumNews } from "@/Hooks/getForumNewsData";
-import { Footer } from "@/Components/Footer";
-import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
-
-import styles from "./page.module.scss";
-import { Title } from "@/Components/Texts/Title";
 import axios from "axios";
-import { IconButton } from "@mui/material";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import { IconButton } from "@mui/material";
+import { Footer } from "@/Components/Footer";
+import { Header } from "@/Components/Header/Header";
+import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
 import Preloader from "@/Components/Preloader/Preloader";
+import { Title } from "@/Components/Texts/Title";
+import { useFetchForumNews } from "@/Hooks/getForumNewsData";
+import { ForumNewsItemType } from "@/Interfaces/BaseType";
+import styles from "./page.module.scss";
 
 const NewsArticle = () => {
   const { forumNews, error, loading } = useFetchForumNews();

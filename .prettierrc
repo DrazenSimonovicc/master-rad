@@ -1,5 +1,5 @@
 {
-  "singleQuote": true,
+  "singleQuote": false,
   "trailingComma": "all",
   "importOrder": [
     "^use client$",
@@ -7,16 +7,18 @@
     "^next(.*)$",
     "^axios$",
     "^formik$",
+    "^yup$",
     "^@mui/(.*)$",
     "^@/Components/(.*)$",
     "^@/Hooks/(.*)$",
     "^@/Interfaces/(.*)$",
     "^@/libs/(.*)$",
     "^@/app/(.*)$",
+    "^clsx$",
     "^\\.(.*)$",
     "^.+\\.scss$"
   ],
-  "importOrderSeparation": true,
+  "importOrderSeparation": false,
   "importOrderSortSpecifiers": true,
   "plugins": ["@trivago/prettier-plugin-sort-imports"]
 }

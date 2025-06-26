@@ -1,8 +1,6 @@
-import clsx from "clsx";
 import { FC } from "react";
-
 import Link from "next/link";
-
+import clsx from "clsx";
 import styles from "./ImageCard.module.scss";
 
 //TODO NIJE URADJEN STAJLING

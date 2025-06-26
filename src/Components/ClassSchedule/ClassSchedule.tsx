@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./ClassSchedule.module.scss";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import styles from "./ClassSchedule.module.scss";
 
 interface ClassSchedule {
   id: string;

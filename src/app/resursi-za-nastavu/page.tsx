@@ -1,14 +1,12 @@
 "use client";
 
-import { Header } from "@/Components/Header/Header";
-import Link from "next/link";
-import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
 import React from "react";
-
-import styles from "./page.module.scss";
-
-import { Title } from "@/Components/Texts/Title";
+import Link from "next/link";
 import { Footer } from "@/Components/Footer";
+import { Header } from "@/Components/Header/Header";
+import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
+import { Title } from "@/Components/Texts/Title";
+import styles from "./page.module.scss";
 
 const HomeworkSubjects = () => {
   const breadCrumb = {

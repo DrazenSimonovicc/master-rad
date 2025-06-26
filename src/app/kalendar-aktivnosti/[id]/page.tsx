@@ -1,32 +1,31 @@
 "use client";
 
-import { Header } from "@/Components/Header/Header";
-import React, { useState, useEffect } from "react";
-import styles from "./page.module.scss";
-import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { useFetchActivity } from "@/Hooks/Activity/getActivity";
-import { Title } from "@/Components/Texts/Title";
-import { useAuth } from "@/Hooks/useAuth";
-import Preloader from "@/Components/Preloader/Preloader";
-
-import DownloadIcon from "@mui/icons-material/Download";
-import IconButton from "@mui/material/IconButton";
-import { useDownloadActivity } from "@/Hooks/Download/useDownloadActivity";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { ActivityType } from "@/Interfaces/BaseType";
+import { useRouter } from "next/navigation";
 import axios from "axios";
-import { PocketBaseCollection } from "@/libs/pocketbase";
-import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
-import { Modal } from "@/Components/Modal";
-import { ActivityConfig } from "@/app/kalendar-aktivnosti/config";
-import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
-import { TextField } from "@mui/material";
-import { Button } from "@/Components/Button";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useRouter } from "next/navigation";
+import DeleteIcon from "@mui/icons-material/Delete";
+import DownloadIcon from "@mui/icons-material/Download";
+import EditIcon from "@mui/icons-material/Edit";
+import { TextField } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import { Button } from "@/Components/Button";
+import { Header } from "@/Components/Header/Header";
+import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
+import { Modal } from "@/Components/Modal";
+import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
+import Preloader from "@/Components/Preloader/Preloader";
+import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
+import { Title } from "@/Components/Texts/Title";
+import { useFetchActivity } from "@/Hooks/Activity/getActivity";
+import { useDownloadActivity } from "@/Hooks/Download/useDownloadActivity";
+import { useAuth } from "@/Hooks/useAuth";
+import { ActivityType } from "@/Interfaces/BaseType";
+import { PocketBaseCollection } from "@/libs/pocketbase";
+import { ActivityConfig } from "@/app/kalendar-aktivnosti/config";
+import styles from "./page.module.scss";
 
 const SingleActivity = () => {
   const searchParams = useSearchParams();

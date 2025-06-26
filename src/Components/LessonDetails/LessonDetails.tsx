@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./LessonDetails.module.scss";
 import { LessonPlanType } from "@/Interfaces/BaseType";
 import { LessonConfig } from "@/app/resursi-za-nastavu/priprema-za-nastavu/config";
+import styles from "./LessonDetails.module.scss";
 
 interface LessonDetailsProps {
   lesson: LessonPlanType;

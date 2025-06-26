@@ -1,19 +1,17 @@
 "use client";
 
-import React from "react";
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
 import { Underline } from "@tiptap/extension-underline";
-
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import React from "react";
 import FormatBoldIcon from "@mui/icons-material/FormatBold";
 import FormatItalicIcon from "@mui/icons-material/FormatItalic";
-import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
-import StrikethroughSIcon from "@mui/icons-material/StrikethroughS";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
-import UndoIcon from "@mui/icons-material/Undo";
+import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
 import RedoIcon from "@mui/icons-material/Redo";
-
+import StrikethroughSIcon from "@mui/icons-material/StrikethroughS";
+import UndoIcon from "@mui/icons-material/Undo";
 import styles from "./TextEditor.module.scss";
 
 interface RichTextEditorProps {

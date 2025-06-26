@@ -1,9 +1,8 @@
-import clsx from "clsx";
 import { FC } from "react";
-
-import styles from "./TitleWithDescription.module.scss";
-import { Title } from "@/Components/Texts/Title";
 import { Description } from "@/Components/Texts/Description";
+import { Title } from "@/Components/Texts/Title";
+import clsx from "clsx";
+import styles from "./TitleWithDescription.module.scss";
 
 interface DescriptionProps {
   text: string;

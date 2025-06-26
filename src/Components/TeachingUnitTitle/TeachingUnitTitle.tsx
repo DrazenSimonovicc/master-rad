@@ -1,12 +1,12 @@
 import React from "react";
-import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import DownloadIcon from "@mui/icons-material/Download";
+import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
-import styles from "./TeachingUnitTitle.module.scss";
-import { useDownloadTasks } from "@/Hooks/Download/useDownloadTasks";
 import { useDownloadLessonPlan } from "@/Hooks/Download/useDownloadLessonPlan";
+import { useDownloadTasks } from "@/Hooks/Download/useDownloadTasks";
 import { LessonPlanType } from "@/Interfaces/BaseType";
+import styles from "./TeachingUnitTitle.module.scss";
 
 type TaskType =
   | "test"

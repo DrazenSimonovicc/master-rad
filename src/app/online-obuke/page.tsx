@@ -1,13 +1,11 @@
 "use client";
 
 import React from "react";
-
+import { Footer } from "@/Components/Footer";
 import { Header } from "@/Components/Header/Header";
 import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
-import { Title } from "@/Components/Texts/Title";
 import TeacherSitesGrid from "@/Components/TeacherSiteGrid/TeacherSiteGrid";
-import { Footer } from "@/Components/Footer";
-
+import { Title } from "@/Components/Texts/Title";
 import styles from "./page.module.scss";
 
 const Announcements = () => {

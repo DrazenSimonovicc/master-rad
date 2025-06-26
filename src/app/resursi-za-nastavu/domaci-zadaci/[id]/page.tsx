@@ -1,35 +1,28 @@
 "use client";
 
 import React, { useState } from "react";
-import { useFormik } from "formik";
-import axios from "axios";
 import { useSearchParams } from "next/navigation";
+import axios from "axios";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { Pagination, TextField } from "@mui/material";
-
-import { Header } from "@/Components/Header/Header";
-import TeachingUnitTitle from "@/Components/TeachingUnitTitle/TeachingUnitTitle";
-import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
-import TaskList from "@/Components/TaskList/TaskList";
-import RequireAuth from "@/Components/RequireAuth/RequireAuth";
-import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
-import Preloader from "@/Components/Preloader/Preloader";
-import { Footer } from "@/Components/Footer";
-import { Title } from "@/Components/Texts/Title";
 import { Button } from "@/Components/Button";
+import { Footer } from "@/Components/Footer";
+import { Header } from "@/Components/Header/Header";
 import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
 import { Modal } from "@/Components/Modal";
-
-import { useAuth } from "@/Hooks/useAuth";
+import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
+import Preloader from "@/Components/Preloader/Preloader";
+import RequireAuth from "@/Components/RequireAuth/RequireAuth";
+import TaskList from "@/Components/TaskList/TaskList";
+import TeachingUnitTitle from "@/Components/TeachingUnitTitle/TeachingUnitTitle";
+import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
+import { Title } from "@/Components/Texts/Title";
 import { useFetchHomeworks } from "@/Hooks/Homework/getHomeworks";
-
-import { homeworkConfig } from "@/app/resursi-za-nastavu/domaci-zadaci/config";
-
+import { useAuth } from "@/Hooks/useAuth";
 import { HomeworkItemType } from "@/Interfaces/BaseType";
-
 import { PocketBaseCollection } from "@/libs/pocketbase";
-
-import * as Yup from "yup";
-
+import { homeworkConfig } from "@/app/resursi-za-nastavu/domaci-zadaci/config";
 import styles from "./page.module.scss";
 
 const Homework = () => {
@@ -234,7 +227,7 @@ const Homework = () => {
         {isLoggedIn && (
           <div className={styles.addButtonWrapper}>
             <Button
-              title={"Dodaj domaci zadatak"}
+              title={"Dodaj domaći zadatak"}
               themes={[
                 "orange",
                 "standardWide",
@@ -430,7 +423,7 @@ const Homework = () => {
         </Modal>
 
         <Modal
-          title="Dodaj domaci zadatak"
+          title="Dodaj domaći zadatak"
           isOpen={open}
           setIsOpen={setOpen}
           description="Dodajte jedan ili više zadataka koje učenici treba da urade."
@@ -494,7 +487,7 @@ const Homework = () => {
 
             <div style={{ marginTop: "60px" }}>
               <Button
-                title="Dodaj domaci zadatak"
+                title="Dodaj domaći zadatak"
                 themes={[
                   "blue",
                   "standardWide",

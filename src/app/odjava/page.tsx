@@ -1,8 +1,6 @@
 import { FC } from "react";
-
-import { Description } from "@/Components/Texts/Description";
 import { Button } from "@/Components/Button";
-
+import { Description } from "@/Components/Texts/Description";
 import styles from "./page.module.scss";
 
 const LogoutPage: FC = () => {

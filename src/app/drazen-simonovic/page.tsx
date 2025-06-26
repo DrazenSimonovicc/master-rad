@@ -1,9 +1,8 @@
 "use client";
 
+import { Footer } from "@/Components/Footer";
 import { Header } from "@/Components/Header/Header";
 import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
-import { Footer } from "@/Components/Footer";
-
 import styles from "./page.module.scss";
 
 const Announcements = () => {

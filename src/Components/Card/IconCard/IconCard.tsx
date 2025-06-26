@@ -1,8 +1,7 @@
-import clsx from "clsx";
 import React, { FC } from "react";
-
-import styles from "./IconCard.module.scss";
 import Link from "next/link";
+import clsx from "clsx";
+import styles from "./IconCard.module.scss";
 
 interface IconCardProps {
   className?: string;

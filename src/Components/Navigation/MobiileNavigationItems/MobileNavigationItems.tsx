@@ -1,11 +1,11 @@
 "use client";
+
 import React, { FC, useState } from "react";
 import Link from "next/link";
 import KeyboardArrowDown from "@mui/icons-material/KeyboardArrowDown";
-import clsx from "clsx";
-
-import styles from "./MobileNavigationItems.module.scss";
 import { NavigationItemType } from "@/Interfaces/BaseType";
+import clsx from "clsx";
+import styles from "./MobileNavigationItems.module.scss";
 
 interface MobileNavItemsProps {
   items: NavigationItemType[];

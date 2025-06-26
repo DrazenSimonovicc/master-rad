@@ -1,33 +1,33 @@
 "use client";
 
-import { Header } from "@/Components/Header/Header";
-import { useFetchOperativePlans } from "@/Hooks/OperativeAndGlobalPlans/getOperativePlans";
-import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
-import { Button } from "@/Components/Button";
 import React, { useState } from "react";
-import { useAuth } from "@/Hooks/useAuth";
-import { Modal } from "@/Components/Modal";
-import styles from "./page.module.scss";
-import { useFormik } from "formik";
 import axios from "axios";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 import { TextField } from "@mui/material";
+import { Button } from "@/Components/Button";
+import { Footer } from "@/Components/Footer";
+import { Header } from "@/Components/Header/Header";
+import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
+import { Modal } from "@/Components/Modal";
+import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
+import Preloader from "@/Components/Preloader/Preloader";
+import RequireAuth from "@/Components/RequireAuth/RequireAuth";
+import SubjectCard from "@/Components/SubjectCard/SubjectCard";
+import { Title } from "@/Components/Texts/Title";
+import { useFetchGlobalPlans } from "@/Hooks/OperativeAndGlobalPlans/getGlobalPlans";
+import { useFetchOperativePlans } from "@/Hooks/OperativeAndGlobalPlans/getOperativePlans";
+import { useAuth } from "@/Hooks/useAuth";
+import {
+  GlobalPlansItemType,
+  OperativePlansItemType,
+} from "@/Interfaces/BaseType";
 import { PocketBaseCollection } from "@/libs/pocketbase";
 import {
   globalFieldConfig,
   operativeFieldConfig,
 } from "@/app/resursi-za-nastavu/operativni-i-globalni-planovi/config";
-import { Title } from "@/Components/Texts/Title";
-import { useFetchGlobalPlans } from "@/Hooks/OperativeAndGlobalPlans/getGlobalPlans";
-import RequireAuth from "@/Components/RequireAuth/RequireAuth";
-import Preloader from "@/Components/Preloader/Preloader";
-import SubjectCard from "@/Components/SubjectCard/SubjectCard";
-import { Footer } from "@/Components/Footer";
-import * as Yup from "yup";
-import {
-  GlobalPlansItemType,
-  OperativePlansItemType,
-} from "@/Interfaces/BaseType";
-import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
+import styles from "./page.module.scss";
 
 const OperativeAndGlobalPlans = () => {
   const breadCrumb = {

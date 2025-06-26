@@ -1,28 +1,27 @@
 "use client";
 
-import { Header } from "@/Components/Header/Header";
-
-import { useAuth } from "@/Hooks/useAuth";
 import React, { useEffect, useMemo, useState } from "react";
-import { useFormik } from "formik";
-import axios from "axios";
-import { PocketBaseCollection } from "@/libs/pocketbase";
-import styles from "./page.module.scss";
-import { Button } from "@/Components/Button";
-import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
-import { Pagination } from "@mui/material";
 import { useSearchParams } from "next/navigation";
-import { useFetchLessonPlan } from "@/Hooks/LessonPlan/getLessonPlan";
-import RequireAuth from "@/Components/RequireAuth/RequireAuth";
-import Preloader from "@/Components/Preloader/Preloader";
+import axios from "axios";
+import { useFormik } from "formik";
+import { Pagination } from "@mui/material";
+import { Button } from "@/Components/Button";
 import { Footer } from "@/Components/Footer";
-import { Title } from "@/Components/Texts/Title";
-import LessonDetails from "@/Components/LessonDetails/LessonDetails";
-import TeachingUnitTitle from "@/Components/TeachingUnitTitle/TeachingUnitTitle";
-import { LessonPlanType } from "@/Interfaces/BaseType";
-import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
 import LessonPlanModal from "@/Components/Form/LessonPlan/LessonPlanModal/LessonPlanModal";
+import { Header } from "@/Components/Header/Header";
+import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
+import LessonDetails from "@/Components/LessonDetails/LessonDetails";
+import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
+import Preloader from "@/Components/Preloader/Preloader";
+import RequireAuth from "@/Components/RequireAuth/RequireAuth";
+import TeachingUnitTitle from "@/Components/TeachingUnitTitle/TeachingUnitTitle";
+import { Title } from "@/Components/Texts/Title";
+import { useFetchLessonPlan } from "@/Hooks/LessonPlan/getLessonPlan";
+import { useAuth } from "@/Hooks/useAuth";
+import { LessonPlanType } from "@/Interfaces/BaseType";
+import { PocketBaseCollection } from "@/libs/pocketbase";
 import { lessonPlanValidationSchema } from "@/app/resursi-za-nastavu/priprema-za-nastavu/[id]/Validation";
+import styles from "./page.module.scss";
 
 const LessonPlan = () => {
   const searchParams = useSearchParams();

@@ -1,7 +1,7 @@
 import { FC } from "react";
-import styles from "./Button.module.scss";
-import clsx from "clsx";
 import Link from "next/link";
+import clsx from "clsx";
+import styles from "./Button.module.scss";
 
 type themeType =
   | "blue"

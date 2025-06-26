@@ -1,6 +1,5 @@
-import { RichTextEditor } from "@/Components/Texts/TextEditorWithLabel/TextEditor/TextEditor";
 import React, { FC } from "react";
-
+import { RichTextEditor } from "@/Components/Texts/TextEditorWithLabel/TextEditor/TextEditor";
 import styles from "./TextEditorWithLabel.module.scss";
 
 interface TextEditorWithLabelProps {

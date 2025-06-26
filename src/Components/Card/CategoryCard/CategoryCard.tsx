@@ -1,7 +1,7 @@
-import clsx from "clsx";
 import { FC } from "react";
-import styles from "./CategoryCard.module.scss";
 import Image from "next/image";
+import clsx from "clsx";
+import styles from "./CategoryCard.module.scss";
 
 interface CategoryCardProps {
   className?: string;

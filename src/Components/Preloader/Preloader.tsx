@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import styles from "./Preloader.module.scss";
 import clsx from "clsx";
+import styles from "./Preloader.module.scss";
 
 interface PreloaderProps {
   page?: boolean;

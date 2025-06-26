@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import styles from "./WorkDescription.module.scss";
 import { ImageCard } from "@/Components/Card/ImageCard/ImageCard";
+import styles from "./WorkDescription.module.scss";
 
 interface WorkDescriptionProps {
   text: string;

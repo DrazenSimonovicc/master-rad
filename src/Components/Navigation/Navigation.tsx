@@ -1,17 +1,16 @@
 "use client";
 
-import React, { FC, useState, useEffect } from "react";
-import styles from "./Navigation.module.scss";
-import { AccountCircle, Dehaze, ExitToApp } from "@mui/icons-material";
+import React, { FC, useEffect, useState } from "react";
 import Link from "next/link";
-import clsx from "clsx";
-
-import { MobileNavigation } from "./MobileNavigation";
-import { NavigationItemType } from "@/Interfaces/BaseType";
-import { IconButton, Menu, MenuItem } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { pb } from "@/libs/pocketbase";
 import { usePathname } from "next/navigation";
+import { AccountCircle, Dehaze, ExitToApp } from "@mui/icons-material";
+import { IconButton, Menu, MenuItem } from "@mui/material";
+import { NavigationItemType } from "@/Interfaces/BaseType";
+import { pb } from "@/libs/pocketbase";
+import clsx from "clsx";
+import { MobileNavigation } from "./MobileNavigation";
+import styles from "./Navigation.module.scss";
 
 //TODO:ako ima profil picture stavi to ako nema onda account circle
 //TODO:ako je ulogovan onda pise profil, a ako nije ulogovan onda da pise prijava

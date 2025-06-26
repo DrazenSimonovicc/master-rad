@@ -1,7 +1,7 @@
+import React, { useState } from "react";
+import Pagination from "@mui/material/Pagination";
 import TeacherSiteCard from "../TeacherSiteGrid/TeacherSiteCard/TeacherSiteCard";
 import styles from "./TeacherSiteGrid.module.scss";
-import Pagination from "@mui/material/Pagination";
-import React, { useState } from "react";
 
 const sites = [
   {

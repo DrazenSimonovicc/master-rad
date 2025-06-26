@@ -1,10 +1,9 @@
 import React from "react";
 import { TextField } from "@mui/material";
-
-import styles from "./LessonUploadFields.module.scss";
-import { testConfig } from "@/app/resursi-za-nastavu/testovi/config";
 import { Button } from "@/Components/Button";
 import { LessonConfig } from "@/app/resursi-za-nastavu/priprema-za-nastavu/config";
+import { testConfig } from "@/app/resursi-za-nastavu/testovi/config";
+import styles from "./LessonUploadFields.module.scss";
 
 type Props = {
   formikLessonPlan: any;

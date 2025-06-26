@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import { LessonConfig } from "@/app/resursi-za-nastavu/priprema-za-nastavu/config";
 import { LessonPlanType } from "@/Interfaces/BaseType";
+import { LessonConfig } from "@/app/resursi-za-nastavu/priprema-za-nastavu/config";
 
 interface UseDownloadLessonPlanParams {
   lesson: LessonPlanType;

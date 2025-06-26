@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./DeleteConfirmationModal.module.scss";
 import { Button } from "@/Components/Button";
+import styles from "./DeleteConfirmationModal.module.scss";
 
 interface DeleteConfirmationModalProps {
   isOpen: boolean;

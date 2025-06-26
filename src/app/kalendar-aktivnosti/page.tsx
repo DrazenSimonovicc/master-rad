@@ -2,40 +2,33 @@
 
 import React, { useState } from "react";
 import axios from "axios";
+import { FieldArray, FormikProvider, useFormik } from "formik";
 import * as Yup from "yup";
-import { useFormik, FieldArray, FormikProvider } from "formik";
-import { TextField } from "@mui/material";
-
-import { Header } from "@/Components/Header/Header";
-import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
-import { Button } from "@/Components/Button";
-import { Modal } from "@/Components/Modal";
-import { Title } from "@/Components/Texts/Title";
-import { ClassScheduleTable } from "@/Components/ClassSchedule/ClassSchedule";
-import RequireAuth from "@/Components/RequireAuth/RequireAuth";
-import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
-import Preloader from "@/Components/Preloader/Preloader";
-import { ActivityCard } from "@/Components/Card/ActivityCard/ActivityCard";
-import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
-
 import DownloadIcon from "@mui/icons-material/Download";
 import EditIcon from "@mui/icons-material/Edit";
-
-import { useDownloadClassScheduleCsv } from "@/Hooks/Download/useDownloadClassScheduleCsv";
-import { useAuth } from "@/Hooks/useAuth";
+import { TextField } from "@mui/material";
+import { Button } from "@/Components/Button";
+import { ActivityCard } from "@/Components/Card/ActivityCard/ActivityCard";
+import { ClassScheduleTable } from "@/Components/ClassSchedule/ClassSchedule";
+import { Header } from "@/Components/Header/Header";
+import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
+import { Modal } from "@/Components/Modal";
+import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
+import Preloader from "@/Components/Preloader/Preloader";
+import RequireAuth from "@/Components/RequireAuth/RequireAuth";
+import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
+import { Title } from "@/Components/Texts/Title";
 import { useFetchActivity } from "@/Hooks/Activity/getActivity";
 import { useFetchClassSchedule } from "@/Hooks/Activity/getClassSchedule";
-
+import { useDownloadClassScheduleCsv } from "@/Hooks/Download/useDownloadClassScheduleCsv";
+import { useAuth } from "@/Hooks/useAuth";
 import { ClassScheduleType } from "@/Interfaces/BaseType";
-
 import { PocketBaseCollection } from "@/libs/pocketbase";
-import { ActivityConfig } from "@/app/kalendar-aktivnosti/config";
-
 import {
   activityValidationSchema,
   classScheduleValidationSchema,
 } from "@/app/kalendar-aktivnosti/Validation";
-
+import { ActivityConfig } from "@/app/kalendar-aktivnosti/config";
 import styles from "./page.module.scss";
 
 const MAX_SUBJECTS = 7;

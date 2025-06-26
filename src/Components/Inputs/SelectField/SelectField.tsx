@@ -1,5 +1,5 @@
 import React from "react";
-import { FormControl, Select, MenuItem } from "@mui/material";
+import { FormControl, MenuItem, Select } from "@mui/material";
 import { SelectChangeEvent } from "@mui/material/Select";
 import clsx from "clsx";
 import styles from "./SelectField.module.scss";

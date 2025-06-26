@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { Modal } from "@/Components/Modal";
-
-import styles from "./LessonPlanModal.module.scss";
+import { Button } from "@/Components/Button";
 import LessonFormFields from "@/Components/Form/LessonPlan/LessonFormFields/LessonFormFields";
 import LessonUploadFields from "@/Components/Form/LessonPlan/LessonUploadFields/LessonUploadFields";
-import { Button } from "@/Components/Button";
+import { Modal } from "@/Components/Modal";
+import styles from "./LessonPlanModal.module.scss";
 
 const LessonPlanModal = ({
   open,

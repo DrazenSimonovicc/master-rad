@@ -1,8 +1,8 @@
-import Link from "next/link";
-import styles from "./SubjectCard.module.scss";
 import React, { FC } from "react";
-import EditIcon from "@mui/icons-material/Edit";
+import Link from "next/link";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import styles from "./SubjectCard.module.scss";
 
 interface SubjectCardProps {
   id: string | number;

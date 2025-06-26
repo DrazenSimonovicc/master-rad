@@ -1,12 +1,12 @@
 "use client";
-import { CancelRounded } from "@mui/icons-material";
-import clsx from "clsx";
-import { FC, JSX, useCallback, useEffect, useState } from "react";
-import ReactModal from "react-modal";
 
-import styles from "./Modal.module.scss";
+import ReactModal from "react-modal";
+import { FC, JSX, useCallback, useEffect, useState } from "react";
+import { CancelRounded } from "@mui/icons-material";
 import { Description } from "@/Components/Texts/Description";
 import { Title } from "@/Components/Texts/Title";
+import clsx from "clsx";
+import styles from "./Modal.module.scss";
 
 //TODO:Treba da se sredi da kada je ovoren da sticky ne utice na njega, da bude veci za index ovde
 

@@ -1,25 +1,23 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { useFormik } from "formik";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Header } from "@/Components/Header/Header";
+import { useFormik } from "formik";
+import { Input, TextField } from "@mui/material";
+import { Button } from "@/Components/Button";
 import { CategoryPicker } from "@/Components/CategoryPicker/CategoryPicker";
-import { ForumNews } from "@/Components/ForumNews/ForumNews";
 import { Footer } from "@/Components/Footer";
-import { Title } from "@/Components/Texts/Title";
+import { ForumNews } from "@/Components/ForumNews/ForumNews";
+import { Header } from "@/Components/Header/Header";
 import { Modal } from "@/Components/Modal";
-import { TextField, Input } from "@mui/material";
-
-import styles from "./page.module.scss";
+import Preloader from "@/Components/Preloader/Preloader";
+import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
+import { Title } from "@/Components/Texts/Title";
+import { useFetchNewsCategories } from "@/Hooks/getForumCategories";
 import { useFetchForumNews } from "@/Hooks/getForumNewsData";
 import { useAuth } from "@/Hooks/useAuth";
-import { Button } from "@/Components/Button";
-
-import Preloader from "@/Components/Preloader/Preloader";
-import { useFetchNewsCategories } from "@/Hooks/getForumCategories";
-import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
 import { ForumNewsValidationSchema } from "@/app/forum/Validation";
+import styles from "./page.module.scss";
 
 export default function Page() {
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(

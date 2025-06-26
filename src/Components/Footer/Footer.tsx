@@ -1,9 +1,9 @@
-import { FC } from "react";
-import styles from "./Footer.module.scss";
-import Image from "next/image";
 import footerImage from "@/Assets/footerImages/img7.jpg";
-import { useFetchFooter } from "@/Hooks/getFooterData";
+import { FC } from "react";
+import Image from "next/image";
 import Link from "next/link";
+import { useFetchFooter } from "@/Hooks/getFooterData";
+import styles from "./Footer.module.scss";
 
 export const Footer: FC = () => {
   const { footerData, error, loading } = useFetchFooter();

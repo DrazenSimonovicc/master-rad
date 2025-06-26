@@ -1,10 +1,9 @@
 import React, { FC } from "react";
-
-import styles from "./CardsWithIcons.module.scss";
-import { IconCard } from "@/Components/Card/IconCard/IconCard";
-import TextSnippetIcon from "@mui/icons-material/TextSnippet";
 import ForumIcon from "@mui/icons-material/Forum";
 import GroupsIcon from "@mui/icons-material/Groups";
+import TextSnippetIcon from "@mui/icons-material/TextSnippet";
+import { IconCard } from "@/Components/Card/IconCard/IconCard";
+import styles from "./CardsWithIcons.module.scss";
 
 export const CardsWithIcons: FC = ({}) => (
   <div className={styles.iconWrapper}>

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { ActivityType } from "@/Interfaces/BaseType";
 import axios from "axios";
+import { ActivityType } from "@/Interfaces/BaseType";
 import { PocketBaseCollection } from "@/libs/pocketbase";
 
 export const useFetchActivity = (userId?: string) => {

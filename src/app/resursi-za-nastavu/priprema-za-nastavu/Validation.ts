@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const HomeworkSubjectValidationSchema = Yup.object({
+export const LessonSubjectValidationSchema = Yup.object({
   subject: Yup.string()
     .required("Naziv predmeta je obavezan")
     .min(2, "Predmet mora imati bar 2 slova"),

@@ -1,4 +1,3 @@
-// hooks/useDownloadDoc.ts
 import { ActivityType } from "@/Interfaces/BaseType";
 
 export const useDownloadActivity = () => {

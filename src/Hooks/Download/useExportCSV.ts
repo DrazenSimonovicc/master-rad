@@ -7,7 +7,7 @@ export function useExportCSV() {
     globalPlans: any[],
     filenamePrefix: string = "",
   ) => {
-    let csvContent = "\uFEFF"; // UTF-8 BOM
+    let csvContent = "\uFEFF";
 
     if (type === "operative") {
       const headers = [

@@ -16,7 +16,7 @@ import { Title } from "@/Components/Texts/Title";
 import { useFetchHomeworkSubjects } from "@/Hooks/Homework/getHomeworkSubjects";
 import { useAuth } from "@/Hooks/useAuth";
 import { PocketBaseCollection } from "@/libs/pocketbase";
-import { HomeworkValidationSchema } from "@/app/resursi-za-nastavu/domaci-zadaci/Validation";
+import { HomeworkSubjectValidationSchema } from "@/app/resursi-za-nastavu/domaci-zadaci/Validation";
 import { homeworkSubjectConfig } from "@/app/resursi-za-nastavu/domaci-zadaci/config";
 import styles from "./page.module.scss";
 
@@ -47,7 +47,7 @@ const HomeworkSubjects = () => {
       subject: "",
       grade: "",
     },
-    validationSchema: HomeworkValidationSchema,
+    validationSchema: HomeworkSubjectValidationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
         await axios.post(`${PocketBaseCollection}/homework_subjects/records`, {

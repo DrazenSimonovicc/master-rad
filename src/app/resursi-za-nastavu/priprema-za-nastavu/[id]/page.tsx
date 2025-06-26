@@ -9,6 +9,8 @@ import { Button } from "@/Components/Button";
 import { Footer } from "@/Components/Footer";
 import LessonPlanModal from "@/Components/Form/LessonPlan/LessonPlanModal/LessonPlanModal";
 import { Header } from "@/Components/Header/Header";
+import SearchInput from "@/Components/Inputs/SearchInput/SearchInput";
+import SearchToggleInput from "@/Components/Inputs/SearchInput/SearchInput";
 import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
 import LessonDetails from "@/Components/LessonDetails/LessonDetails";
 import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
@@ -53,6 +55,38 @@ const LessonPlan = () => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [view, setView] = useState<"form" | "upload">("form");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  const lessonMatchesSearch = (lesson: LessonPlanType, query: string) => {
+    const searchTarget = [
+      lesson.lesson_name,
+      lesson.teaching_topic,
+      lesson.class_number,
+      lesson.date,
+      lesson.previous_lesson,
+      lesson.next_lesson,
+      lesson.type_of_lesson,
+      lesson.educational_objectives,
+      lesson.social_objectives,
+      lesson.functional_objectives,
+      lesson.teaching_methods,
+      lesson.forms_of_work,
+      lesson.instructional_materials,
+      lesson.correlation,
+      lesson.literature,
+      lesson.introduction,
+      lesson.main,
+      lesson.conclusion,
+      lesson.grade_and_class,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    return searchTarget.includes(query.toLowerCase());
+  };
 
   const handleEdit = (lessonItem: LessonPlanType) => {
     setEditingLessonPlan(lessonItem);
@@ -217,7 +251,8 @@ const LessonPlan = () => {
   const myLessonPlan = lessonPlan.filter(
     (t) =>
       t.subject.toLowerCase() === subject.toLowerCase() &&
-      t.user === userData?.id,
+      t.user === userData?.id &&
+      lessonMatchesSearch(t, searchQuery),
   );
 
   const paginatedLessonPlan = myLessonPlan.slice(
@@ -225,10 +260,19 @@ const LessonPlan = () => {
     myCurrentPage * itemsPerPage,
   );
 
-  const paginatedOtherLessonPlan = otherLessonPlan.slice(
+  const filteredOtherLessonPlan = otherLessonPlan.filter((t) =>
+    lessonMatchesSearch(t, searchQuery),
+  );
+
+  const paginatedOtherLessonPlan = filteredOtherLessonPlan.slice(
     (otherCurrentPage - 1) * itemsPerPage,
     otherCurrentPage * itemsPerPage,
   );
+
+  useEffect(() => {
+    setMyCurrentPage(1);
+    setOtherCurrentPage(1);
+  }, [searchQuery]);
 
   if (onLoading) {
     return <Preloader page />;
@@ -257,6 +301,11 @@ const LessonPlan = () => {
                 "maxWidth",
               ]}
               onClick={handleOpenModal}
+            />
+
+            <SearchToggleInput
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         )}

@@ -74,7 +74,6 @@ export const useDownloadLessonPlan = ({
 
     htmlContent += `</body></html>`;
 
-    // Check if empty (no meaningful content)
     const contentWithoutTags = htmlContent.replace(/<[^>]+>/g, "").trim();
     if (!contentWithoutTags) {
       alert("Nema podataka za preuzimanje.");

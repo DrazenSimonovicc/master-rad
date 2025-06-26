@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import { Pagination, TextField } from "@mui/material";
 import { Button } from "@/Components/Button";
 import { Footer } from "@/Components/Footer";
 import { Header } from "@/Components/Header/Header";
+import SearchToggleInput from "@/Components/Inputs/SearchInput/SearchInput";
 import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
 import { Modal } from "@/Components/Modal";
 import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
@@ -22,8 +22,22 @@ import { useFetchHomeworks } from "@/Hooks/Homework/getHomeworks";
 import { useAuth } from "@/Hooks/useAuth";
 import { HomeworkItemType } from "@/Interfaces/BaseType";
 import { PocketBaseCollection } from "@/libs/pocketbase";
+import { HomeworkValidationSchema } from "@/app/resursi-za-nastavu/domaci-zadaci/[id]/Validation";
 import { homeworkConfig } from "@/app/resursi-za-nastavu/domaci-zadaci/config";
 import styles from "./page.module.scss";
+
+const taskKeys = [
+  "task1",
+  "task2",
+  "task3",
+  "task4",
+  "task5",
+  "task6",
+  "task7",
+  "task8",
+  "task9",
+  "task10",
+] as const;
 
 const Homework = () => {
   const searchParams = useSearchParams();
@@ -37,74 +51,45 @@ const Homework = () => {
     level3url: "/resursi-za-nastavu/domaci-zadaci",
   };
 
-  const [myCurrentPage, setMyCurrentPage] = useState(1);
-  const [otherCurrentPage, setOtherCurrentPage] = useState(1);
-  const itemsPerPage = 12;
-  const [openEditModal, setOpenEditModal] = useState(false);
-  const [editingHomework, setEditingHomework] =
-    useState<HomeworkItemType | null>(null);
-
-  const handleEdit = (homeworkItem: HomeworkItemType) => {
-    setEditingHomework(homeworkItem);
-    setOpenEditModal(true);
-  };
-
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [deleteId, setDeleteId] = useState<string | null>(null);
-
-  const handleDelete = (id: string) => {
-    setDeleteId(id);
-    setIsDeleteModalOpen(true);
-  };
-
-  const confirmDelete = async () => {
-    if (!deleteId) return;
-
-    try {
-      await axios.delete(
-        `${PocketBaseCollection}/homework/records/${deleteId}`,
-      );
-      await refetchOperative();
-    } catch (error) {
-      console.error("Greška prilikom brisanja:", error);
-    } finally {
-      setIsDeleteModalOpen(false);
-      setDeleteId(null);
-    }
-  };
-
   const {
     homework,
     error: onError,
     loading: onLoading,
-    refetch: refetchOperative,
+    refetch: refetch,
   } = useFetchHomeworks();
 
   const { userData, isLoggedIn } = useAuth();
-  const [open, setOpen] = useState(false);
-  const handleOpenModal = () => setOpen(true);
 
-  const HomeworkValidationSchema = Yup.object().shape({
-    teaching_unit: Yup.string().required("Naziv nastavne jedinice je obavezan"),
-    tasks: Yup.array()
-      .of(Yup.string().required("Zadatak ne sme biti prazan"))
-      .min(1, "Potrebno je uneti bar jedan zadatak"),
-  });
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingHomework, setEditingHomework] =
+    useState<HomeworkItemType | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [expandedUnitId, setExpandedUnitId] = useState<string | null>(null);
+  const [myCurrentPage, setMyCurrentPage] = useState(1);
+  const [otherCurrentPage, setOtherCurrentPage] = useState(1);
+  const itemsPerPage = 12;
 
-  const taskKeys = [
-    "task1",
-    "task2",
-    "task3",
-    "task4",
-    "task5",
-    "task6",
-    "task7",
-    "task8",
-    "task9",
-    "task10",
-  ] as const;
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const formikEdit = useFormik({
+  useEffect(() => {
+    setMyCurrentPage(1);
+    setOtherCurrentPage(1);
+  }, [searchQuery]);
+
+  const matchesSearch = (homework: HomeworkItemType, query: string) => {
+    const searchString = [
+      homework.teaching_unit,
+      taskKeys.map((key) => homework[key]).join(" "),
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    return searchString.includes(query.toLowerCase());
+  };
+
+  const formik = useFormik({
     enableReinitialize: true,
     initialValues: editingHomework
       ? {
@@ -120,68 +105,65 @@ const Homework = () => {
           subject: subject,
         },
     validationSchema: HomeworkValidationSchema,
-    onSubmit: async (values) => {
+    onSubmit: async (values, { resetForm }) => {
       try {
-        const dataToSend = {
+        const dataToSend: Record<string, string | undefined> = {
           teaching_unit: values.teaching_unit,
           subject: values.subject,
-          ...values.tasks.reduce(
-            (acc, task, i) => {
-              acc[`task${i + 1}`] = task;
-              return acc;
-            },
-            {} as Record<string, string>,
-          ),
+          user: userData?.id,
         };
+
+        for (let i = 0; i < taskKeys.length; i++) {
+          dataToSend[`task${i + 1}`] = values.tasks[i] || "";
+        }
+
         if (editingHomework) {
           await axios.patch(
             `${PocketBaseCollection}/homework/records/${editingHomework.id}`,
             dataToSend,
           );
-          setOpenEditModal(false);
-          await refetchOperative();
+        } else {
+          await axios.post(
+            `${PocketBaseCollection}/homework/records`,
+            dataToSend,
+          );
         }
-      } catch (error) {
-        console.error("Greška prilikom izmene:", error);
-      }
-    },
-  });
 
-  const formikHomework = useFormik({
-    initialValues: {
-      tasks: [""],
-      subject: subject,
-      teaching_unit: "",
-    },
-    validationSchema: HomeworkValidationSchema,
-    onSubmit: async (values, { resetForm }) => {
-      const dataToSend = {
-        ...values,
-        ...values.tasks.reduce(
-          (acc, task, i) => {
-            acc[`task${i + 1}`] = task;
-            return acc;
-          },
-          {} as Record<string, string>,
-        ),
-        user: userData?.id,
-      };
-
-      try {
-        await axios.post(
-          `${PocketBaseCollection}/homework/records`,
-          dataToSend,
-        );
         resetForm();
-        setOpen(false);
-        await refetchOperative();
+        setModalOpen(false);
+        setEditingHomework(null);
+        await refetch();
       } catch (error) {
-        console.error("Error submitting form:", error);
+        console.error("Greška prilikom čuvanja:", error);
       }
     },
   });
 
-  const [expandedUnitId, setExpandedUnitId] = useState<string | null>(null);
+  const handleEdit = (homeworkItem: HomeworkItemType) => {
+    setEditingHomework(homeworkItem);
+    setModalOpen(true);
+  };
+
+  const handleDelete = (id: string) => {
+    setDeleteId(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteId) return;
+
+    try {
+      await axios.delete(
+        `${PocketBaseCollection}/homework/records/${deleteId}`,
+      );
+      await refetch();
+    } catch (error) {
+      console.error("Greška prilikom brisanja:", error);
+    } finally {
+      setIsDeleteModalOpen(false);
+      setDeleteId(null);
+    }
+  };
 
   const toggleExpandedUnit = (id: string) => {
     setExpandedUnitId((prevId) => (prevId === id ? null : id));
@@ -196,13 +178,15 @@ const Homework = () => {
   const myHomeworks = homework.filter(
     (t) =>
       t.subject.toLowerCase() === subject.toLowerCase() &&
-      t.user === userData?.id,
+      t.user === userData?.id &&
+      matchesSearch(t, searchQuery),
   );
 
   const otherHomeworks = homework.filter(
     (t) =>
       t.subject.toLowerCase() === subject.toLowerCase() &&
-      t.user !== userData?.id,
+      t.user !== userData?.id &&
+      matchesSearch(t, searchQuery),
   );
 
   const paginatedMyTests = myHomeworks.slice(
@@ -235,7 +219,14 @@ const Homework = () => {
                 "noBorderRadius",
                 "maxWidth",
               ]}
-              onClick={handleOpenModal}
+              onClick={() => {
+                setEditingHomework(null);
+                setModalOpen(true);
+              }}
+            />
+            <SearchToggleInput
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         )}
@@ -344,13 +335,19 @@ const Homework = () => {
         </section>
 
         <Modal
-          title="Izmeni domaći zadatak"
-          isOpen={openEditModal}
-          setIsOpen={setOpenEditModal}
-          description="Izmenite podatke o domaćem zadatku."
+          title={
+            editingHomework ? "Izmeni domaći zadatak" : "Dodaj domaći zadatak"
+          }
+          isOpen={modalOpen}
+          setIsOpen={setModalOpen}
+          description={
+            editingHomework
+              ? "Izmenite podatke o domaćem zadatku."
+              : "Dodajte jedan ili više zadataka koje učenici treba da urade."
+          }
           theme="halfScreen"
         >
-          <form onSubmit={formikEdit.handleSubmit} className={styles.form}>
+          <form onSubmit={formik.handleSubmit} className={styles.form}>
             <TextField
               label={homeworkConfig.teaching_unit.label}
               placeholder={homeworkConfig.teaching_unit.placeholder}
@@ -358,57 +355,67 @@ const Homework = () => {
               fullWidth
               margin="normal"
               name="teaching_unit"
-              value={formikEdit.values.teaching_unit}
-              onChange={formikEdit.handleChange}
+              value={formik.values.teaching_unit}
+              onChange={formik.handleChange}
               error={
-                formikEdit.touched.teaching_unit &&
-                Boolean(formikEdit.errors.teaching_unit)
+                formik.touched.teaching_unit &&
+                Boolean(formik.errors.teaching_unit)
               }
               helperText={
-                formikEdit.touched.teaching_unit &&
-                formikEdit.errors.teaching_unit
+                formik.touched.teaching_unit && formik.errors.teaching_unit
               }
             />
 
-            {formikEdit.values.tasks.map((task, index) => {
-              const taskError = (
-                formikEdit.errors.tasks as string[] | undefined
-              )?.[index];
+            {formik.values.tasks.map((task, index) => {
+              const taskError = (formik.errors.tasks as string[] | undefined)?.[
+                index
+              ];
               const taskTouched = (
-                formikEdit.touched.tasks as boolean[] | undefined
+                formik.touched.tasks as boolean[] | undefined
               )?.[index];
 
               return (
-                <TextEditorWithLabel
+                <div
                   key={index}
-                  index={index}
-                  task={task}
-                  onChange={(val) =>
-                    formikEdit.setFieldValue(`tasks[${index}]`, val)
-                  }
-                  label={`Zadatak ${index + 1}`}
-                  error={taskTouched && taskError ? taskError : undefined}
-                />
+                  style={{
+                    display: "flex",
+                    gap: "12px",
+                    alignItems: "flex-start",
+                    marginBottom: "24px",
+                  }}
+                >
+                  <div style={{ flex: 1 }}>
+                    <TextEditorWithLabel
+                      key={`task-${index}`}
+                      task={task}
+                      onChange={(val) =>
+                        formik.setFieldValue(`tasks[${index}]`, val)
+                      }
+                      onDelete={() => {
+                        const updatedTasks = [...formik.values.tasks];
+                        updatedTasks.splice(index, 1);
+                        formik.setFieldValue("tasks", updatedTasks);
+                      }}
+                      onAdd={() => {
+                        formik.setFieldValue("tasks", [
+                          ...formik.values.tasks,
+                          "",
+                        ]);
+                      }}
+                      canDelete={formik.values.tasks.length > 1}
+                      label={`Zadatak ${index + 1}`}
+                      error={taskTouched && taskError ? taskError : undefined}
+                    />
+                  </div>
+                </div>
               );
             })}
 
-            <div style={{ marginTop: "32px" }}>
-              <Button
-                themes={["standardWide", "blue", "noBorderRadius"]}
-                title={"Dodaj zadatak"}
-                type={"button"}
-                onClick={() => {
-                  formikEdit.setFieldValue("tasks", [
-                    ...formikEdit.values.tasks,
-                    "",
-                  ]);
-                }}
-              />
-            </div>
-
             <div style={{ marginTop: "60px" }}>
               <Button
-                title="Sačuvaj izmene"
+                title={
+                  editingHomework ? "Sačuvaj izmene" : "Dodaj domaći zadatak"
+                }
                 themes={[
                   "blue",
                   "standardWide",
@@ -416,90 +423,12 @@ const Homework = () => {
                   "noBorderRadius",
                   "maxWidth",
                 ]}
-                type={"submit"}
+                type="submit"
               />
             </div>
           </form>
         </Modal>
 
-        <Modal
-          title="Dodaj domaći zadatak"
-          isOpen={open}
-          setIsOpen={setOpen}
-          description="Dodajte jedan ili više zadataka koje učenici treba da urade."
-          theme={"halfScreen"}
-        >
-          <form onSubmit={formikHomework.handleSubmit} className={styles.form}>
-            <TextField
-              label={homeworkConfig.teaching_unit.label}
-              placeholder={homeworkConfig.teaching_unit.placeholder}
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              name="teaching_unit"
-              value={formikHomework.values.teaching_unit}
-              onChange={formikHomework.handleChange}
-              error={
-                formikHomework.touched.teaching_unit &&
-                Boolean(formikHomework.errors.teaching_unit)
-              }
-              helperText={
-                formikHomework.touched.teaching_unit &&
-                formikHomework.errors.teaching_unit
-              }
-            />
-
-            {formikHomework.values.tasks.map((task, index) => {
-              const taskError = (
-                formikHomework.errors.tasks as string[] | undefined
-              )?.[index];
-              const taskTouched = (
-                formikHomework.touched.tasks as boolean[] | undefined
-              )?.[index];
-
-              return (
-                <TextEditorWithLabel
-                  key={index}
-                  index={index}
-                  task={task}
-                  onChange={(val) =>
-                    formikHomework.setFieldValue(`tasks[${index}]`, val)
-                  }
-                  label={`Zadatak ${index + 1}`}
-                  error={taskTouched && taskError ? taskError : undefined}
-                />
-              );
-            })}
-
-            <div style={{ marginTop: "32px" }}>
-              <Button
-                themes={["standardWide", "blue", "noBorderRadius"]}
-                title={"Dodaj zadatak"}
-                type={"button"}
-                onClick={() => {
-                  formikHomework.setFieldValue("tasks", [
-                    ...formikHomework.values.tasks,
-                    "",
-                  ]);
-                }}
-              />
-            </div>
-
-            <div style={{ marginTop: "60px" }}>
-              <Button
-                title="Dodaj domaći zadatak"
-                themes={[
-                  "blue",
-                  "standardWide",
-                  "standardHeight",
-                  "noBorderRadius",
-                  "maxWidth",
-                ]}
-                type={"submit"}
-              />
-            </div>
-          </form>
-        </Modal>
         <DeleteConfirmationModal
           isOpen={isDeleteModalOpen}
           setIsOpen={setIsDeleteModalOpen}

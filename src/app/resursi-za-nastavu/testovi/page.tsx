@@ -17,6 +17,7 @@ import { Title } from "@/Components/Texts/Title";
 import { useFetchTestSubjects } from "@/Hooks/Tests/getTestsSubjects";
 import { useAuth } from "@/Hooks/useAuth";
 import { PocketBaseCollection } from "@/libs/pocketbase";
+import { TestSubjectValidationSchema } from "@/app/resursi-za-nastavu/testovi/Validation";
 import { testsSubjectConfig } from "@/app/resursi-za-nastavu/testovi/config";
 import styles from "./page.module.scss";
 
@@ -43,19 +44,12 @@ const TestsSubjects = () => {
 
   const handleOpenOperativeModal = () => setOpenTestModal(true);
 
-  const ValidationSchema = Yup.object({
-    subject: Yup.string()
-      .required("Naziv predmeta je obavezan")
-      .min(2, "Predmet mora imati bar 2 slova"),
-    grade: Yup.string().required("Razred je obavezan"),
-  });
-
   const formikOperative = useFormik({
     initialValues: {
       subject: "",
       grade: "",
     },
-    validationSchema: ValidationSchema,
+    validationSchema: TestSubjectValidationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
         await axios.post(`${PocketBaseCollection}/test_subjects/records`, {

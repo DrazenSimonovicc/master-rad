@@ -6,11 +6,26 @@
   padding: 15px;
   display: flex;
   gap: 32px;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
 
-  @include breakpoint("tablet") {
+  @include breakpoint("desktopSmall") {
     flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  div {
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+    flex-direction: column;
+
+    @include breakpoint("665px") {
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+    }
   }
 }
 

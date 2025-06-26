@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import { TextField } from "@mui/material";
 import { Button } from "@/Components/Button";
 import { Footer } from "@/Components/Footer";
@@ -17,6 +16,7 @@ import { Title } from "@/Components/Texts/Title";
 import { useFetchLessonPlansForSubject } from "@/Hooks/LessonPlan/getLessonPlanForSubject";
 import { useAuth } from "@/Hooks/useAuth";
 import { PocketBaseCollection } from "@/libs/pocketbase";
+import { LessonSubjectValidationSchema } from "@/app/resursi-za-nastavu/priprema-za-nastavu/Validation";
 import { lessonPlanSubjectConfig } from "@/app/resursi-za-nastavu/priprema-za-nastavu/config";
 import styles from "./page.module.scss";
 
@@ -42,19 +42,12 @@ const LessonPlanSubjects = () => {
 
   const handleOpenOperativeModal = () => setOpenTestModal(true);
 
-  const ValidationSchema = Yup.object({
-    subject: Yup.string()
-      .required("Naziv predmeta je obavezan")
-      .min(2, "Predmet mora imati bar 2 slova"),
-    grade: Yup.string().required("Razred je obavezan"),
-  });
-
   const formikOperative = useFormik({
     initialValues: {
       subject: "",
       grade: "",
     },
-    validationSchema: ValidationSchema,
+    validationSchema: LessonSubjectValidationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
         await axios.post(

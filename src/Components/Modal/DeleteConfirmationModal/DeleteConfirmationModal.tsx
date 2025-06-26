@@ -21,10 +21,7 @@ const DeleteConfirmationModal: React.FC<DeleteConfirmationModalProps> = ({
 
   return (
     <div className={styles.overlay} onClick={() => setIsOpen(false)}>
-      <div
-        className={styles.modal}
-        onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside modal
-      >
+      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <h2>{title}</h2>
         <p>{description}</p>
 

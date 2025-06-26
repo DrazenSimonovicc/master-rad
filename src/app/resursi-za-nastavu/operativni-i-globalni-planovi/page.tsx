@@ -3,11 +3,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import { TextField } from "@mui/material";
 import { Button } from "@/Components/Button";
 import { Footer } from "@/Components/Footer";
 import { Header } from "@/Components/Header/Header";
+import SearchToggleInput from "@/Components/Inputs/SearchInput/SearchInput";
 import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
 import { Modal } from "@/Components/Modal";
 import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
@@ -23,6 +23,10 @@ import {
   OperativePlansItemType,
 } from "@/Interfaces/BaseType";
 import { PocketBaseCollection } from "@/libs/pocketbase";
+import {
+  GlobalValidationSchema,
+  OperativeValidationSchema,
+} from "@/app/resursi-za-nastavu/operativni-i-globalni-planovi/Validation";
 import {
   globalFieldConfig,
   operativeFieldConfig,
@@ -47,6 +51,12 @@ const OperativeAndGlobalPlans = () => {
   const [deleteType, setDeleteType] = useState<"operative" | "global" | null>(
     null,
   );
+  const [editingOperative, setEditingOperative] =
+    useState<OperativePlansItemType | null>(null);
+  const [editingGlobal, setEditingGlobal] =
+    useState<GlobalPlansItemType | null>(null);
+
+  const [searchQuery, setSearchQuery] = useState("");
 
   const {
     operativePlans,
@@ -62,13 +72,6 @@ const OperativeAndGlobalPlans = () => {
     refetch: refetchGlobal,
   } = useFetchGlobalPlans(userData?.id);
 
-  // State for editing plans
-  const [editingOperative, setEditingOperative] =
-    useState<OperativePlansItemType | null>(null);
-  const [editingGlobal, setEditingGlobal] =
-    useState<GlobalPlansItemType | null>(null);
-
-  // Open modals & prepare for editing or creating new
   const handleOpenOperativeModal = () => {
     setEditingOperative(null);
     setOpenOperative(true);
@@ -88,25 +91,6 @@ const OperativeAndGlobalPlans = () => {
     setOpenGlobal(true);
   };
 
-  // Validation schemas
-  const OperativeValidationSchema = Yup.object({
-    subject: Yup.string()
-      .required("Naziv predmeta je obavezan.")
-      .min(2, "Predmet mora imati bar 2 slova."),
-    grade: Yup.string().required("Razred je obavezan."),
-    month: Yup.string().required("Mesec je obavezan."),
-    school_year: Yup.string().required("Školska godina je obavezna."),
-  });
-
-  const GlobalValidationSchema = Yup.object({
-    subject: Yup.string()
-      .required("Naziv predmeta je obavezan.")
-      .min(2, "Predmet mora imati bar 2 slova."),
-    grade: Yup.string().required("Razred je obavezan."),
-    school_year: Yup.string().required("Školska godina je obavezna."),
-  });
-
-  // Formik for Operative Plan with dynamic initial values based on editingOperative
   const formikOperative = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -120,7 +104,6 @@ const OperativeAndGlobalPlans = () => {
     onSubmit: async (values, { resetForm }) => {
       try {
         if (editingOperative) {
-          // Update existing
           await axios.patch(
             `${PocketBaseCollection}/operative_plan/records/${editingOperative.id}`,
             {
@@ -129,7 +112,6 @@ const OperativeAndGlobalPlans = () => {
             },
           );
         } else {
-          // Create new
           await axios.post(`${PocketBaseCollection}/operative_plan/records`, {
             ...values,
             user: userData.id,
@@ -146,7 +128,6 @@ const OperativeAndGlobalPlans = () => {
     },
   });
 
-  // Formik for Global Plan with dynamic initial values based on editingGlobal
   const formikGlobal = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -159,7 +140,6 @@ const OperativeAndGlobalPlans = () => {
     onSubmit: async (values, { resetForm }) => {
       try {
         if (editingGlobal) {
-          // Update existing
           await axios.patch(
             `${PocketBaseCollection}/global_plan/records/${editingGlobal.id}`,
             {
@@ -168,7 +148,6 @@ const OperativeAndGlobalPlans = () => {
             },
           );
         } else {
-          // Create new
           await axios.post(`${PocketBaseCollection}/global_plan/records`, {
             ...values,
             user: userData.id,
@@ -193,7 +172,6 @@ const OperativeAndGlobalPlans = () => {
     return <div>Greška u učitavanju {opError || glError}</div>;
   }
 
-  // Fix delete handler to know what to delete and call correct endpoint
   const handleDelete = (id: string, type: "operative" | "global") => {
     setDeleteId(id);
     setDeleteType(type);
@@ -233,28 +211,34 @@ const OperativeAndGlobalPlans = () => {
         />
         {isLoggedIn && (
           <div className={styles.addButtonWrapper}>
-            <Button
-              title={"Dodaj novi operativni plan"}
-              themes={[
-                "orange",
-                "standardWide",
-                "standardHeight",
-                "noBorderRadius",
-                "maxWidth",
-              ]}
-              onClick={handleOpenOperativeModal}
-            />
+            <div>
+              <Button
+                title={"Dodaj novi operativni plan"}
+                themes={[
+                  "orange",
+                  "standardWide",
+                  "standardHeight",
+                  "noBorderRadius",
+                  "maxWidth",
+                ]}
+                onClick={handleOpenOperativeModal}
+              />
+              <Button
+                title={"Dodaj novi globalni plan"}
+                themes={[
+                  "orange",
+                  "standardWide",
+                  "standardHeight",
+                  "noBorderRadius",
+                  "maxWidth",
+                ]}
+                onClick={handleOpenGlobalModal}
+              />
+            </div>
 
-            <Button
-              title={"Dodaj novi globalni plan"}
-              themes={[
-                "orange",
-                "standardWide",
-                "standardHeight",
-                "noBorderRadius",
-                "maxWidth",
-              ]}
-              onClick={handleOpenGlobalModal}
+            <SearchToggleInput
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         )}
@@ -267,18 +251,24 @@ const OperativeAndGlobalPlans = () => {
                 className={styles.title}
               />
             )}
-            {operativePlans.map((plan) => (
-              <SubjectCard
-                link={"/resursi-za-nastavu/operativni-i-globalni-planovi"}
-                id={plan.id}
-                key={plan.id}
-                description={`${plan.subject} - ${plan.grade} - ${plan.month} - ${plan.school_year} - ${plan.teacher}`}
-                type={"operative"}
-                subject={plan.subject}
-                onEdit={() => handleEditOperative(plan)}
-                onDelete={() => handleDelete(plan.id, "operative")}
-              />
-            ))}
+            {operativePlans
+              .filter((plan) =>
+                `${plan.subject} ${plan.grade} ${plan.month} ${plan.school_year} ${plan.teacher}`
+                  .toLowerCase()
+                  .includes(searchQuery.toLowerCase()),
+              )
+              .map((plan) => (
+                <SubjectCard
+                  link={"/resursi-za-nastavu/operativni-i-globalni-planovi"}
+                  id={plan.id}
+                  key={plan.id}
+                  description={`${plan.subject} - ${plan.grade} - ${plan.month} - ${plan.school_year} - ${plan.teacher}`}
+                  type={"operative"}
+                  subject={plan.subject}
+                  onEdit={() => handleEditOperative(plan)}
+                  onDelete={() => handleDelete(plan.id, "operative")}
+                />
+              ))}
 
             {globalPlans && globalPlans.length > 0 && (
               <Title
@@ -287,25 +277,30 @@ const OperativeAndGlobalPlans = () => {
                 className={styles.title}
               />
             )}
-            {globalPlans.map((plan) => (
-              <SubjectCard
-                link={"/resursi-za-nastavu/operativni-i-globalni-planovi"}
-                id={plan.id}
-                key={plan.id}
-                description={`${plan.subject} - ${plan.grade} - ${plan.school_year} - ${plan.teacher}`}
-                type={"global"}
-                subject={plan.subject}
-                onEdit={() => handleEditGlobal(plan)}
-                onDelete={() => handleDelete(plan.id, "global")}
-              />
-            ))}
+            {globalPlans
+              .filter((plan) =>
+                `${plan.subject} ${plan.grade} ${plan.school_year} ${plan.teacher}`
+                  .toLowerCase()
+                  .includes(searchQuery.toLowerCase()),
+              )
+              .map((plan) => (
+                <SubjectCard
+                  link={"/resursi-za-nastavu/operativni-i-globalni-planovi"}
+                  id={plan.id}
+                  key={plan.id}
+                  description={`${plan.subject} - ${plan.grade} - ${plan.school_year} - ${plan.teacher}`}
+                  type={"global"}
+                  subject={plan.subject}
+                  onEdit={() => handleEditGlobal(plan)}
+                  onDelete={() => handleDelete(plan.id, "global")}
+                />
+              ))}
           </div>
           <aside className={styles.sidebarWrap}>
             <SidebarWrapper />
           </aside>
         </section>
 
-        {/* Operative Modal */}
         <Modal
           title={
             editingOperative
@@ -369,7 +364,6 @@ const OperativeAndGlobalPlans = () => {
           </form>
         </Modal>
 
-        {/* Global Modal */}
         <Modal
           title={
             editingGlobal ? "Izmeni globalni plan" : "Dodaj novi globalni plan"
@@ -430,7 +424,13 @@ const OperativeAndGlobalPlans = () => {
         isOpen={isDeleteModalOpen}
         setIsOpen={setIsDeleteModalOpen}
         onConfirm={confirmDelete}
-        title="Potvrda brisanja plana"
+        title={
+          deleteType === "operative"
+            ? "Potvrda brisanja operativnog plana"
+            : deleteType === "global"
+              ? "Potvrda brisanja globalnog plana"
+              : "Potvrda brisanja plana"
+        }
         description="Da li ste sigurni da želite da obrišete ovaj plan?"
       />
 

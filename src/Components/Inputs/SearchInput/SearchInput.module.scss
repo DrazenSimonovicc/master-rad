@@ -1,0 +1,115 @@
+@use "src/Styling/index" as *;
+
+.container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 40px;
+}
+
+.iconButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  transition:
+    background-color 0.25s ease,
+    transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover,
+  &:focus-visible {
+    background-color: rgba(255, 122, 0, 0.1);
+    outline: none;
+    transform: scale(1.1);
+  }
+
+  svg {
+    stroke: $orange-color;
+  }
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  box-shadow: 0 6px 15px rgba(255, 122, 0, 0.15);
+  border-radius: 25px;
+  width: 0;
+  padding: 0;
+  opacity: 0;
+  visibility: hidden;
+  overflow: hidden;
+  pointer-events: none;
+
+  transition:
+    width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.35s ease,
+    padding 0.35s ease,
+    visibility 0s linear 0.35s;
+
+  &.open {
+    width: 280px;
+    padding: 0 14px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+
+    @include breakpoint("375px") {
+      width: 300px;
+    }
+  }
+}
+
+.icon {
+  flex-shrink: 0;
+  margin-right: 10px;
+  stroke: $orange-color;
+}
+
+.input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  padding: 10px 0;
+  background: transparent;
+  color: #222;
+  font-weight: 500;
+  font-family: inherit;
+
+  &::placeholder {
+    color: #bbb;
+    font-style: italic;
+  }
+}
+
+.closeButton {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  margin-left: 10px;
+  border-radius: 50%;
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease;
+
+  svg {
+    stroke: #999;
+    transition: stroke 0.3s ease;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background-color: rgba(255, 122, 0, 0.15);
+
+    svg {
+      stroke: $orange-color;
+    }
+  }
+}

@@ -11,6 +11,7 @@ import { Button } from "@/Components/Button";
 import { ActivityCard } from "@/Components/Card/ActivityCard/ActivityCard";
 import { ClassScheduleTable } from "@/Components/ClassSchedule/ClassSchedule";
 import { Header } from "@/Components/Header/Header";
+import SearchToggleInput from "@/Components/Inputs/SearchInput/SearchInput";
 import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
 import { Modal } from "@/Components/Modal";
 import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
@@ -52,6 +53,7 @@ const Calendar = () => {
   const [editClassData, setEditClassData] = useState<ClassScheduleType | null>(
     null,
   );
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleChangeable = () => {
     setIsChangeable(!isChangeable);
@@ -136,7 +138,7 @@ const Calendar = () => {
         }
 
         resetForm();
-        setEditClassData(null); // Reset editing mode
+        setEditClassData(null);
         setIsClassScheduleModalOpen(false);
         await refetchClassSchedule();
       } catch (error) {
@@ -250,20 +252,33 @@ const Calendar = () => {
 
             {activity && activity.length > 0 && (
               <>
-                <Title text="Aktivnosti" level={2} className={styles.title} />
+                <div className={styles.titleWithSearch}>
+                  <Title text="Aktivnosti" level={2} className={styles.title} />
+                  <SearchToggleInput
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                  />
+                </div>
+
                 <div className={styles.activityWrapper}>
-                  {activity.map(({ id, type_of_activity, title, date }) => (
-                    <ActivityCard
-                      key={id}
-                      href={{
-                        pathname: `/kalendar-aktivnosti/${id}`,
-                        query: { id, title },
-                      }}
-                      type_of_activity={type_of_activity}
-                      title={title}
-                      date={date}
-                    />
-                  ))}
+                  {activity
+                    .filter((a) => {
+                      const target =
+                        `${a.title} ${a.type_of_activity} ${a.date}`.toLowerCase();
+                      return target.includes(searchQuery.toLowerCase());
+                    })
+                    .map(({ id, type_of_activity, title, date }) => (
+                      <ActivityCard
+                        key={id}
+                        href={{
+                          pathname: `/kalendar-aktivnosti/${id}`,
+                          query: { id, title },
+                        }}
+                        type_of_activity={type_of_activity}
+                        title={title}
+                        date={date}
+                      />
+                    ))}
                 </div>
               </>
             )}
@@ -456,8 +471,8 @@ const Calendar = () => {
           isOpen={isDeleteModalOpen}
           setIsOpen={setIsDeleteModalOpen}
           onConfirm={confirmDelete}
-          title="Potvrda brisanja domaćeg zadatka"
-          description="Da li ste sigurni da želite da obrišete ovaj domaći zadatak?"
+          title="Brisanje dana iz rasporeda časova"
+          description="Da li ste sigurni da želite da obrišete ovaj dan iz rasporeda?"
         />
       </div>
       {!isLoggedIn && <RequireAuth />}

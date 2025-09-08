@@ -1,10 +1,11 @@
 "use client";
+
+import { AnimatePresence, motion } from "framer-motion";
 import { FC, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import { CategoryCard } from "@/Components/Card/CategoryCard/CategoryCard";
-import styles from "./CategoryPicker.module.scss";
-import { useFetchNewsCategories } from "@/Hooks/getForumCategories";
 import { Title } from "@/Components/Texts/Title";
+import { useFetchNewsCategories } from "@/Hooks/getForumCategories";
+import styles from "./CategoryPicker.module.scss";
 
 interface CategoryPickerProps {
   onCategorySelect: (categoryName: string | null) => void;
@@ -56,6 +57,7 @@ export const CategoryPicker: FC<CategoryPickerProps> = ({
                 imageDescription={data.image_description}
                 description={data.category_name}
                 onClick={() => handleCategoryClick(data.category_name)}
+                isSelected={selectedCategory === data.category_name}
               />
             </motion.div>
           ))}

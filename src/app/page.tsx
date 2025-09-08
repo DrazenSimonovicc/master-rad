@@ -1,13 +1,14 @@
 "use client";
-import { Footer } from "@/Components/Footer/Footer";
-import { TitleWithDescription } from "@/Components/Texts/TitleWithDescription/TitleWithDescription";
+
 import React from "react";
-import styles from "./page.module.scss";
 import { CardsWithIcons } from "@/Components/CardsWithIcons/CardsWithIcons";
-import { TextWithImage } from "@/Components/TextWithImageHomepage/TextWithImage";
+import { Footer } from "@/Components/Footer/Footer";
 import HeroSlider from "@/Components/Hero/Hero";
 import { heroData } from "@/Components/Hero/mockedData";
+import { TextWithImage } from "@/Components/TextWithImageHomepage/TextWithImage";
+import { TitleWithDescription } from "@/Components/Texts/TitleWithDescription/TitleWithDescription";
 import { WorkDescription } from "@/Components/WorkDescription/WorkDescription";
+import styles from "./page.module.scss";
 
 export default function Home() {
   return (

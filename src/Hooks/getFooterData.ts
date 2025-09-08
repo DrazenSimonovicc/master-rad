@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { FooterItemType } from "@/Interfaces/Footer";
 import { PocketBaseCollection } from "@/libs/pocketbase";

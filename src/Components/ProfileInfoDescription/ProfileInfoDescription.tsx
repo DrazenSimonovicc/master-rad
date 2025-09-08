@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-
 import styles from "./ProfileInfoDescription.module.scss";
 
 interface ProfileInfoDescriptionProps {

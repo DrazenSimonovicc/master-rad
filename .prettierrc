@@ -1,0 +1,24 @@
+{
+  "singleQuote": false,
+  "trailingComma": "all",
+  "importOrder": [
+    "^use client$",
+    "^react$",
+    "^next(.*)$",
+    "^axios$",
+    "^formik$",
+    "^yup$",
+    "^@mui/(.*)$",
+    "^@/Components/(.*)$",
+    "^@/Hooks/(.*)$",
+    "^@/Interfaces/(.*)$",
+    "^@/libs/(.*)$",
+    "^@/app/(.*)$",
+    "^clsx$",
+    "^\\.(.*)$",
+    "^.+\\.scss$"
+  ],
+  "importOrderSeparation": false,
+  "importOrderSortSpecifiers": true,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"]
+}

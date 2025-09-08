@@ -1,27 +1,43 @@
 "use client";
 
-import { Header } from "@/Components/Header/Header";
-
-import { useAuth } from "@/Hooks/useAuth";
-import React, { useState } from "react";
-import { useFormik } from "formik";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import axios from "axios";
-import { PocketBaseCollection } from "@/libs/pocketbase";
-import styles from "./page.module.scss";
+import { useFormik } from "formik";
+import { Pagination, TextField } from "@mui/material";
 import { Button } from "@/Components/Button";
+import { Footer } from "@/Components/Footer";
+import { Header } from "@/Components/Header/Header";
+import SearchToggleInput from "@/Components/Inputs/SearchInput/SearchInput";
 import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
 import { Modal } from "@/Components/Modal";
-import { Pagination, TextField } from "@mui/material";
-import { useSearchParams } from "next/navigation";
-import { useFetchHomeworks } from "@/Hooks/Homework/getHomeworks";
-import { homeworkConfig } from "@/app/resursi-za-nastavu/domaci-zadaci/config";
-import TaskList from "@/Components/TaskList/TaskList";
-import RequireAuth from "@/Components/RequireAuth/RequireAuth";
-import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
+import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
 import Preloader from "@/Components/Preloader/Preloader";
-import { Footer } from "@/Components/Footer";
+import RequireAuth from "@/Components/RequireAuth/RequireAuth";
+import TaskList from "@/Components/TaskList/TaskList";
+import TeachingUnitTitle from "@/Components/TeachingUnitTitle/TeachingUnitTitle";
+import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
 import { Title } from "@/Components/Texts/Title";
-import * as Yup from "yup";
+import { useFetchHomeworks } from "@/Hooks/Homework/getHomeworks";
+import { useAuth } from "@/Hooks/useAuth";
+import { HomeworkItemType } from "@/Interfaces/BaseType";
+import { PocketBaseCollection } from "@/libs/pocketbase";
+import { HomeworkValidationSchema } from "@/app/resursi-za-nastavu/domaci-zadaci/[id]/Validation";
+import { homeworkConfig } from "@/app/resursi-za-nastavu/domaci-zadaci/config";
+import styles from "./page.module.scss";
+
+const taskKeys = [
+  "task1",
+  "task2",
+  "task3",
+  "task4",
+  "task5",
+  "task6",
+  "task7",
+  "task8",
+  "task9",
+  "task10",
+] as const;
 
 const Homework = () => {
   const searchParams = useSearchParams();
@@ -35,63 +51,119 @@ const Homework = () => {
     level3url: "/resursi-za-nastavu/domaci-zadaci",
   };
 
-  const [myCurrentPage, setMyCurrentPage] = useState(1);
-  const [otherCurrentPage, setOtherCurrentPage] = useState(1);
-  const itemsPerPage = 12;
-
   const {
     homework,
     error: onError,
     loading: onLoading,
-    refetch: refetchOperative,
+    refetch: refetch,
   } = useFetchHomeworks();
 
   const { userData, isLoggedIn } = useAuth();
-  const [open, setOpen] = useState(false);
-  const handleOpenModal = () => setOpen(true);
 
-  const HomeworkValidationSchema = Yup.object().shape({
-    teaching_unit: Yup.string().required("Naziv nastavne jedinice je obavezan"),
-    tasks: Yup.array()
-      .of(Yup.string().required("Zadatak ne sme biti prazan"))
-      .min(1, "Potrebno je uneti bar jedan zadatak"),
-  });
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingHomework, setEditingHomework] =
+    useState<HomeworkItemType | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [expandedUnitId, setExpandedUnitId] = useState<string | null>(null);
+  const [myCurrentPage, setMyCurrentPage] = useState(1);
+  const [otherCurrentPage, setOtherCurrentPage] = useState(1);
+  const itemsPerPage = 12;
 
-  const formikHomework = useFormik({
-    initialValues: {
-      tasks: [""],
-      subject: subject,
-      teaching_unit: "",
-    },
+  const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    setMyCurrentPage(1);
+    setOtherCurrentPage(1);
+  }, [searchQuery]);
+
+  const matchesSearch = (homework: HomeworkItemType, query: string) => {
+    const searchString = [
+      homework.teaching_unit,
+      taskKeys.map((key) => homework[key]).join(" "),
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    return searchString.includes(query.toLowerCase());
+  };
+
+  const formik = useFormik({
+    enableReinitialize: true,
+    initialValues: editingHomework
+      ? {
+          teaching_unit: editingHomework.teaching_unit,
+          tasks: taskKeys
+            .map((key) => editingHomework[key] || "")
+            .filter((task) => task !== ""),
+          subject: editingHomework.subject,
+        }
+      : {
+          teaching_unit: "",
+          tasks: [""],
+          subject: subject,
+        },
     validationSchema: HomeworkValidationSchema,
     onSubmit: async (values, { resetForm }) => {
-      const dataToSend = {
-        ...values,
-        ...values.tasks.reduce(
-          (acc, task, i) => {
-            acc[`task${i + 1}`] = task;
-            return acc;
-          },
-          {} as Record<string, string>,
-        ),
-        user: userData?.id,
-      };
-
       try {
-        await axios.post(
-          `${PocketBaseCollection}/homework/records`,
-          dataToSend,
-        );
+        const dataToSend: Record<string, string | undefined> = {
+          teaching_unit: values.teaching_unit,
+          subject: values.subject,
+          user: userData?.id,
+        };
+
+        for (let i = 0; i < taskKeys.length; i++) {
+          dataToSend[`task${i + 1}`] = values.tasks[i] || "";
+        }
+
+        if (editingHomework) {
+          await axios.patch(
+            `${PocketBaseCollection}/homework/records/${editingHomework.id}`,
+            dataToSend,
+          );
+        } else {
+          await axios.post(
+            `${PocketBaseCollection}/homework/records`,
+            dataToSend,
+          );
+        }
+
         resetForm();
-        setOpen(false);
-        await refetchOperative();
+        setModalOpen(false);
+        setEditingHomework(null);
+        await refetch();
       } catch (error) {
-        console.error("Error submitting form:", error);
+        console.error("Greška prilikom čuvanja:", error);
       }
     },
   });
 
-  const [expandedUnitId, setExpandedUnitId] = useState<string | null>(null);
+  const handleEdit = (homeworkItem: HomeworkItemType) => {
+    setEditingHomework(homeworkItem);
+    setModalOpen(true);
+  };
+
+  const handleDelete = (id: string) => {
+    setDeleteId(id);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteId) return;
+
+    try {
+      await axios.delete(
+        `${PocketBaseCollection}/homework/records/${deleteId}`,
+      );
+      await refetch();
+    } catch (error) {
+      console.error("Greška prilikom brisanja:", error);
+    } finally {
+      setIsDeleteModalOpen(false);
+      setDeleteId(null);
+    }
+  };
 
   const toggleExpandedUnit = (id: string) => {
     setExpandedUnitId((prevId) => (prevId === id ? null : id));
@@ -106,13 +178,15 @@ const Homework = () => {
   const myHomeworks = homework.filter(
     (t) =>
       t.subject.toLowerCase() === subject.toLowerCase() &&
-      t.user === userData?.id,
+      t.user === userData?.id &&
+      matchesSearch(t, searchQuery),
   );
 
   const otherHomeworks = homework.filter(
     (t) =>
       t.subject.toLowerCase() === subject.toLowerCase() &&
-      t.user !== userData?.id,
+      t.user !== userData?.id &&
+      matchesSearch(t, searchQuery),
   );
 
   const paginatedMyTests = myHomeworks.slice(
@@ -137,7 +211,7 @@ const Homework = () => {
         {isLoggedIn && (
           <div className={styles.addButtonWrapper}>
             <Button
-              title={"Dodaj domaci zadatak"}
+              title={"Dodaj domaći zadatak"}
               themes={[
                 "orange",
                 "standardWide",
@@ -145,7 +219,14 @@ const Homework = () => {
                 "noBorderRadius",
                 "maxWidth",
               ]}
-              onClick={handleOpenModal}
+              onClick={() => {
+                setEditingHomework(null);
+                setModalOpen(true);
+              }}
+            />
+            <SearchToggleInput
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
         )}
@@ -164,14 +245,16 @@ const Homework = () => {
                     const isExpanded = expandedUnitId === t.id;
                     return (
                       <div key={t.id} className={styles.teachingUnitWrapper}>
-                        <div
-                          onClick={() => toggleExpandedUnit(t.id)}
-                          className={`${styles.teachingUnitTitle} ${
-                            isExpanded ? styles.expanded : ""
-                          }`}
-                        >
-                          {t.teaching_unit}
-                        </div>
+                        <TeachingUnitTitle
+                          title={t.teaching_unit}
+                          isExpanded={isExpanded}
+                          onToggle={() => toggleExpandedUnit(t.id)}
+                          onEdit={() => handleEdit(t)}
+                          onDelete={() => handleDelete(t.id)}
+                          canEdit={t.user === userData?.id}
+                          plan={t}
+                          type={"homework"}
+                        />
                         {isExpanded && (
                           <div className={styles.taskListWrapper}>
                             <TaskList
@@ -183,6 +266,7 @@ const Homework = () => {
                       </div>
                     );
                   })}
+
                   {myHomeworks.length > itemsPerPage && (
                     <div className={styles.paginationContainer}>
                       <Pagination
@@ -209,14 +293,16 @@ const Homework = () => {
                     const isExpanded = expandedUnitId === t.id;
                     return (
                       <div key={t.id} className={styles.teachingUnitWrapper}>
-                        <div
-                          onClick={() => toggleExpandedUnit(t.id)}
-                          className={`${styles.teachingUnitTitle} ${
-                            isExpanded ? styles.expanded : ""
-                          }`}
-                        >
-                          {t.teaching_unit}
-                        </div>
+                        <TeachingUnitTitle
+                          title={t.teaching_unit}
+                          isExpanded={isExpanded}
+                          onToggle={() => toggleExpandedUnit(t.id)}
+                          onEdit={() => handleEdit(t)}
+                          onDelete={() => handleDelete(t.id)}
+                          canEdit={t.user === userData?.id}
+                          plan={t}
+                          type={"homework"}
+                        />
                         {isExpanded && (
                           <div className={styles.taskListWrapper}>
                             <TaskList
@@ -249,13 +335,19 @@ const Homework = () => {
         </section>
 
         <Modal
-          title="Dodaj domaci zadatak"
-          isOpen={open}
-          setIsOpen={setOpen}
-          description="Dodajte jedan ili više zadataka koje učenici treba da urade."
-          theme={"halfScreen"}
+          title={
+            editingHomework ? "Izmeni domaći zadatak" : "Dodaj domaći zadatak"
+          }
+          isOpen={modalOpen}
+          setIsOpen={setModalOpen}
+          description={
+            editingHomework
+              ? "Izmenite podatke o domaćem zadatku."
+              : "Dodajte jedan ili više zadataka koje učenici treba da urade."
+          }
+          theme="halfScreen"
         >
-          <form onSubmit={formikHomework.handleSubmit} className={styles.form}>
+          <form onSubmit={formik.handleSubmit} className={styles.form}>
             <TextField
               label={homeworkConfig.teaching_unit.label}
               placeholder={homeworkConfig.teaching_unit.placeholder}
@@ -263,57 +355,67 @@ const Homework = () => {
               fullWidth
               margin="normal"
               name="teaching_unit"
-              value={formikHomework.values.teaching_unit}
-              onChange={formikHomework.handleChange}
+              value={formik.values.teaching_unit}
+              onChange={formik.handleChange}
               error={
-                formikHomework.touched.teaching_unit &&
-                Boolean(formikHomework.errors.teaching_unit)
+                formik.touched.teaching_unit &&
+                Boolean(formik.errors.teaching_unit)
               }
               helperText={
-                formikHomework.touched.teaching_unit &&
-                formikHomework.errors.teaching_unit
+                formik.touched.teaching_unit && formik.errors.teaching_unit
               }
             />
 
-            {formikHomework.values.tasks.map((task, index) => {
-              const taskError = (
-                formikHomework.errors.tasks as string[] | undefined
-              )?.[index];
+            {formik.values.tasks.map((task, index) => {
+              const taskError = (formik.errors.tasks as string[] | undefined)?.[
+                index
+              ];
               const taskTouched = (
-                formikHomework.touched.tasks as boolean[] | undefined
+                formik.touched.tasks as boolean[] | undefined
               )?.[index];
 
               return (
-                <TextEditorWithLabel
+                <div
                   key={index}
-                  index={index}
-                  task={task}
-                  onChange={(val) =>
-                    formikHomework.setFieldValue(`tasks[${index}]`, val)
-                  }
-                  label={`Zadatak ${index + 1}`}
-                  error={taskTouched && taskError ? taskError : undefined}
-                />
+                  style={{
+                    display: "flex",
+                    gap: "12px",
+                    alignItems: "flex-start",
+                    marginBottom: "24px",
+                  }}
+                >
+                  <div style={{ flex: 1 }}>
+                    <TextEditorWithLabel
+                      key={`task-${index}`}
+                      task={task}
+                      onChange={(val) =>
+                        formik.setFieldValue(`tasks[${index}]`, val)
+                      }
+                      onDelete={() => {
+                        const updatedTasks = [...formik.values.tasks];
+                        updatedTasks.splice(index, 1);
+                        formik.setFieldValue("tasks", updatedTasks);
+                      }}
+                      onAdd={() => {
+                        formik.setFieldValue("tasks", [
+                          ...formik.values.tasks,
+                          "",
+                        ]);
+                      }}
+                      canDelete={formik.values.tasks.length > 1}
+                      label={`Zadatak ${index + 1}`}
+                      error={taskTouched && taskError ? taskError : undefined}
+                    />
+                  </div>
+                </div>
               );
             })}
 
-            <div style={{ marginTop: "32px" }}>
-              <Button
-                themes={["standardWide", "blue", "noBorderRadius"]}
-                title={"Dodaj zadatak"}
-                type={"button"}
-                onClick={() => {
-                  formikHomework.setFieldValue("tasks", [
-                    ...formikHomework.values.tasks,
-                    "",
-                  ]);
-                }}
-              />
-            </div>
-
             <div style={{ marginTop: "60px" }}>
               <Button
-                title="Dodaj domaci zadatak"
+                title={
+                  editingHomework ? "Sačuvaj izmene" : "Dodaj domaći zadatak"
+                }
                 themes={[
                   "blue",
                   "standardWide",
@@ -321,11 +423,19 @@ const Homework = () => {
                   "noBorderRadius",
                   "maxWidth",
                 ]}
-                type={"submit"}
+                type="submit"
               />
             </div>
           </form>
         </Modal>
+
+        <DeleteConfirmationModal
+          isOpen={isDeleteModalOpen}
+          setIsOpen={setIsDeleteModalOpen}
+          onConfirm={confirmDelete}
+          title="Potvrda brisanja domaćeg zadatka"
+          description="Da li ste sigurni da želite da obrišete ovaj domaći zadatak?"
+        />
       </div>
       <Footer />
       {!isLoggedIn && <RequireAuth />}

@@ -1,15 +1,16 @@
 "use client";
-import React, { FC } from "react";
-import styles from "./Hero.module.scss";
+
 import SwiperCore from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/pagination";
 import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import React, { FC } from "react";
+import { Button } from "@/Components/Button";
 import { Navigation as CustomNavigation } from "../Navigation/Navigation";
 import { CustomNavigationData } from "../Navigation/mockedData";
-import { Button } from "@/Components/Button";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import styles from "./Hero.module.scss";
 
 SwiperCore.use([Autoplay, Pagination, Navigation]);
 

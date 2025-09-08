@@ -4,6 +4,16 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 15px;
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  flex-direction: column;
+
+  @include breakpoint("600px") {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .container {

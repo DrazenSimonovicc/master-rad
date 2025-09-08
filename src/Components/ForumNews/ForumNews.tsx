@@ -1,21 +1,23 @@
 "use client";
-import React, { FC, useEffect, useState } from "react";
-import styles from "./ForumNews.module.scss";
-import Image from "next/image";
-import { ForumNewsItemType } from "@/Interfaces/BaseType";
+
 import { motion } from "framer-motion";
-import clsx from "clsx";
-import { Title } from "@/Components/Texts/Title";
+import React, { FC, useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
-import { IconButton, Pagination } from "@mui/material";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import ThumbDownIcon from "@mui/icons-material/ThumbDown";
 import axios from "axios";
+import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import { IconButton, Pagination } from "@mui/material";
+import { Title } from "@/Components/Texts/Title";
 import { useFormattedSerbianDate } from "@/Hooks/useFormattedSerbianDate";
+import { ForumNewsItemType } from "@/Interfaces/BaseType";
+import clsx from "clsx";
+import styles from "./ForumNews.module.scss";
 
 interface ServicesBoxProps {
   data: ForumNewsItemType[];
   className?: string;
+  triggerOnView?: boolean;
 }
 
 const updateLikeDislikeCount = async (
@@ -50,7 +52,11 @@ const containerVariants = {
   }),
 };
 
-export const ForumNews: FC<ServicesBoxProps> = ({ data, className }) => {
+export const ForumNews: FC<ServicesBoxProps> = ({
+  data,
+  className,
+  triggerOnView,
+}) => {
   const [likes, setLikes] = useState<number[]>(data.map((item) => item.likes));
   const [unlikes, setUnlikes] = useState<number[]>(
     data.map((item) => item.dislikes),
@@ -163,8 +169,9 @@ export const ForumNews: FC<ServicesBoxProps> = ({ data, className }) => {
           key={d.id}
           custom={index}
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+          animate={triggerOnView ? undefined : "visible"}
+          whileInView={triggerOnView ? "visible" : undefined}
+          viewport={triggerOnView ? { once: true, amount: 0.1 } : undefined}
           variants={containerVariants}
         >
           {d.image_url && (

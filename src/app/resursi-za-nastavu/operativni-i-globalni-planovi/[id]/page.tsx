@@ -1,25 +1,26 @@
 "use client";
 
-import { Header } from "@/Components/Header/Header";
-import { useAuth } from "@/Hooks/useAuth";
 import React, { useState } from "react";
-import { useFormik } from "formik";
+import { useSearchParams } from "next/navigation";
 import axios from "axios";
-import { PocketBaseCollection } from "@/libs/pocketbase";
-import styles from "./page.module.scss";
+import { useFormik } from "formik";
+import { TextField } from "@mui/material";
 import { Button } from "@/Components/Button";
+import { Footer } from "@/Components/Footer";
+import { Header } from "@/Components/Header/Header";
 import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
 import { Modal } from "@/Components/Modal";
+import Preloader from "@/Components/Preloader/Preloader";
+import { useExportCSV } from "@/Hooks/Download/useExportCSV";
+import { useFetchGlobalPlansWithSubject } from "@/Hooks/OperativeAndGlobalPlans/getGlobalPlanForSubject";
+import { useFetchOperativePlansWithClass } from "@/Hooks/OperativeAndGlobalPlans/getOperativePlansWithClass";
+import { useAuth } from "@/Hooks/useAuth";
+import { PocketBaseCollection } from "@/libs/pocketbase";
 import {
   globalSubjectConfig,
   operativeClassConfig,
 } from "@/app/resursi-za-nastavu/operativni-i-globalni-planovi/config";
-import { TextField } from "@mui/material";
-import { useFetchOperativePlansWithClass } from "@/Hooks/OperativeAndGlobalPlans/getOperativePlansWithClass";
-import { useSearchParams } from "next/navigation";
-import { useFetchGlobalPlansWithSubject } from "@/Hooks/OperativeAndGlobalPlans/getGlobalPlanForSubject";
-import Preloader from "@/Components/Preloader/Preloader";
-import { Footer } from "@/Components/Footer";
+import styles from "./page.module.scss";
 
 const SingleOperativnePlan = () => {
   const searchParams = useSearchParams();
@@ -124,6 +125,8 @@ const SingleOperativnePlan = () => {
   if (operativeError || globalError)
     return <div>Greška u učitavanju {operativeError || globalError}</div>;
 
+  const { downloadCSV } = useExportCSV();
+
   return (
     <div>
       <Header
@@ -134,20 +137,43 @@ const SingleOperativnePlan = () => {
       {isLoggedIn && (
         <div className={styles.addButtonWrapper}>
           {(type === "operative" || type === "global") && (
-            <Button
-              title={type === "operative" ? "Dodaj čas" : "Dodaj nastavnu temu"}
-              themes={[
-                "orange",
-                "standardWide",
-                "standardHeight",
-                "noBorderRadius",
-                "maxWidth",
-              ]}
-              onClick={handleOpenModal}
-            />
+            <>
+              <Button
+                title={
+                  type === "operative" ? "Dodaj čas" : "Dodaj nastavnu temu"
+                }
+                themes={[
+                  "orange",
+                  "standardWide",
+                  "standardHeight",
+                  "noBorderRadius",
+                  "maxWidth",
+                ]}
+                onClick={handleOpenModal}
+              />
+              <Button
+                title="Preuzmi tabelu"
+                themes={[
+                  "blue",
+                  "standardWide",
+                  "standardHeight",
+                  "noBorderRadius",
+                  "maxWidth",
+                ]}
+                onClick={() =>
+                  downloadCSV(
+                    type as "operative" | "global",
+                    filteredOperativePlans,
+                    filteredGlobalPlans,
+                    `${subject}-`,
+                  )
+                }
+              />
+            </>
           )}
         </div>
       )}
+
       <section className={styles.container}>
         <div className={styles.referencesWrap}>
           {type === "operative" ? (
@@ -232,9 +258,6 @@ const SingleOperativnePlan = () => {
             <p>Tip plana nije prepoznat.</p>
           )}
         </div>
-        <aside className={styles.sidebarWrap}>
-          <SidebarWrapper />
-        </aside>
       </section>
       <Modal
         title="Dodaj novi čas"

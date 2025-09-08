@@ -17,6 +17,33 @@
   width: 100%;
   margin: 10px 0;
 
+  .descriptionAndIcon {
+    display: flex;
+
+    gap: 32px;
+    flex-direction: column;
+
+    @include breakpoint("tablet") {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .iconsWrapper {
+      display: flex;
+      gap: 12px;
+
+      .icon {
+        cursor: pointer;
+        color: $main-color-light-blue;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: $orange-color;
+        }
+      }
+    }
+  }
+
   a {
     text-decoration: none;
 

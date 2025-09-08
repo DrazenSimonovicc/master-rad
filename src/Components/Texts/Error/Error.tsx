@@ -1,7 +1,5 @@
-import clsx from "clsx";
-
 import { FC } from "react";
-
+import clsx from "clsx";
 import styles from "./Error.module.scss";
 
 interface ErrorProps {

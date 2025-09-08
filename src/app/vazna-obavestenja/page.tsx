@@ -2,16 +2,14 @@
 
 import React, { useState } from "react";
 import Pagination from "@mui/material/Pagination";
-
-import { Header } from "@/Components/Header/Header";
-import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
-import { Title } from "@/Components/Texts/Title";
-
-import styles from "./page.module.scss";
-import { useFetchAnnouncements } from "@/Hooks/Announcements/getAnnouncements";
-import Preloader from "@/Components/Preloader/Preloader";
 import { AnnouncementLink } from "@/Components/AnnouncementLink/AnnouncementLink";
 import { Footer } from "@/Components/Footer";
+import { Header } from "@/Components/Header/Header";
+import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
+import Preloader from "@/Components/Preloader/Preloader";
+import { Title } from "@/Components/Texts/Title";
+import { useFetchAnnouncements } from "@/Hooks/Announcements/getAnnouncements";
+import styles from "./page.module.scss";
 
 const Announcements = () => {
   const breadcrumbItems = {

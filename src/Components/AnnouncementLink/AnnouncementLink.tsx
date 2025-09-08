@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import styles from "./AnnouncementLink.module.scss";
 import Link from "next/link";
+import styles from "./AnnouncementLink.module.scss";
 
 interface AnnouncementLinkProps {
   link: string;

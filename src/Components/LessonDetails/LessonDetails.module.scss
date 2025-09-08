@@ -1,0 +1,63 @@
+@use "src/Styling/index" as *;
+
+.lessonDetails {
+  padding-top: 12px;
+  background-color: #f9fbfc;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+
+  .lessonTable {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+
+    background-color: #ffffff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+
+    .lessonTableHeading {
+      background: linear-gradient(135deg, #dfefff, #f0f7ff);
+      padding: 20px;
+      font-size: 20px;
+      text-align: center;
+      border-bottom: 1px solid #e1e7ed;
+
+      h3 {
+        margin: 0;
+        font-weight: 600;
+        color: #2c3e50;
+      }
+    }
+
+    th,
+    td {
+      padding: 16px 20px;
+      text-align: left;
+      vertical-align: middle;
+      border-bottom: 1px solid #f0f2f5;
+    }
+
+    thead th {
+      background-color: #f7f9fb;
+      color: #5d6d7e;
+      font-size: 16px;
+    }
+
+    tbody th {
+      background-color: #f7f9fb;
+      color: #34495e;
+      font-weight: 500;
+      width: 35%;
+      border-right: 1px solid #f0f2f5;
+    }
+
+    tbody td {
+      color: #2c3e50;
+      font-size: 15px;
+    }
+
+    tbody tr:hover {
+      background-color: #f0f7ff;
+    }
+  }
+}

@@ -1,17 +1,16 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { Footer } from "@/Components/Footer";
 import { Header } from "@/Components/Header/Header";
 import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
-import styles from "./page.module.scss";
-import { PocketBaseCollection } from "@/libs/pocketbase";
-import { AnnouncementsType } from "@/Interfaces/BaseType";
-import Link from "next/link";
-import { Title } from "@/Components/Texts/Title";
 import Preloader from "@/Components/Preloader/Preloader";
-import { Footer } from "@/Components/Footer";
+import { Title } from "@/Components/Texts/Title";
+import { AnnouncementsType } from "@/Interfaces/BaseType";
+import { PocketBaseCollection } from "@/libs/pocketbase";
+import styles from "./page.module.scss";
 
 const Announcement = () => {
   const { id } = useParams();

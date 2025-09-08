@@ -1,6 +1,5 @@
-import clsx from "clsx";
 import { FC } from "react";
-
+import clsx from "clsx";
 import styles from "./Description.module.scss";
 
 interface DescriptionProps {

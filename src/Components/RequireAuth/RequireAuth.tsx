@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import styles from "./RequireAuth.module.scss";
 import { useRouter } from "next/navigation";
 import { Button } from "@/Components/Button";
+import styles from "./RequireAuth.module.scss";
 
 const RequireAuth = () => {
   const router = useRouter();

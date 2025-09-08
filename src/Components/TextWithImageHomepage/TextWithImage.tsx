@@ -1,7 +1,7 @@
 import React, { FC } from "react";
-import styles from "./TextWithImage.module.scss";
-import clsx from "clsx";
 import { Description } from "@/Components/Texts/Description";
+import clsx from "clsx";
+import styles from "./TextWithImage.module.scss";
 
 interface TextWithImageProps {
   title?: string;

@@ -1,13 +1,14 @@
 "use client";
+
 import { FC, useEffect } from "react";
-import styles from "./Header.module.scss";
-import clsx from "clsx";
 import Image, { StaticImageData } from "next/image";
 import { Breadcrumb } from "@/Components/Header/Breadcrumb/Breadcrumb";
 import { Navigation } from "@/Components/Navigation/Navigation";
 import { CustomNavigationData } from "@/Components/Navigation/mockedData";
 import { Title } from "@/Components/Texts/Title";
 import { BreadcrumbItemType } from "@/Interfaces/BaseType";
+import clsx from "clsx";
+import styles from "./Header.module.scss";
 
 type themeType = "bigHeader" | "mediumHeader";
 
@@ -71,7 +72,9 @@ export const Header: FC<HeaderProps> = ({
           )}
           {expertTeam && (
             <div className={styles.subTitle}>
-              {positionTitle?.map((pt, index) => <span key={index}>{pt}</span>)}
+              {positionTitle?.map((pt, index) => (
+                <span key={index}>{pt}</span>
+              ))}
             </div>
           )}
           <Breadcrumb

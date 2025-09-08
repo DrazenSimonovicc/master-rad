@@ -1,9 +1,8 @@
 import { FC } from "react";
-import styles from "./EditButton.module.scss";
-import clsx from "clsx";
-
 import EditIcon from "@mui/icons-material/Edit";
 import { Title } from "@/Components/Texts/Title";
+import clsx from "clsx";
+import styles from "./EditButton.module.scss";
 
 interface ButtonProps {
   className?: string;

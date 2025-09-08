@@ -1,12 +1,12 @@
 "use client";
-import React, { FC, useEffect, useState } from "react";
-import styles from "./Sidebar.module.scss";
-import clsx from "clsx";
 
-import { ImageType } from "@/Interfaces/BaseType";
+import React, { FC, useEffect, useState } from "react";
+import Link from "next/link";
 import { Title } from "@/Components/Texts/Title";
 import { useFetchFooter } from "@/Hooks/getFooterData";
-import Link from "next/link";
+import { ImageType } from "@/Interfaces/BaseType";
+import clsx from "clsx";
+import styles from "./Sidebar.module.scss";
 
 interface PhotoSwipeItemType {
   linkTo: string;

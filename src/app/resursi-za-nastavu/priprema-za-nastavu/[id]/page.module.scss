@@ -4,6 +4,16 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 15px;
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+  flex-direction: column;
+
+  @include breakpoint("600px") {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .paginationContainer {
@@ -17,109 +27,6 @@
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-
-  .teachingUnitTitle {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 18px;
-
-    cursor: pointer;
-    background-color: #f5f7fa;
-    padding: 12px 16px;
-    transition: background-color 0.3s ease;
-    border-bottom: 1px solid #eee;
-
-    &:hover {
-      background-color: #e8edf2;
-    }
-
-    &::after {
-      content: "▼";
-      font-size: 14px;
-      transform: rotate(0deg);
-      transition: transform 0.3s ease;
-    }
-
-    &.expanded::after {
-      transform: rotate(180deg);
-    }
-
-    &.file {
-      text-decoration: underline;
-      cursor: pointer;
-      color: #3b82f6;
-    }
-
-    &.file::after {
-      content: " 📥";
-      font-size: 14px;
-      cursor: pointer;
-      margin-left: 6px;
-    }
-  }
-}
-
-.lessonDetails {
-  padding-top: 12px;
-  background-color: #f9fbfc;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-
-  .lessonTable {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    overflow: hidden;
-
-    background-color: #ffffff;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-
-    .lessonTableHeading {
-      background: linear-gradient(135deg, #dfefff, #f0f7ff);
-      padding: 20px;
-      font-size: 20px;
-      text-align: center;
-      border-bottom: 1px solid #e1e7ed;
-
-      h3 {
-        margin: 0;
-        font-weight: 600;
-        color: #2c3e50;
-      }
-    }
-
-    th,
-    td {
-      padding: 16px 20px;
-      text-align: left;
-      vertical-align: middle;
-      border-bottom: 1px solid #f0f2f5;
-    }
-
-    thead th {
-      background-color: #f7f9fb;
-      color: #5d6d7e;
-      font-size: 16px;
-    }
-
-    tbody th {
-      background-color: #f7f9fb;
-      color: #34495e;
-      font-weight: 500;
-      width: 35%;
-      border-right: 1px solid #f0f2f5;
-    }
-
-    tbody td {
-      color: #2c3e50;
-      font-size: 15px;
-    }
-
-    tbody tr:hover {
-      background-color: #f0f7ff;
-    }
-  }
 }
 
 .container {
@@ -141,44 +48,6 @@
       display: flex;
       flex-direction: column;
       gap: 12px;
-    }
-  }
-
-  .taskListWrapper {
-    padding: 10px 15px;
-    background-color: #fafafa;
-    border-left: 4px solid #007acc;
-    border-radius: 6px;
-    margin-top: 10px;
-  }
-
-  .taskItem {
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-    margin-bottom: 16px;
-    font-size: 16px;
-    line-height: 1.6;
-
-    .taskNumber {
-      font-weight: bold;
-      flex-shrink: 0;
-    }
-
-    .taskContent {
-      p {
-        margin: 0 0 8px;
-      }
-
-      ul,
-      ol {
-        padding-left: 20px;
-        margin: 8px 0;
-      }
-
-      li {
-        margin-bottom: 6px;
-      }
     }
   }
 }
@@ -209,13 +78,41 @@
   }
 }
 
-.modalButtonWrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 20px;
+.searchWrapper {
+  width: 100%;
+  max-width: 400px;
+  position: relative;
 
-  @include breakpoint("tablet") {
-    flex-direction: row;
+  .searchInput {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.3s ease;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    padding-left: 40px;
+
+    &::placeholder {
+      color: #999;
+      font-style: italic;
+    }
+
+    &:focus {
+      border-color: #ff7a00;
+      box-shadow: 0 0 0 3px rgba(255, 122, 0, 0.2);
+    }
   }
+}
+
+.searchIcon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #999;
+  pointer-events: none;
 }

@@ -1,28 +1,29 @@
 "use client";
+
+import dayjs, { Dayjs } from "dayjs";
 import { FC, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useRouter } from "next/navigation";
-import styles from "./page.module.scss";
-import { pb } from "@/libs/pocketbase";
-import { useFetchUserData } from "@/Hooks/getUserData";
-import { userDataType } from "@/Interfaces/BaseType";
-import { Header } from "@/Components/Header/Header";
-import TextInput from "@/Components/Inputs/TextInput/TextInput";
 import {
-  Select,
-  MenuItem,
   FormControl,
+  MenuItem,
+  Select,
   SelectChangeEvent,
 } from "@mui/material";
-
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import dayjs, { Dayjs } from "dayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { Button } from "@/Components/Button";
+import { Header } from "@/Components/Header/Header";
+import TextInput from "@/Components/Inputs/TextInput/TextInput";
 import { Title } from "@/Components/Texts/Title";
+import { useFetchUserData } from "@/Hooks/getUserData";
+import { userDataType } from "@/Interfaces/BaseType";
+import { pb } from "@/libs/pocketbase";
+import { PersonValidationSchema } from "@/app/podaci-o-korisniku/Validation";
+import styles from "./page.module.scss";
 
 //TODO:padding na label
 
@@ -40,12 +41,6 @@ const Page: FC = () => {
     }
   }, [userData]);
 
-  const validationSchema = Yup.object({
-    name: Yup.string().required("Ime i prezime je obavezno"),
-    current_work: Yup.string().required("Trenutno radno mesto je obavezno"),
-    gender: Yup.string().required("Pol je obavezan"),
-  });
-
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -54,7 +49,7 @@ const Page: FC = () => {
       gender: "",
     },
     enableReinitialize: true,
-    validationSchema,
+    validationSchema: PersonValidationSchema,
     onSubmit: (values) => {
       if (!currentUser) {
         console.error("No user data available");

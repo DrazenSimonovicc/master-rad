@@ -1,7 +1,6 @@
 import React, { FC, ReactNode } from "react";
-import styles from "./Text.module.scss";
-
 import clsx from "clsx";
+import styles from "./Text.module.scss";
 
 export interface TextProps {
   className?: string;

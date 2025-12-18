@@ -1,0 +1,79 @@
+@use "src/Styling/index" as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  color: #333;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  cursor: pointer;
+  width: 100%;
+  margin: 10px 0;
+
+  .descriptionAndIcon {
+    display: flex;
+
+    gap: 32px;
+    flex-direction: column;
+
+    @include breakpoint("tablet") {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .iconsWrapper {
+      display: flex;
+      gap: 12px;
+
+      .icon {
+        cursor: pointer;
+        color: $main-color-light-blue;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: $orange-color;
+        }
+      }
+    }
+  }
+
+  a {
+    text-decoration: none;
+
+    .subject {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #2c3e50;
+    }
+    .description {
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 4px;
+      color: #616161;
+    }
+
+    .grade {
+      font-size: 16px;
+      color: #616161;
+    }
+  }
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+}

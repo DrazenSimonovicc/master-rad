@@ -1,0 +1,265 @@
+// This is your Prisma schema file
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  USER
+  ADMIN
+  MODERATOR
+}
+
+model User {
+  id                  String   @id @default(cuid())
+  email               String   @unique
+  password            String
+  role                Role     @default(USER)
+  name                String?
+  primaryEducation    String?  @map("primary_education")
+  secondaryEducation  String?  @map("secondary_education")
+  faculty             String?
+  university          String?
+  currentWork         String?  @map("current_work")
+  avatar              String?
+  dateOfBirth         String?  @map("date_of_birth")
+  gender              String?
+  topEducation        String?  @map("top_education")
+  educationDegree     String?  @map("education_degree")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  forumNews           ForumNews[]
+  lessonPlans         LessonPlan[]
+  homeworks           Homework[]
+  tests               Test[]
+  activities          Activity[]
+
+  @@map("users")
+}
+
+model ForumCategory {
+  id               String      @id @default(cuid())
+  categoryName     String      @map("category_name")
+  image            String
+  imageDescription String      @map("image_description")
+  createdAt        DateTime    @default(now()) @map("created_at")
+  updatedAt        DateTime    @updatedAt @map("updated_at")
+
+  // Relations
+  forumNews        ForumNews[]
+
+  @@map("forum_categories")
+}
+
+model ForumNews {
+  id               String        @id @default(cuid())
+  authorName       String?       @map("author_name")
+  currentWork      String?       @map("current_work")
+  title            String
+  text             String        @db.Text
+  realText         String?       @map("real_text") @db.Text
+  additionalText   String?       @map("additional_text") @db.Text
+  imageUrl         String        @map("image_url")
+  imageDescription String        @map("image_description")
+  authorPosition   String?       @map("author_position")
+  mainNews         Boolean       @default(false) @map("main_news")
+  newsLink         String?       @map("news_link")
+  likes            Int           @default(0)
+  dislikes         Int           @default(0)
+  userId           String        @map("user_id")
+  categoryId       String        @map("category_id")
+  createdAt        DateTime      @default(now()) @map("created_at")
+  updatedAt        DateTime      @updatedAt @map("updated_at")
+
+  // Relations
+  user             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category         ForumCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@map("forum_news")
+}
+
+model LessonPlan {
+  id                      String   @id @default(cuid())
+  date                    String
+  classNumber             String   @map("class_number")
+  gradeAndClass           String   @map("grade_and_class")
+  subject                 String
+  teachingTopic           String   @map("teaching_topic")
+  lessonName              String   @map("lesson_name")
+  previousLesson          String?  @map("previous_lesson")
+  nextLesson              String?  @map("next_lesson")
+  typeOfLesson            String?  @map("type_of_lesson")
+  educationalObjectives   String?  @map("educational_objectives") @db.Text
+  socialObjectives        String?  @map("social_objectives") @db.Text
+  functionalObjectives    String?  @map("functional_objectives") @db.Text
+  teachingMethods         String?  @map("teaching_methods") @db.Text
+  formsOfWork             String?  @map("forms_of_work") @db.Text
+  instructionalMaterials  String?  @map("instructional_materials") @db.Text
+  correlation             String?  @db.Text
+  literature              String?  @db.Text
+  introductionSmall       String?  @map("introduction_small") @db.Text
+  mainActivitySmall       String?  @map("main_activity_small") @db.Text
+  conclusionSmall         String?  @map("conclusion_small") @db.Text
+  introduction            String?  @db.Text
+  main                    String?  @db.Text
+  conclusion              String?  @db.Text
+  file                    String?
+  userId                  String   @map("user_id")
+  createdAt               DateTime @default(now()) @map("created_at")
+  updatedAt               DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user                    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("lesson_plans")
+}
+
+model Homework {
+  id             String   @id @default(cuid())
+  task1          String?  @db.Text
+  task2          String?  @db.Text
+  task3          String?  @db.Text
+  task4          String?  @db.Text
+  task5          String?  @db.Text
+  task6          String?  @db.Text
+  task7          String?  @db.Text
+  task8          String?  @db.Text
+  task9          String?  @db.Text
+  task10         String?  @db.Text
+  subject        String
+  teachingUnit   String   @map("teaching_unit")
+  userId         String   @map("user_id")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("homeworks")
+}
+
+model Test {
+  id             String   @id @default(cuid())
+  task1          String?  @db.Text
+  task2          String?  @db.Text
+  task3          String?  @db.Text
+  task4          String?  @db.Text
+  task5          String?  @db.Text
+  task6          String?  @db.Text
+  task7          String?  @db.Text
+  task8          String?  @db.Text
+  task9          String?  @db.Text
+  task10         String?  @db.Text
+  subject        String
+  teachingUnit   String   @map("teaching_unit")
+  date           String
+  userId         String   @map("user_id")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("tests")
+}
+
+model Activity {
+  id              String   @id @default(cuid())
+  date            String
+  title           String
+  description     String   @db.Text
+  typeOfActivity  String   @map("type_of_activity")
+  place           String
+  userId          String   @map("user_id")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("activities")
+}
+
+model ClassSchedule {
+  id        String   @id @default(cuid())
+  subject   String
+  dayName   String   @map("day_name")
+  userId    String?  @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("class_schedules")
+}
+
+model Announcement {
+  id                String   @id @default(cuid())
+  title             String
+  description       String?  @db.Text
+  date              String
+  link1             String?
+  link1Description  String?  @map("link1_description")
+  link2             String?
+  link2Description  String?  @map("link2_description")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@map("announcements")
+}
+
+model OperativePlan {
+  id          String   @id @default(cuid())
+  subject     String
+  grade       String
+  month       String
+  schoolYear  String   @map("school_year")
+  teacher     String
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("operative_plans")
+}
+
+model GlobalPlan {
+  id          String   @id @default(cuid())
+  subject     String
+  grade       String
+  schoolYear  String   @map("school_year")
+  teacher     String
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("global_plans")
+}
+
+model GlobalPlanSubject {
+  id                 String   @id @default(cuid())
+  classTheme         String   @map("class_theme")
+  learningObjectives String   @map("learning_objectives") @db.Text
+  month              String
+  processingClass    Int      @map("processing_class")
+  reviewClass        Int      @map("review_class")
+  evaluationClass    Int      @map("evaluation_class")
+  subject            String
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  @@map("global_plan_subjects")
+}
+
+model SubjectAndGrade {
+  id        String   @id @default(cuid())
+  subject   String
+  grade     String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("subjects_and_grades")
+}
+
+

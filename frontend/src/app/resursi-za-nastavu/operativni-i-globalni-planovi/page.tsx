@@ -1,0 +1,409 @@
+"use client";
+
+import React, { useState } from "react";
+import { useFormik } from "formik";
+import { TextField } from "@mui/material";
+import { Button } from "@/Components/Button";
+import { PageHeader } from "@/Components/Navigation/PageHeader";
+import SearchToggleInput from "@/Components/Inputs/SearchInput/SearchInput";
+import { SidebarWrapper } from "@/Components/Layout/Sidebar/SidebarWrapper";
+import { Modal } from "@/Components/Modal";
+import DeleteConfirmationModal from "@/Components/Modal/DeleteConfirmationModal/DeleteConfirmationModal";
+import Preloader from "@/Components/Preloader/Preloader";
+import RequireAuth from "@/Components/RequireAuth/RequireAuth";
+import SubjectCard from "@/Components/SubjectCard/SubjectCard";
+import { Title } from "@/Components/Texts/Title";
+import { useFetchGlobalPlans } from "@/Hooks/OperativeAndGlobalPlans/getGlobalPlans";
+import { useFetchOperativePlans } from "@/Hooks/OperativeAndGlobalPlans/getOperativePlans";
+import { useAuth } from "@/Hooks/useAuth";
+import {
+  GlobalPlansItemType,
+  OperativePlansItemType,
+} from "@/Interfaces/BaseType";
+import { operativePlanService, globalPlanService } from "@/libs/api";
+import {
+  GlobalValidationSchema,
+  OperativeValidationSchema,
+} from "@/app/resursi-za-nastavu/operativni-i-globalni-planovi/Validation";
+import {
+  globalFieldConfig,
+  operativeFieldConfig,
+} from "@/app/resursi-za-nastavu/operativni-i-globalni-planovi/config";
+import styles from "./page.module.scss";
+
+const OperativeAndGlobalPlans = () => {
+
+  const { userData, isLoggedIn } = useAuth();
+  const [openOperative, setOpenOperative] = useState(false);
+  const [openGlobal, setOpenGlobal] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [deleteType, setDeleteType] = useState<"operative" | "global" | null>(
+    null,
+  );
+  const [editingOperative, setEditingOperative] =
+    useState<OperativePlansItemType | null>(null);
+  const [editingGlobal, setEditingGlobal] =
+    useState<GlobalPlansItemType | null>(null);
+
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const {
+    operativePlans,
+    error: opError,
+    loading: opLoading,
+    refetch: refetchOperative,
+  } = useFetchOperativePlans(userData?.id);
+
+  const {
+    globalPlans,
+    error: glError,
+    loading: glLoading,
+    refetch: refetchGlobal,
+  } = useFetchGlobalPlans(userData?.id);
+
+  const handleOpenOperativeModal = () => {
+    setEditingOperative(null);
+    setOpenOperative(true);
+  };
+  const handleOpenGlobalModal = () => {
+    setEditingGlobal(null);
+    setOpenGlobal(true);
+  };
+
+  const handleEditOperative = (plan: OperativePlansItemType) => {
+    setEditingOperative(plan);
+    setOpenOperative(true);
+  };
+
+  const handleEditGlobal = (plan: GlobalPlansItemType) => {
+    setEditingGlobal(plan);
+    setOpenGlobal(true);
+  };
+
+  const formikOperative = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      subject: editingOperative?.subject || "",
+      grade: editingOperative?.grade || "",
+      month: editingOperative?.month || "",
+      schoolYear: editingOperative?.schoolYear || "",
+      teacher: editingOperative?.teacher || "",
+    },
+    validationSchema: OperativeValidationSchema,
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        if (editingOperative) {
+          await operativePlanService.update(editingOperative.id, values);
+        } else {
+          await operativePlanService.create(values);
+        }
+        resetForm();
+        setOpenOperative(false);
+        setEditingOperative(null);
+        await refetchOperative();
+        await refetchGlobal();
+      } catch (error) {
+        console.error("Error submitting operative plan:", error);
+      }
+    },
+  });
+
+  const formikGlobal = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      subject: editingGlobal?.subject || "",
+      grade: editingGlobal?.grade || "",
+      schoolYear: editingGlobal?.schoolYear || "",
+      teacher: editingGlobal?.teacher || "",
+    },
+    validationSchema: GlobalValidationSchema,
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        if (editingGlobal) {
+          await globalPlanService.update(editingGlobal.id, values);
+        } else {
+          await globalPlanService.create(values);
+        }
+        resetForm();
+        setOpenGlobal(false);
+        setEditingGlobal(null);
+        await refetchOperative();
+        await refetchGlobal();
+      } catch (error) {
+        console.error("Error submitting global plan:", error);
+      }
+    },
+  });
+
+  if (isLoggedIn && (opLoading || glLoading)) {
+    return <Preloader page />;
+  }
+
+  if (isLoggedIn && (opError || glError)) {
+    return <div>Greška u učitavanju {opError || glError}</div>;
+  }
+
+  const handleDelete = (id: string, type: "operative" | "global") => {
+    setDeleteId(id);
+    setDeleteType(type);
+    setIsDeleteModalOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteId || !deleteType) return;
+
+    try {
+      if (deleteType === "operative") {
+        await operativePlanService.delete(deleteId);
+        await refetchOperative();
+      } else {
+        await globalPlanService.delete(deleteId);
+        await refetchGlobal();
+      }
+    } catch (error) {
+      console.error("Greška prilikom brisanja:", error);
+    } finally {
+      setIsDeleteModalOpen(false);
+      setDeleteId(null);
+      setDeleteType(null);
+    }
+  };
+
+  return (
+    <div>
+      <div className={!isLoggedIn ? styles.blurWrapper : ""}>
+        <PageHeader />
+        {isLoggedIn && (
+          <div className={styles.actionHeader}>
+            <div className={styles.addButtonWrapper}>
+            <div>
+              <Button
+                title={"Dodaj novi operativni plan"}
+                themes={[
+                  "orange",
+                  "standardWide",
+                  "standardHeight",
+                  "noBorderRadius",
+                  "maxWidth",
+                ]}
+                onClick={handleOpenOperativeModal}
+              />
+              <Button
+                title={"Dodaj novi globalni plan"}
+                themes={[
+                  "orange",
+                  "standardWide",
+                  "standardHeight",
+                  "noBorderRadius",
+                  "maxWidth",
+                ]}
+                onClick={handleOpenGlobalModal}
+              />
+            </div>
+
+            <SearchToggleInput
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            </div>
+          </div>
+        )}
+        <section className={styles.container}>
+          <div className={styles.referencesWrap}>
+            {operativePlans && operativePlans.length > 0 && (
+              <Title
+                text={"Operativni planovi"}
+                level={2}
+                className={styles.title}
+              />
+            )}
+            {operativePlans
+              .filter((plan) =>
+                `${plan.subject} ${plan.grade} ${plan.month} ${plan.school_year} ${plan.teacher}`
+                  .toLowerCase()
+                  .includes(searchQuery.toLowerCase()),
+              )
+              .map((plan) => (
+                <SubjectCard
+                  link={"/resursi-za-nastavu/operativni-i-globalni-planovi"}
+                  id={plan.id}
+                  key={plan.id}
+                  description={`${plan.subject} - ${plan.grade} - ${plan.month} - ${plan.school_year} - ${plan.teacher}`}
+                  type={"operative"}
+                  subject={plan.subject}
+                  onEdit={() => handleEditOperative(plan)}
+                  onDelete={() => handleDelete(plan.id, "operative")}
+                />
+              ))}
+
+            {globalPlans && globalPlans.length > 0 && (
+              <Title
+                text={"Globalni planovi"}
+                level={2}
+                className={styles.title}
+              />
+            )}
+            {globalPlans
+              .filter((plan) =>
+                `${plan.subject} ${plan.grade} ${plan.school_year} ${plan.teacher}`
+                  .toLowerCase()
+                  .includes(searchQuery.toLowerCase()),
+              )
+              .map((plan) => (
+                <SubjectCard
+                  link={"/resursi-za-nastavu/operativni-i-globalni-planovi"}
+                  id={plan.id}
+                  key={plan.id}
+                  description={`${plan.subject} - ${plan.grade} - ${plan.school_year} - ${plan.teacher}`}
+                  type={"global"}
+                  subject={plan.subject}
+                  onEdit={() => handleEditGlobal(plan)}
+                  onDelete={() => handleDelete(plan.id, "global")}
+                />
+              ))}
+          </div>
+          <aside className={styles.sidebarWrap}>
+            <SidebarWrapper />
+          </aside>
+        </section>
+
+        <Modal
+          title={
+            editingOperative
+              ? "Izmeni operativni plan"
+              : "Dodaj novi operativni plan"
+          }
+          isOpen={openOperative}
+          setIsOpen={(open) => {
+            setOpenOperative(open);
+            if (!open) setEditingOperative(null);
+          }}
+          description="Popunite polja da biste dodali novu operativni plan."
+          theme={"halfScreen"}
+        >
+          <form onSubmit={formikOperative.handleSubmit} className={styles.form}>
+            {Object.entries(operativeFieldConfig).map(([key, config]) => (
+              <TextField
+                key={key}
+                label={config.label}
+                placeholder={config.placeholder}
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                name={key}
+                value={
+                  formikOperative.values[
+                    key as keyof typeof formikOperative.values
+                  ]
+                }
+                onChange={formikOperative.handleChange}
+                error={
+                  !!formikOperative.touched[
+                    key as keyof typeof formikOperative.touched
+                  ] &&
+                  !!formikOperative.errors[
+                    key as keyof typeof formikOperative.errors
+                  ]
+                }
+                helperText={
+                  formikOperative.touched[
+                    key as keyof typeof formikOperative.touched
+                  ] &&
+                  formikOperative.errors[
+                    key as keyof typeof formikOperative.errors
+                  ]
+                }
+              />
+            ))}
+
+            <Button
+              title={editingOperative ? "Sačuvaj izmene" : "Dodaj plan"}
+              themes={[
+                "blue",
+                "standardWide",
+                "standardHeight",
+                "noBorderRadius",
+                "maxWidth",
+              ]}
+              type={"submit"}
+            />
+          </form>
+        </Modal>
+
+        <Modal
+          title={
+            editingGlobal ? "Izmeni globalni plan" : "Dodaj novi globalni plan"
+          }
+          isOpen={openGlobal}
+          setIsOpen={(open) => {
+            setOpenGlobal(open);
+            if (!open) setEditingGlobal(null);
+          }}
+          description="Popunite polja da biste dodali novu globalni plan."
+          theme={"halfScreen"}
+        >
+          <form onSubmit={formikGlobal.handleSubmit} className={styles.form}>
+            {Object.entries(globalFieldConfig).map(([key, config]) => (
+              <TextField
+                key={key}
+                label={config.label}
+                placeholder={config.placeholder}
+                variant="outlined"
+                fullWidth
+                margin="normal"
+                name={key}
+                value={
+                  formikGlobal.values[key as keyof typeof formikGlobal.values]
+                }
+                onChange={formikGlobal.handleChange}
+                error={
+                  !!formikGlobal.touched[
+                    key as keyof typeof formikGlobal.touched
+                  ] &&
+                  !!formikGlobal.errors[key as keyof typeof formikGlobal.errors]
+                }
+                helperText={
+                  formikGlobal.touched[
+                    key as keyof typeof formikGlobal.touched
+                  ] &&
+                  formikGlobal.errors[key as keyof typeof formikGlobal.errors]
+                }
+              />
+            ))}
+
+            <Button
+              title={editingGlobal ? "Sačuvaj izmene" : "Dodaj plan"}
+              themes={[
+                "blue",
+                "standardWide",
+                "standardHeight",
+                "noBorderRadius",
+                "maxWidth",
+              ]}
+              type={"submit"}
+            />
+          </form>
+        </Modal>
+      </div>
+
+      <DeleteConfirmationModal
+        isOpen={isDeleteModalOpen}
+        setIsOpen={setIsDeleteModalOpen}
+        onConfirm={confirmDelete}
+        title={
+          deleteType === "operative"
+            ? "Potvrda brisanja operativnog plana"
+            : deleteType === "global"
+              ? "Potvrda brisanja globalnog plana"
+              : "Potvrda brisanja plana"
+        }
+        description="Da li ste sigurni da želite da obrišete ovaj plan?"
+      />
+
+      {!isLoggedIn && <RequireAuth />}
+    </div>
+  );
+};
+
+export default OperativeAndGlobalPlans;

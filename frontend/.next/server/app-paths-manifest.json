@@ -1,0 +1,6 @@
+{
+  "/page": "app/page.js",
+  "/podaci-o-korisniku/page": "app/podaci-o-korisniku/page.js",
+  "/profil/page": "app/profil/page.js",
+  "/online-obuke/page": "app/online-obuke/page.js"
+}

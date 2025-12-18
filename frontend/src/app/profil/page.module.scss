@@ -1,0 +1,416 @@
+@use "src/Styling/index" as *;
+
+.profilePage {
+  background: linear-gradient(135deg, #f5f5fc 0%, #e8f0f8 100%);
+  min-height: 100vh;
+  animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 32px;
+  padding: 45px 15px;
+  max-width: 1200px;
+  margin: 0 auto;
+  animation: slideUp 0.6s ease-out;
+
+  .leftSide {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+
+    .editButtonWrapper {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+      animation: fadeIn 0.8s ease-out;
+
+      .editButton {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        background: linear-gradient(135deg, $main-color-light-blue 0%, $dark-blue 100%);
+        color: $white;
+        border: none;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(73, 187, 189, 0.3);
+        transition: all 0.3s ease;
+
+        .editIcon {
+          font-size: 18px;
+        }
+
+        &:active {
+          transform: scale(0.98);
+        }
+      }
+    }
+
+    .profileCard {
+      background: linear-gradient(135deg, $white 0%, #fafbfc 100%);
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      animation: scaleIn 0.6s ease-out;
+      border: 1px solid rgba(73, 187, 189, 0.1);
+    }
+
+    .avatarSection {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      padding: 40px 32px;
+      background: linear-gradient(135deg, rgba(73, 187, 189, 0.08) 0%, rgba(73, 187, 189, 0.15) 100%);
+      border-radius: 20px;
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+
+
+      &.dragging {
+        background: linear-gradient(135deg, rgba(73, 187, 189, 0.2) 0%, rgba(73, 187, 189, 0.3) 100%);
+        transform: scale(1.02);
+        border: 2px dashed $main-color-light-blue;
+      }
+
+      .avatarWrapper {
+        position: relative;
+        cursor: pointer;
+
+        .avatarOverlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.6);
+          border-radius: 50%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 8px;
+          opacity: 0;
+          color: $white;
+
+          .uploadIcon {
+            font-size: 32px;
+          }
+
+          span {
+            font-size: 14px;
+            font-weight: 500;
+          }
+        }
+      }
+
+      .avatar {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 5px solid $white;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+
+        @include breakpoint("tablet") {
+          width: 220px;
+          height: 220px;
+        }
+      }
+
+      .image {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 5px solid $white;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+
+        @include breakpoint("tablet") {
+          width: 220px;
+          height: 220px;
+        }
+      }
+
+      .avatarUpload {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        width: 100%;
+
+        .avatarPlaceholder {
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          border: 3px dashed $main-color-light-blue;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          background: rgba(73, 187, 189, 0.05);
+
+          @include breakpoint("tablet") {
+            width: 220px;
+            height: 220px;
+          }
+
+          .placeholderIcon {
+            font-size: 64px;
+            color: $main-color-light-blue;
+            opacity: 0.6;
+          }
+
+          span {
+            font-size: 14px;
+            color: $gray-color;
+            font-weight: 500;
+          }
+        }
+
+        .uploadButton {
+          font-size: 14px;
+          font-weight: 600;
+          color: $white;
+          cursor: pointer;
+          padding: 14px 32px;
+          background: linear-gradient(135deg, $main-color-light-blue 0%, $dark-blue 100%);
+          border-radius: 12px;
+          text-align: center;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          justify-content: center;
+          box-shadow: 0 4px 12px rgba(73, 187, 189, 0.3);
+
+          .buttonIcon {
+            font-size: 20px;
+          }
+        }
+
+        input[type="file"] {
+          display: none;
+        }
+
+        .avatarPreview {
+          width: 200px;
+          height: 200px;
+          object-fit: cover;
+          border-radius: 50%;
+          border: 5px solid $white;
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+
+          @include breakpoint("tablet") {
+            width: 220px;
+            height: 220px;
+          }
+        }
+      }
+    }
+
+    .profileDetails {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .formSection {
+      background: linear-gradient(135deg, $white 0%, #fafbfc 100%);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(73, 187, 189, 0.1);
+      animation: scaleIn 0.7s ease-out;
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .sectionHeader {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 2px solid rgba(73, 187, 189, 0.2);
+
+        .sectionIcon {
+          font-size: 28px;
+          color: $main-color-light-blue;
+        }
+
+        .sectionTitle {
+          font-size: 20px;
+          font-weight: 600;
+          color: $title-dark;
+          margin: 0;
+        }
+      }
+
+      .sectionContent {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+    }
+
+    .infoCard {
+      background: linear-gradient(135deg, $white 0%, #fafbfc 100%);
+      border-radius: 20px;
+      padding: 32px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+      border: 1px solid rgba(73, 187, 189, 0.1);
+      animation: scaleIn 0.6s ease-out;
+
+      .infoCardHeader {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 2px solid rgba(73, 187, 189, 0.2);
+
+        .infoCardIcon {
+          font-size: 28px;
+          color: $main-color-light-blue;
+        }
+
+        .infoCardTitle {
+          font-size: 20px;
+          font-weight: 600;
+          color: $title-dark;
+          margin: 0;
+        }
+      }
+
+      .infoCardContent {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+    }
+
+    .buttonWrapper {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      padding: 32px 0 0;
+      flex-wrap: wrap;
+
+      @include breakpoint("tablet") {
+        justify-content: flex-end;
+      }
+    }
+
+    .select {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dateAndGenderWrap {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+
+      @include breakpoint("tablet") {
+        flex-direction: row;
+        gap: 20px;
+      }
+
+      > div {
+        flex: 1;
+
+        :global {
+          .MuiStack-root {
+            padding-top: 0;
+
+            .MuiTextField-root {
+              width: 100%;
+            }
+          }
+        }
+      }
+    }
+
+    .label {
+      font-size: 14px;
+      font-weight: 500;
+      padding-bottom: 8px;
+      color: $gray-color;
+    }
+  }
+
+  @include breakpoint("tablet") {
+    padding: 105px 15px 70px;
+  }
+
+  @include breakpoint("desktopSmall") {
+    flex-direction: row;
+    gap: 40px;
+
+    .leftSide {
+      max-width: 800px;
+      flex: 1;
+    }
+
+    .sidebarWrap {
+      width: 280px;
+      flex-shrink: 0;
+    }
+  }
+
+  @include breakpoint("desktop") {
+    .leftSide {
+      max-width: 850px;
+    }
+
+    .sidebarWrap {
+      width: 340px;
+    }
+  }
+}

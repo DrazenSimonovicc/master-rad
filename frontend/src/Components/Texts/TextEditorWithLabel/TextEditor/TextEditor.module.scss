@@ -1,0 +1,67 @@
+@use "src/Styling/index" as *;
+
+.errorBorder {
+  border: 1px solid #d32f2f !important;
+  border-radius: 4px;
+}
+.editorWrapper.errorBorder :global(.ProseMirror) {
+  border: none;
+  outline: none;
+}
+.editorWrapper {
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 4px;
+
+  :global {
+    .ProseMirror {
+      border: none;
+      margin-left: 20px;
+      min-height: 200px;
+    }
+
+    .ProseMirror-focused {
+      outline: none !important;
+      box-shadow: none !important;
+    }
+
+    .ProseMirror li {
+      margin-left: 40px;
+    }
+  }
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+
+  button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.54);
+    padding: 6px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background-color: #e3f2fd;
+    }
+  }
+
+  .active {
+    color: #1976d2;
+    font-weight: bold;
+  }
+}
+
+.editorContent {
+  min-height: 200px;
+  outline: none;
+
+  p:focus {
+    border: none;
+  }
+}

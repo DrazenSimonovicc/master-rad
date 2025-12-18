@@ -1,0 +1,28 @@
+import * as Yup from "yup";
+
+export const lessonPlanValidationSchema = Yup.object().shape({
+  date: Yup.string().required("Datum je obavezan"),
+  classNumber: Yup.string().required("Broj časa je obavezan"),
+  gradeAndClass: Yup.string().required("Razred i odeljenje su obavezni"),
+  teachingTopic: Yup.string().required("Tema časa je obavezna"),
+  lessonName: Yup.string().required("Naziv časa je obavezan"),
+  previousLesson: Yup.string().required("Prethodni čas je obavezan"),
+  nextLesson: Yup.string().required("Sledeći čas je obavezan"),
+  typeOfLesson: Yup.string().required("Tip časa je obavezan"),
+  educationalObjectives: Yup.string().required("Obrazovni ciljevi su obavezni"),
+  socialObjectives: Yup.string().required("Socijalni ciljevi su obavezni"),
+  functionalObjectives: Yup.string().required("Funkcionalni ciljevi su obavezni"),
+  teachingMethods: Yup.string().required("Metode nastave su obavezne"),
+  formsOfWork: Yup.string().required("Oblici rada su obavezni"),
+  instructionalMaterials: Yup.string().required("Nastavna sredstva su obavezna"),
+  correlation: Yup.string().required("Korelacija je obavezna"),
+  literature: Yup.string().required("Literatura je obavezna"),
+  introductionSmall: Yup.string().required("Uvod (kratak) je obavezan"),
+  mainActivitySmall: Yup.string().required("Glavna aktivnost (kratko) je obavezna"),
+  conclusionSmall: Yup.string().required("Zaključak (kratko) je obavezan"),
+  introduction: Yup.string().required("Uvod je obavezan"),
+  main: Yup.string().required("Glavni deo je obavezan"),
+  conclusion: Yup.string().required("Zaključak je obavezan"),
+  subject: Yup.string().required("Predmet je obavezan"),
+  userId: Yup.string().required("Korisnik nije validan"),
+});

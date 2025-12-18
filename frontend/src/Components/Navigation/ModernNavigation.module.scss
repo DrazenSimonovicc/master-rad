@@ -1,0 +1,627 @@
+@use "src/Styling/index" as *;
+
+// Variables
+$nav-height: 70px;
+$nav-height-mobile: 60px;
+$transition-duration: 0.3s;
+$border-radius: 8px;
+$shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+$shadow-hover: 0 4px 25px rgba(0, 0, 0, 0.15);
+
+// Keyframes
+@keyframes slideInFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Main Navigation
+.navigation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all $transition-duration ease;
+  height: $nav-height;
+
+  &.scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    box-shadow: $shadow;
+    height: $nav-height - 10px;
+  }
+
+  @include breakpoint("tablet") {
+    height: $nav-height-mobile;
+    
+    &.scrolled {
+      height: $nav-height-mobile - 5px;
+    }
+  }
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+
+  @include breakpoint("tablet") {
+    padding: 0 15px;
+  }
+}
+
+// Logo
+.logo {
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 24px;
+  color: $main-color-light-blue;
+  transition: all $transition-duration ease;
+  z-index: 1001;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  .logoText {
+    background: linear-gradient(135deg, $main-color-light-blue, $light-blue);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  @include breakpoint("tablet") {
+    font-size: 20px;
+  }
+}
+
+// Desktop Navigation
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+
+  @include breakpoint("1024px") {
+    display: none;
+  }
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navItem {
+  position: relative;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  text-decoration: none;
+  color: $main-color-dark-gray;
+  font-weight: 500;
+  font-size: 14px;
+  border-radius: $border-radius;
+  transition: all $transition-duration ease;
+  position: relative;
+
+  &:hover {
+    color: $main-color-light-blue;
+    background: rgba($main-color-light-blue, 0.1);
+    transform: translateY(-1px);
+  }
+
+  &.active {
+    color: $main-color-light-blue;
+    background: rgba($main-color-light-blue, 0.1);
+    font-weight: 600;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 2px;
+      background: $main-color-light-blue;
+      border-radius: 1px;
+    }
+  }
+}
+
+.chevron {
+  width: 16px;
+  height: 16px;
+  transition: transform $transition-duration ease;
+  
+  &.rotated {
+    transform: rotate(180deg);
+  }
+}
+
+// Dropdown
+.dropdownContainer {
+  position: relative;
+}
+
+.dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  background: white;
+  border-radius: $border-radius;
+  box-shadow: $shadow;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  animation: slideDown $transition-duration ease;
+  z-index: 1000;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 20px;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid white;
+  }
+}
+
+.dropdownItem {
+  margin: 0;
+}
+
+.dropdownLink {
+  display: block;
+  padding: 12px 20px;
+  text-decoration: none;
+  color: $main-color-dark-gray;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all $transition-duration ease;
+
+  &:hover {
+    color: $main-color-light-blue;
+    background: rgba($main-color-light-blue, 0.1);
+    padding-left: 25px;
+  }
+}
+
+// User Section
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.userMenu {
+  position: relative;
+}
+
+.userButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: rgba($main-color-light-blue, 0.1);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all $transition-duration ease;
+
+  &:hover {
+    background: rgba($main-color-light-blue, 0.2);
+    transform: scale(1.05);
+  }
+}
+
+.userIcon {
+  width: 20px;
+  height: 20px;
+  color: $main-color-light-blue;
+}
+
+.userDropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  min-width: 150px;
+  background: white;
+  border-radius: $border-radius;
+  box-shadow: $shadow;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 8px 0;
+  margin-top: 8px;
+  animation: slideDown $transition-duration ease;
+  z-index: 1000;
+}
+
+.userLink {
+  display: block;
+  padding: 12px 20px;
+  text-decoration: none;
+  color: $main-color-dark-gray;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all $transition-duration ease;
+
+  &:hover {
+    color: $main-color-light-blue;
+    background: rgba($main-color-light-blue, 0.1);
+  }
+}
+
+.logoutButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 20px;
+  border: none;
+  background: none;
+  color: $main-color-dark-gray;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all $transition-duration ease;
+
+  &:hover {
+    color: #dc3545;
+    background: rgba(220, 53, 69, 0.1);
+  }
+}
+
+.logoutIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.loginButton {
+  padding: 10px 20px;
+  background: $main-color-light-blue;
+  color: white;
+  text-decoration: none;
+  border-radius: $border-radius;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all $transition-duration ease;
+
+  &:hover {
+    background: darken($main-color-light-blue, 10%);
+    transform: translateY(-1px);
+    box-shadow: $shadow-hover;
+  }
+}
+
+// Mobile Menu Button
+.mobileMenuButton {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: rgba($main-color-light-blue, 0.1);
+  border-radius: $border-radius;
+  cursor: pointer;
+  transition: all $transition-duration ease;
+  z-index: 1001;
+
+  &:hover {
+    background: rgba($main-color-light-blue, 0.2);
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+    color: $main-color-light-blue;
+  }
+
+  @include breakpoint("1024px") {
+    display: flex;
+  }
+}
+
+// Mobile Menu
+.mobileMenu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 999;
+  animation: fadeIn $transition-duration ease;
+
+  @include breakpoint("1024px") {
+    display: block;
+  }
+}
+
+.mobileMenuContent {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 320px;
+  height: 100%;
+  background: white;
+  padding: 80px 0 20px;
+  overflow-y: auto;
+  animation: slideInFromRight $transition-duration ease;
+  box-shadow: -5px 0 25px rgba(0, 0, 0, 0.1);
+
+  @include breakpoint("tablet") {
+    width: 100%;
+    padding: 70px 0 20px;
+  }
+}
+
+.mobileNavList {
+  list-style: none;
+  margin: 0;
+  padding: 0 20px;
+}
+
+.mobileNavItem {
+  margin-bottom: 5px;
+}
+
+.mobileNavLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  text-decoration: none;
+  color: $main-color-dark-gray;
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: $border-radius;
+  transition: all $transition-duration ease;
+  border: 1px solid transparent;
+
+  &:hover {
+    color: $main-color-light-blue;
+    background: rgba($main-color-light-blue, 0.1);
+    border-color: rgba($main-color-light-blue, 0.2);
+  }
+
+  &.active {
+    color: $main-color-light-blue;
+    background: rgba($main-color-light-blue, 0.1);
+    border-color: $main-color-light-blue;
+    font-weight: 600;
+  }
+}
+
+.mobileDropdownContainer {
+  margin-bottom: 5px;
+}
+
+.mobileDropdown {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background: rgba($main-color-light-blue, 0.05);
+  border-radius: $border-radius;
+  margin-top: 5px;
+  animation: slideDown $transition-duration ease;
+}
+
+.mobileDropdownItem {
+  margin: 0;
+}
+
+.mobileDropdownLink {
+  display: block;
+  padding: 12px 20px 12px 40px;
+  text-decoration: none;
+  color: $main-color-dark-gray;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all $transition-duration ease;
+
+  &:hover {
+    color: $main-color-light-blue;
+    background: rgba($main-color-light-blue, 0.1);
+    padding-left: 45px;
+  }
+}
+
+// Mobile User Section
+.mobileUserSection {
+  padding: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.mobileUserActions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mobileUserLink {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 20px;
+  text-decoration: none;
+  color: $main-color-dark-gray;
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: $border-radius;
+  transition: all $transition-duration ease;
+  border: 1px solid transparent;
+
+  &:hover {
+    color: $main-color-light-blue;
+    background: rgba($main-color-light-blue, 0.1);
+    border-color: rgba($main-color-light-blue, 0.2);
+  }
+}
+
+.mobileUserIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.mobileLogoutButton {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 15px 20px;
+  border: none;
+  background: none;
+  color: $main-color-dark-gray;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: $border-radius;
+  transition: all $transition-duration ease;
+  border: 1px solid transparent;
+
+  &:hover {
+    color: #dc3545;
+    background: rgba(220, 53, 69, 0.1);
+    border-color: rgba(220, 53, 69, 0.2);
+  }
+}
+
+.mobileLogoutIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.mobileLoginButton {
+  display: block;
+  width: 100%;
+  padding: 15px 20px;
+  background: $main-color-light-blue;
+  color: white;
+  text-decoration: none;
+  border-radius: $border-radius;
+  font-weight: 500;
+  font-size: 16px;
+  text-align: center;
+  transition: all $transition-duration ease;
+
+  &:hover {
+    background: darken($main-color-light-blue, 10%);
+    transform: translateY(-1px);
+  }
+}
+
+// Responsive adjustments
+@include breakpoint("tablet") {
+  .navigation {
+    height: $nav-height-mobile;
+    
+    &.scrolled {
+      height: $nav-height-mobile - 5px;
+    }
+  }
+  
+  .container {
+    padding: 0 15px;
+  }
+  
+  .logo {
+    font-size: 20px;
+  }
+}
+
+// Accessibility improvements
+@media (prefers-reduced-motion: reduce) {
+  .navigation,
+  .navigation * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+// Focus styles for accessibility
+.navLink:focus,
+.mobileNavLink:focus,
+.userButton:focus,
+.mobileMenuButton:focus {
+  outline: 2px solid $main-color-light-blue;
+  outline-offset: 2px;
+}
+
+// High contrast mode support
+@media (prefers-contrast: high) {
+  .navigation {
+    border-bottom: 2px solid $main-color-dark-gray;
+  }
+  
+  .navLink,
+  .mobileNavLink {
+    border: 1px solid transparent;
+    
+    &:hover,
+    &.active {
+      border-color: $main-color-light-blue;
+    }
+  }
+}

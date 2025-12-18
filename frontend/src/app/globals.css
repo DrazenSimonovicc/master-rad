@@ -1,0 +1,26 @@
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+/* Responsive padding for content wrapper */
+.content-wrapper {
+  padding-top: 60px;
+}
+
+@media (min-width: 1024px) {
+  .content-wrapper {
+    padding-top: 40px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .content-wrapper {
+    padding-top: 30px;
+  }
+}

@@ -1,0 +1,95 @@
+@use "src/Styling/index" as *;
+
+.breadcrumb {
+  background: white;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 12px 0;
+  position: relative;
+  z-index: 998;
+}
+
+.breadcrumbList {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 8px;
+}
+
+.breadcrumbItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.separator {
+  color: #999;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.breadcrumbLink {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  padding: 4px 8px;
+  border-radius: 4px;
+
+  &:hover {
+    color: $main-color-light-blue;
+    background: rgba($main-color-light-blue, 0.1);
+  }
+}
+
+.breadcrumbCurrent {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba($main-color-light-blue, 0.1);
+}
+
+.homeIcon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .breadcrumb {
+    padding: 8px 0;
+  }
+  
+  .breadcrumbList {
+    padding: 0 15px;
+    gap: 4px;
+  }
+  
+  .breadcrumbLink,
+  .breadcrumbCurrent {
+    font-size: 13px;
+    padding: 3px 6px;
+  }
+  
+  .separator {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .homeIcon {
+    width: 14px;
+    height: 14px;
+  }
+}

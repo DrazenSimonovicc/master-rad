@@ -1,0 +1,127 @@
+@use "src/Styling/index" as *;
+
+@keyframes jumpBtn {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+  100% {
+    transform: scale(0, 0);
+  }
+}
+
+.btn {
+  text-transform: uppercase;
+  cursor: pointer;
+  line-height: 24px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-size: 14px;
+  border: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  border-radius: 8px;
+
+  &.blue {
+    background-color: $main-color-light-blue;
+    color: $white;
+
+    &:hover {
+      background-color: darken($main-color-light-blue, 10%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(73, 187, 189, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(73, 187, 189, 0.2);
+    }
+  }
+
+  &.white {
+    background-color: $white;
+    color: $main-color-dark-gray;
+    border: 1px solid #e2e8f0;
+
+    &:hover {
+      background-color: $main-color-light-blue;
+      color: $white;
+      border-color: $main-color-light-blue;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(73, 187, 189, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(73, 187, 189, 0.2);
+    }
+  }
+
+  &.orange {
+    background-color: #ff9800;
+    color: $white;
+
+    &:hover {
+      background-color: darken(#ff9800, 10%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 4px rgba(255, 152, 0, 0.2);
+    }
+  }
+
+  &.standardWide {
+    width: 180px;
+  }
+
+  &.maxWidth {
+    width: 280px;
+    padding: 12px;
+    max-width: 280px;
+
+    @include breakpoint("375px") {
+      width: 300px;
+      max-width: 300px;
+    }
+  }
+
+  &.standardHeight {
+    height: 52px;
+  }
+
+  &.noBorderRadius {
+    border-radius: 8px;
+  }
+
+
+  // Focus styles for accessibility
+  &:focus-visible {
+    outline: 2px solid $main-color-light-blue;
+    outline-offset: 2px;
+  }
+}

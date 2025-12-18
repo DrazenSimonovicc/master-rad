@@ -1,0 +1,268 @@
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[14].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[14].oneOf[7].use[5]!./src/Components/Hero/ModernHero.module.scss ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.ModernHero_heroSection__oeXKH {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 80px 20px;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+}
+
+.ModernHero_heroContent__p1tQ_ {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 60px;
+  gap: 60px;
+  align-items: center;
+}
+
+.ModernHero_heroText__m_v3x h1 {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.ModernHero_heroTitle__mECh4 {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  color: white;
+}
+
+.ModernHero_heroSubtitle__EOGAA {
+  font-size: 24px;
+  font-weight: 300;
+  margin-bottom: 24px;
+  opacity: 0.9;
+  color: white;
+}
+
+.ModernHero_heroDescription__zi7TQ {
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  opacity: 0.9;
+  color: white;
+}
+
+.ModernHero_heroFeatures__YxH3x {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+  gap: 20px;
+}
+
+.ModernHero_featureItem__7g64s {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  -webkit-backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+.ModernHero_featureItem__7g64s:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.ModernHero_featureIcon__nDAcw {
+  width: 24px;
+  height: 24px;
+  color: white;
+}
+
+.ModernHero_heroImage__Y2e9g {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.ModernHero_heroImg__zAz2e {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  position: relative;
+  z-index: 2;
+}
+
+.ModernHero_blueSquare__WbU_3 {
+  position: absolute;
+  width: 100px;
+  height: 120px;
+  background-color: #23bdee;
+  top: -15px;
+  left: -15px;
+  z-index: 1;
+  border-radius: 20px;
+}
+
+.ModernHero_greenSquare__2zeAT {
+  position: absolute;
+  width: 160px;
+  height: 180px;
+  background-color: #00cbb8;
+  bottom: -15px;
+  right: -15px;
+  z-index: 1;
+  border-radius: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+  .ModernHero_heroSection__oeXKH {
+    padding: 100px 40px;
+  }
+  .ModernHero_heroContent__p1tQ_ {
+    gap: 80px;
+  }
+  .ModernHero_heroTitle__mECh4 {
+    font-size: 56px;
+  }
+  .ModernHero_heroSubtitle__EOGAA {
+    font-size: 28px;
+  }
+  .ModernHero_heroFeatures__YxH3x {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ModernHero_blueSquare__WbU_3 {
+    width: 120px;
+    height: 140px;
+    top: -20px;
+    left: -20px;
+  }
+  .ModernHero_greenSquare__2zeAT {
+    width: 200px;
+    height: 230px;
+    bottom: -20px;
+    right: -20px;
+  }
+}
+@media only screen and (min-width: tablet) {
+  .ModernHero_heroSection__oeXKH {
+    padding: 100px 40px;
+  }
+  .ModernHero_heroContent__p1tQ_ {
+    gap: 80px;
+  }
+  .ModernHero_heroTitle__mECh4 {
+    font-size: 56px;
+  }
+  .ModernHero_heroSubtitle__EOGAA {
+    font-size: 28px;
+  }
+  .ModernHero_heroFeatures__YxH3x {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ModernHero_blueSquare__WbU_3 {
+    width: 120px;
+    height: 140px;
+    top: -20px;
+    left: -20px;
+  }
+  .ModernHero_greenSquare__2zeAT {
+    width: 200px;
+    height: 230px;
+    bottom: -20px;
+    right: -20px;
+  }
+}
+@media only screen and (min-width: 1023px) {
+  .ModernHero_heroSection__oeXKH {
+    padding: 80px 60px;
+  }
+  .ModernHero_heroContent__p1tQ_ {
+    gap: 100px;
+  }
+  .ModernHero_heroTitle__mECh4 {
+    font-size: 64px;
+  }
+  .ModernHero_heroSubtitle__EOGAA {
+    font-size: 32px;
+  }
+  .ModernHero_heroImg__zAz2e {
+    max-width: 700px;
+  }
+}
+@media only screen and (min-width: desktopSmall) {
+  .ModernHero_heroSection__oeXKH {
+    padding: 80px 60px;
+  }
+  .ModernHero_heroContent__p1tQ_ {
+    gap: 100px;
+  }
+  .ModernHero_heroTitle__mECh4 {
+    font-size: 64px;
+  }
+  .ModernHero_heroSubtitle__EOGAA {
+    font-size: 32px;
+  }
+  .ModernHero_heroImg__zAz2e {
+    max-width: 700px;
+  }
+}
+@media only screen and (min-width: 1140px) {
+  .ModernHero_heroSection__oeXKH {
+    padding: 100px 80px;
+  }
+  .ModernHero_heroTitle__mECh4 {
+    font-size: 72px;
+  }
+  .ModernHero_heroSubtitle__EOGAA {
+    font-size: 36px;
+  }
+  .ModernHero_heroImg__zAz2e {
+    max-width: 800px;
+  }
+}
+@media (max-width: 768px) {
+  .ModernHero_heroContent__p1tQ_ {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+  .ModernHero_heroTitle__mECh4 {
+    font-size: 36px;
+  }
+  .ModernHero_heroSubtitle__EOGAA {
+    font-size: 20px;
+  }
+  .ModernHero_heroFeatures__YxH3x {
+    grid-template-columns: 1fr;
+  }
+  .ModernHero_heroSection__oeXKH {
+    padding: 60px 20px;
+  }
+}
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[14].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[14].oneOf[7].use[5]!./src/app/page.module.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.page_cardsWrapper__pX0oI {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-top: 60px;
+}
+
+.page_backgroundWorkDescription__8IQhm {
+  background-color: rgba(157, 204, 255, 0.2);
+}
+
+.page_thirdPart__lRgmi {
+  padding: 60px 15px;
+}
+
+.page_featureIcon__5lsbZ {
+  width: 24px;
+  height: 24px;
+  color: white;
+}

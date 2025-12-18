@@ -1,0 +1,22 @@
+@use "src/Styling/index" as *;
+
+.cardsWrapper {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding-top: 60px;
+}
+
+.backgroundWorkDescription {
+  background-color: rgba(#9dccff, 0.2);
+}
+
+.thirdPart {
+  padding: 60px 15px;
+}
+
+// Feature icon styles for ModernHero component
+.featureIcon {
+  width: 24px;
+  height: 24px;
+  color: white;
+}

@@ -1,0 +1,391 @@
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[14].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[14].oneOf[7].use[5]!./src/Components/Navigation/Breadcrumb.module.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.Breadcrumb_breadcrumb__2YFfO {
+  background: white;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 12px 0;
+  position: relative;
+  z-index: 998;
+}
+
+.Breadcrumb_breadcrumbList__6WEyy {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 8px;
+}
+
+.Breadcrumb_breadcrumbItem__bBq0r {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.Breadcrumb_separator__bf89i {
+  color: #999;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.Breadcrumb_breadcrumbLink__RmC0u {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: #666;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+.Breadcrumb_breadcrumbLink__RmC0u:hover {
+  color: #49bbbd;
+  background: rgba(73, 187, 189, 0.1);
+}
+
+.Breadcrumb_breadcrumbCurrent__2C0Nq {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(73, 187, 189, 0.1);
+}
+
+.Breadcrumb_homeIcon__JBqry {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .Breadcrumb_breadcrumb__2YFfO {
+    padding: 8px 0;
+  }
+  .Breadcrumb_breadcrumbList__6WEyy {
+    padding: 0 15px;
+    gap: 4px;
+  }
+  .Breadcrumb_breadcrumbLink__RmC0u,
+  .Breadcrumb_breadcrumbCurrent__2C0Nq {
+    font-size: 13px;
+    padding: 3px 6px;
+  }
+  .Breadcrumb_separator__bf89i {
+    width: 14px;
+    height: 14px;
+  }
+  .Breadcrumb_homeIcon__JBqry {
+    width: 14px;
+    height: 14px;
+  }
+}
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[14].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[14].oneOf[7].use[5]!./src/Components/Texts/Title/Title.module.scss ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.Title_title__oMgLE {
+  color: #000;
+  font-size: 32px;
+  line-height: 40px;
+  font-weight: 700;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+@media only screen and (min-width: 1140px) {
+  .Title_title__oMgLE {
+    font-size: 42px;
+    line-height: 42px;
+  }
+}
+.Title_title__oMgLE.Title_level1__48JrJ {
+  font-size: 32px;
+  line-height: 36px;
+}
+@media only screen and (min-width: 1140px) {
+  .Title_title__oMgLE.Title_level1__48JrJ {
+    font-size: 42px;
+    line-height: 50px;
+  }
+}
+.Title_title__oMgLE.Title_level2__uh4q6 {
+  font-size: 26px;
+  line-height: 30px;
+}
+@media only screen and (min-width: 1140px) {
+  .Title_title__oMgLE.Title_level2__uh4q6 {
+    font-size: 36px;
+    line-height: 44px;
+  }
+}
+.Title_title__oMgLE.Title_level3__RT4df {
+  font-size: 22px;
+  line-height: 26px;
+}
+@media only screen and (min-width: 1140px) {
+  .Title_title__oMgLE.Title_level3__RT4df {
+    font-size: 28px;
+    line-height: 36px;
+  }
+}
+.Title_title__oMgLE.Title_level4__glUKk {
+  font-size: 20px;
+  line-height: 24px;
+}
+@media only screen and (min-width: 1140px) {
+  .Title_title__oMgLE.Title_level4__glUKk {
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+.Title_title__oMgLE.Title_level5__JJMyr {
+  font-size: 32px;
+  line-height: 36px;
+}
+@media only screen and (min-width: 1140px) {
+  .Title_title__oMgLE.Title_level5__JJMyr {
+    font-size: 24px;
+    line-height: 28px;
+  }
+}
+.Title_title__oMgLE.Title_regular__LH1xj {
+  font-weight: 400;
+}
+.Title_title__oMgLE.Title_light__xgaPo {
+  font-weight: 300;
+}
+.Title_title__oMgLE.Title_white__fuzXL {
+  color: #fafafa;
+}
+.Title_title__oMgLE.Title_underline__RaHb_ {
+  text-decoration: underline;
+}
+.Title_title__oMgLE .Title_dot___42ON {
+  background-color: #aeb3b2;
+  border-radius: 100%;
+  width: 6px;
+  height: 6px;
+}
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[14].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[14].oneOf[7].use[5]!./src/Components/Layout/Sidebar/Sidebar.module.scss ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.Sidebar_container__2rE6Q .Sidebar_titleWrap__v6iq2 {
+  margin-bottom: 30px;
+}
+.Sidebar_container__2rE6Q .Sidebar_titleWrap__v6iq2 .Sidebar_title__zm2pY {
+  margin-bottom: 14px;
+  font-size: 24px;
+  line-height: 28.8px;
+}
+.Sidebar_container__2rE6Q .Sidebar_gallery__Gq0df {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 61px;
+  column-gap: 30px;
+  row-gap: 15px;
+  align-items: center;
+}
+.Sidebar_container__2rE6Q .Sidebar_gallery__Gq0df .Sidebar_imageWrap__YEHzQ {
+  width: calc((100% - 30px) / 2);
+  cursor: pointer;
+}
+.Sidebar_container__2rE6Q .Sidebar_gallery__Gq0df .Sidebar_imageWrap__YEHzQ .Sidebar_image__zTl0F {
+  width: 100%;
+  height: auto;
+}
+.Sidebar_container__2rE6Q .Sidebar_text__VBg_h {
+  margin-bottom: 45px;
+  line-height: 25.2px;
+  color: #000;
+  font-size: 14px;
+  font-weight: 400;
+}
+.Sidebar_container__2rE6Q .Sidebar_slider__4eSPf {
+  margin-bottom: 45px;
+}
+.Sidebar_container__2rE6Q .Sidebar_contactWrap__HHewq {
+  margin-bottom: 45px;
+}
+.Sidebar_container__2rE6Q .Sidebar_contactWrap__HHewq .Sidebar_contactInfo__BHtDx {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  line-height: 28px;
+  font-size: 14px;
+  color: #000;
+}
+.Sidebar_container__2rE6Q .Sidebar_contactWrap__HHewq .Sidebar_contactInfo__BHtDx .Sidebar_link__gAEWB {
+  text-decoration: none;
+  color: #8e1538;
+}
+.Sidebar_container__2rE6Q .Sidebar_sidebarInputWrap__3IxZ5 {
+  margin-bottom: 30px;
+}
+.Sidebar_container__2rE6Q .Sidebar_contactInfoWrap__mdObP {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[14].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[14].oneOf[7].use[5]!./src/Components/TeacherSiteGrid/TeacherSiteCard/TeacherSiteCard.module.scss ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.TeacherSiteCard_card__lQy0V {
+  background-color: #ffffff;
+  border: 1px solid #e2e2e2;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.TeacherSiteCard_card__lQy0V:hover {
+  transform: translateY(-5px);
+}
+.TeacherSiteCard_card__lQy0V h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #333;
+}
+.TeacherSiteCard_card__lQy0V p {
+  flex-grow: 1;
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+.TeacherSiteCard_card__lQy0V a {
+  color: #0070f3;
+  text-decoration: none;
+  font-weight: 500;
+}
+.TeacherSiteCard_card__lQy0V a:hover {
+  text-decoration: underline;
+}
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[14].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[14].oneOf[7].use[5]!./src/Components/TeacherSiteGrid/TeacherSiteGrid.module.scss ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.TeacherSiteGrid_grid__IIN_d {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-gap: 24px;
+  gap: 24px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.TeacherSiteGrid_paginationWrap__vFpE3 {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[14].oneOf[7].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[14].oneOf[7].use[5]!./src/app/online-obuke/page.module.scss ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+.page_container__GstyZ {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 45px 15px;
+  gap: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page_container__GstyZ .page_referencesWrap__t1K9s {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  flex: 1 1;
+}
+.page_container__GstyZ .page_referencesWrap__t1K9s .page_title__6JxZN {
+  color: #222222;
+}
+.page_container__GstyZ .page_referencesWrap__t1K9s .page_announcementList__H08YK {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px 0;
+}
+.page_container__GstyZ .page_referencesWrap__t1K9s .page_announcementList__H08YK .page_card__5cXab {
+  background-color: #f9f9f9;
+  border-radius: 16px;
+  padding: 32px;
+  max-width: 600px;
+  margin: 32px auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.page_container__GstyZ .page_referencesWrap__t1K9s .page_announcementList__H08YK .page_card__5cXab h2 {
+  margin-bottom: 16px;
+  color: #2a2a2a;
+}
+.page_container__GstyZ .page_referencesWrap__t1K9s .page_announcementList__H08YK .page_card__5cXab p {
+  margin-bottom: 24px;
+  font-size: 16px;
+  color: #555;
+}
+.page_container__GstyZ .page_referencesWrap__t1K9s .page_announcementList__H08YK .page_card__5cXab ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+.page_container__GstyZ .page_referencesWrap__t1K9s .page_announcementList__H08YK .page_card__5cXab ul li {
+  margin-bottom: 8px;
+}
+.page_container__GstyZ .page_referencesWrap__t1K9s .page_announcementList__H08YK .page_card__5cXab ul li a {
+  color: #0070f3;
+  text-decoration: none;
+  font-weight: 500;
+}
+.page_container__GstyZ .page_referencesWrap__t1K9s .page_announcementList__H08YK .page_card__5cXab ul li a:hover {
+  text-decoration: underline;
+}
+.page_container__GstyZ .page_referencesWrap__t1K9s .page_paginationWrap__SyMUb {
+  display: flex;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+@media only screen and (min-width: 768px) {
+  .page_container__GstyZ {
+    padding: 105px 15px 70px;
+  }
+}
+@media only screen and (min-width: tablet) {
+  .page_container__GstyZ {
+    padding: 105px 15px 70px;
+  }
+}
+@media only screen and (min-width: 1023px) {
+  .page_container__GstyZ {
+    flex-direction: row;
+    gap: 60px;
+  }
+  .page_container__GstyZ .page_sidebarWrap__J4bUo {
+    width: 280px;
+    margin-bottom: 45px;
+  }
+}
+@media only screen and (min-width: desktopSmall) {
+  .page_container__GstyZ {
+    flex-direction: row;
+    gap: 60px;
+  }
+  .page_container__GstyZ .page_sidebarWrap__J4bUo {
+    width: 280px;
+    margin-bottom: 45px;
+  }
+}
+@media only screen and (min-width: 1140px) {
+  .page_container__GstyZ .page_sidebarWrap__J4bUo {
+    width: 340px;
+  }
+}

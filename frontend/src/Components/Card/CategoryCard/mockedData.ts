@@ -1,0 +1,58 @@
+export const categoryCardData = [
+  {
+    id: "1",
+    linkUrl: "/",
+    imageUrl: "/categoryCardImages/osnovna.jpg",
+    imageDescription: "alt",
+    description: "Osnovno obrazovanje",
+  },
+  {
+    id: "2",
+    linkUrl: "/",
+    imageUrl: "/categoryCardImages/srednja.jpg",
+    imageDescription: "alt",
+    description: "Srednje obrazovanje",
+  },
+  {
+    id: "3",
+    linkUrl: "/",
+    imageUrl: "/categoryCardImages/faculty.jpg",
+    imageDescription: "alt",
+    description: "Visoko obrazovanje",
+  },
+  {
+    id: "4",
+    linkUrl: "/",
+    imageUrl: "/categoryCardImages/online.jpg",
+    imageDescription: "alt",
+    description: "Online učenje i resursi",
+  },
+  {
+    id: "5",
+    linkUrl: "/",
+    imageUrl: "/categoryCardImages/nastavnici.jpg",
+    imageDescription: "alt",
+    description: "Nastavnici i predavači",
+  },
+  {
+    id: "6",
+    linkUrl: "/",
+    imageUrl: "/categoryCardImages/roditelji.jpg",
+    imageDescription: "alt",
+    description: "Roditelji i učenici",
+  },
+  {
+    id: "7",
+    linkUrl: "/",
+    imageUrl: "/categoryCardImages/specobrazovanje.jpg",
+    imageDescription: "alt",
+    description: "Specijalno obrazovanje",
+  },
+  {
+    id: "8",
+    linkUrl: "/",
+    imageUrl: "/categoryCardImages/reforme.jpg",
+    imageDescription: "alt",
+    description: "Obrazovne reforme",
+  },
+];

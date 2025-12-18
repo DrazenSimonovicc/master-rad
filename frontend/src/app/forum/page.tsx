@@ -1,0 +1,252 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useFormik } from "formik";
+import { Input, TextField } from "@mui/material";
+import { Button } from "@/Components/Button";
+import { CategoryPicker } from "@/Components/CategoryPicker/CategoryPicker";
+import { ForumNews } from "@/Components/ForumNews/ForumNews";
+import { PageHeader } from "@/Components/Navigation/PageHeader";
+import { Modal } from "@/Components/Modal";
+import Preloader from "@/Components/Preloader/Preloader";
+import TextEditorWithLabel from "@/Components/Texts/TextEditorWithLabel/TextEditorWithLabel";
+import { Title } from "@/Components/Texts/Title";
+import { useFetchNewsCategories } from "@/Hooks/getForumCategories";
+import { useFetchForumNews } from "@/Hooks/getForumNewsData";
+import { useAuth } from "@/Hooks/useAuth";
+import { ForumNewsValidationSchema } from "@/app/forum/Validation";
+import styles from "./page.module.scss";
+
+export default function Page() {
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | null>(
+    null,
+  );
+
+  const [open, setOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const { userData, isLoggedIn, authLoading } = useAuth();
+
+  const {
+    forumNews,
+    error: forumNewsError,
+    loading: forumNewsLoading,
+  } = useFetchForumNews();
+
+  const {
+    categories,
+    error: categoriesError,
+    loading: categoriesLoading,
+  } = useFetchNewsCategories();
+
+  const [newsList, setNewsList] = useState(forumNews);
+
+  useEffect(() => {
+    setNewsList(forumNews);
+  }, [forumNews]);
+
+  const formik = useFormik({
+    initialValues: {
+      title: "",
+      text: "",
+      imageDescription: "",
+    },
+    validationSchema: ForumNewsValidationSchema,
+    onSubmit: async (values) => {
+      try {
+        const formData = new FormData();
+        formData.append("authorName", userData.name);
+        formData.append("currentWork", userData.currentWork);
+        formData.append("title", values.title);
+        formData.append("text", values.text);
+        formData.append("imageDescription", values.imageDescription);
+        if (selectedCategoryId !== null) {
+          formData.append("category", selectedCategoryId);
+        }
+
+        if (selectedFile) {
+          formData.append("image_url", selectedFile);
+        }
+
+        const response = await axios.post(
+          "http://127.0.0.1:8090/api/collections/forum_news/records?expand=user,category",
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+          },
+        );
+
+        setOpen(false);
+
+        const updated = await axios.get(
+          "http://127.0.0.1:8090/api/collections/forum_news/records?expand=user,category",
+        );
+
+        setNewsList(updated.data.items);
+        formik.resetForm();
+        setSelectedFile(null);
+      } catch (error) {
+        console.error("Error submitting form:", error);
+      }
+    },
+  });
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
+
+  const handleOpenModal = () => {
+    setOpen(true);
+  };
+
+
+  if (forumNewsLoading || categoriesLoading) {
+    return <Preloader page />;
+  }
+
+  if (forumNewsError || categoriesError) {
+    return <div>Error: {forumNewsError || categoriesError}</div>;
+  }
+
+  const mainNewsList = newsList.filter((news) => news.main_news);
+
+  const filteredNewsList = selectedCategoryId
+    ? newsList.filter(
+        (news) =>
+          news.expand.category?.id === selectedCategoryId ||
+          news.expand.category?.category_name === selectedCategoryId,
+      )
+    : newsList;
+
+  return (
+    <main>
+      <PageHeader />
+
+      {isLoggedIn && (
+        <div className={styles.newNews}>
+          <Button
+            title={"Dodaj novu vest"}
+            themes={[
+              "orange",
+              "standardWide",
+              "standardHeight",
+              "noBorderRadius",
+              "maxWidth",
+            ]}
+            onClick={handleOpenModal}
+          />
+        </div>
+      )}
+
+      <div className={styles.mainNewsWrapper}>
+        <div className={styles.mainNews}>
+          <Title text={"Glavna vest"} level={2} />
+          <ForumNews data={mainNewsList} triggerOnView={false} />
+        </div>
+      </div>
+
+      <div className={styles.categoryWrapper}>
+        <CategoryPicker onCategorySelect={setSelectedCategoryId} />
+      </div>
+
+      <div className={styles.otherNewsWrapper}>
+        <div className={styles.otherNews}>
+          <Title text={"Ostale vesti"} level={2} />
+          <ForumNews
+            data={filteredNewsList
+              .filter((a) => !a.main_news)
+              .sort(
+                (a, b) =>
+                  new Date(b.created).getTime() - new Date(a.created).getTime(),
+              )}
+            triggerOnView
+          />
+        </div>
+      </div>
+
+
+      <Modal
+        title="Nova vest"
+        isOpen={open}
+        setIsOpen={setOpen}
+        description="Popunite polja da biste podelili najnovije informacije sa zajednicom."
+        theme={"halfScreen"}
+      >
+        <form onSubmit={formik.handleSubmit} className={styles.form}>
+          <TextField
+            label="Naslov vesti"
+            placeholder={"Unesite naslov vesti"}
+            variant="outlined"
+            fullWidth
+            value={formik.values.title}
+            onChange={formik.handleChange}
+            name="title"
+            error={formik.touched.title && Boolean(formik.errors.title)}
+            helperText={formik.touched.title && formik.errors.title}
+          />
+          <TextField
+            select
+            label="Kategorija"
+            value={selectedCategoryId || ""}
+            onChange={(e) => setSelectedCategoryId(e.target.value)}
+            SelectProps={{ native: true }}
+            fullWidth
+          >
+            <option value="" disabled hidden>
+              Kategorija
+            </option>
+            {categories?.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.category_name}
+              </option>
+            ))}
+          </TextField>
+          <TextEditorWithLabel
+            onChange={(html) => formik.setFieldValue("text", html)}
+            task={formik.values.text}
+            label={"Tekst vesti"}
+            error={
+              formik.touched.text && formik.errors.text
+                ? formik.errors.text
+                : undefined
+            }
+          />
+          <div className={styles.imageUploadWrapper}>
+            <div className={styles.inputWrapper}>
+              <label>Dodajte fotografiju koju želite da objavite.</label>
+              <Input
+                type="file"
+                onChange={handleFileChange}
+                inputProps={{ accept: "image/*" }}
+              />
+            </div>
+
+            <TextField
+              label="Opis fotografije"
+              variant="outlined"
+              fullWidth
+              value={formik.values.imageDescription}
+              onChange={formik.handleChange}
+              name="imageDescription"
+            />
+          </div>
+
+          <Button
+            title={"Dodaj vest"}
+            themes={[
+              "blue",
+              "standardWide",
+              "standardHeight",
+              "noBorderRadius",
+              "maxWidth",
+            ]}
+            type={"submit"}
+          />
+        </form>
+      </Modal>
+    </main>
+  );
+}
